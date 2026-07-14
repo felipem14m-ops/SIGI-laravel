@@ -78,4 +78,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'id_rol', 'id_rol');
     }
+
+    // Accessor to map role_id to id_rol
+    public function getRoleIdAttribute()
+    {
+        return $this->id_rol;
+    }
 }

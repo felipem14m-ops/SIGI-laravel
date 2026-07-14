@@ -6,10 +6,12 @@ Para estructurar esta lógica, el modelo `Role` define la representación de los
 
 Cuando un usuario inicia sesión correctamente ingresando sus datos en el formulario de acceso, la petición POST es recibida por el método `store` del controlador `AuthenticatedSessionController.php`. Este método se encarga de autenticar las credenciales, regenerar la sesión para evitar problemas de seguridad y ejecutar una redirección mediante el método `intended`, el cual envía al usuario a la ruta con nombre `dashboard`. Este método redirige al usuario a la URL que intentaba acceder originalmente o, en su defecto, a la ruta por defecto del panel de control.
 
-La ruta `/dashboard` está definida en el archivo `routes/web.php` y está protegida por el middleware `auth`, garantizando que únicamente los usuarios que han iniciado sesión puedan ingresar. Al ejecutarse la ruta, una función captura el usuario autenticado actualmente a través del helper `Auth` y obtiene su identificador de rol (`id_rol`). 
+La ruta `/dashboard` está definida en el archivo `routes/web.php` y está protegida por el middleware `auth`, garantizando que únicamente los usuarios que han iniciado sesión puedan ingresar. Al ejecutarse la ruta, una función captura el usuario autenticado actualmente a través del helper `Auth` y obtiene su identificador de rol mapeado a `role_id` (a través de un accessor en el modelo `User`).
 
-El sistema utiliza una estructura de coincidencia (`match`) basada en el valor de `id_rol`:
-* Si el identificador de rol es igual a **1** (Administrador), el sistema devuelve la vista del panel de administración ubicada en `resources/views/Admin/dashboard.blade.php`.
-* Para cualquier otro rol (por ejemplo, Empleado/Vendedor con valor **2**), se retorna la vista correspondiente ubicada en `resources/views/Empleado/dashboard.blade.php`.
+El sistema utiliza una estructura condicional (`if`, `elseif`) basada en el valor de `role_id`:
+* Si el identificador de rol es igual a **1** (Administrador), el sistema devuelve la vista del panel de administración ubicada en `resources/views/admin/dashboard.blade.php`.
+* Si el identificador de rol es igual a **2** (Empleado), se retorna la vista correspondiente ubicada en `resources/views/empleado/dashboard.blade.php`.
 
 Esto logra una segmentación dinámica y segura de la interfaz de usuario basada en roles en el núcleo del enrutamiento de Laravel.
+
+
