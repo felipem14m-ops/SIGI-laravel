@@ -129,9 +129,9 @@
 
         @forelse($categorias as $categoria)
         <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.03); display:flex; flex-direction:column; position:relative;">
-            <div style="position:relative; width:100%; height:160px; border-radius:14px; overflow:hidden; background:#f8fafc; margin-bottom:16px;">
+            <div style="position:relative; width:100%; height:180px; border-radius:14px; overflow:hidden; background:#fafafa; margin-bottom:16px; display:flex; align-items:center; justify-content:center; padding:8px;">
                 @if($categoria->imagen)
-                <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="{{ $categoria->nombre }}" style="width:100%; height:100%; object-fit:cover;" />
+                <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="{{ $categoria->nombre }}" style="max-width:100%; max-height:100%; object-fit:contain;" />
                 @else
                 <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#eff6ff,#dbeafe); color:#3b82f6; font-weight:900; font-size:2.5rem; letter-spacing:-0.02em;">
                     {{ mb_strtoupper(mb_substr($categoria->nombre, 0, 1)) }}
@@ -156,36 +156,50 @@
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
-                    0 productos
+                    {{ $categoria->productos_count ?? 0 }} productos
                 </span>
             </div>
 
-            <div style="display:flex; gap:8px; margin-top:auto;">
-                <button type="button" onclick="openEditModal('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}','{{ addslashes($categoria->descripcion ?? '') }}','{{ $categoria->activa ? 1 : 0 }}')"
-                    style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:#eff6ff; color:#2563eb; border:none; padding:10px; border-radius:12px; font-size:0.875rem; font-weight:700; cursor:pointer;"
+            <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:auto;">
+                {{-- ✏️ Editar --}}
+                <button type="button"
+                    title="Editar categoría"
+                    onclick="openEditModal('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}','{{ addslashes($categoria->descripcion ?? '') }}','{{ $categoria->activa ? 1 : 0 }}')"
+                    style="flex:1; height:38px; border-radius:12px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
                     onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    Editar
                 </button>
-                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.update', $categoria->id_categoria) }}" style="display:inline;">
+
+                {{-- 🚫 Toggle Estado --}}
+                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.update', $categoria->id_categoria) }}" style="display:inline; flex:1;">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="toggle_status" value="1" />
-                    <button type="button" onclick="confirmToggle('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}',{{ $categoria->activa ? 1 : 0 }})"
-                        style="width:40px; height:40px; border-radius:12px; border:none; background:{{ $categoria->activa ? '#fff1f2' : '#f0fdf4' }}; color:{{ $categoria->activa ? '#f43f5e' : '#16a34a' }}; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                    <button type="button"
                         title="{{ $categoria->activa ? 'Desactivar categoría' : 'Activar categoría' }}"
-                        onmouseover="this.style.background='{{ $categoria->activa ? '#fecdd3' : '#bbf7d0' }}'" onmouseout="this.style.background='{{ $categoria->activa ? '#fff1f2' : '#f0fdf4' }}'">
-                        @if($categoria->activa)
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        onclick="confirmToggle('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}',{{ $categoria->activa ? 1 : 0 }})"
+                        style="width:100%; height:38px; border-radius:12px; border:1px solid #fef3c7; background:#fffbeb; color:#d97706; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                        onmouseover="this.style.background='#fde68a'" onmouseout="this.style.background='#fffbeb'">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                         </svg>
-                        @else
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </button>
+                </form>
+
+                {{-- 🗑️ Eliminar --}}
+                <form id="delete-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.destroy', $categoria->id_categoria) }}" style="display:inline; flex:1;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button"
+                        title="Eliminar categoría"
+                        onclick="confirmDelete('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}')"
+                        style="width:100%; height:38px; border-radius:12px; border:1px solid #fecdd3; background:#fff1f2; color:#e11d48; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                        onmouseover="this.style.background='#fecdd3'" onmouseout="this.style.background='#fff1f2'">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                        @endif
                     </button>
                 </form>
             </div>

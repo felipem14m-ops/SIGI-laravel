@@ -13,7 +13,18 @@ class CategoriasController extends Controller
      */
     public function index(Request $request)
     {
-        $categorias = Categoria::all();
+        $query = Categoria::withCount('productos');
+
+        if ($request->filled('search')) {
+            $query->where('nombre', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('status')) {
+            $query->where('activa', $request->status);
+        }
+
+        $categorias = $query->get();
+
         return view('Admin.Categorias.ListasdeCategorias', compact('categorias'));
     }
 

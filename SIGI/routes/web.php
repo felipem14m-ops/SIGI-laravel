@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController as Usuariocontroller;
 use App\Http\Controllers\ProveedorController as Proveedorcontroller;
 use App\Http\Controllers\CategoriasController as Categoriascontroller;
+use App\Http\Controllers\HistorialVentasController;
+use App\Http\Controllers\ProductosController as Productoscontroller;
+use App\Http\Controllers\VentaController as Ventacontroller;
+use App\Http\Controllers\MovimientoController as Movimientocontroller;
+use App\Http\Controllers\AlertasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,6 +58,26 @@ Route::middleware('auth')->group(function () {
     Route::post('/categorias', [CategoriasController::class, 'store'])->name('categorias.store');
     Route::put('/categorias/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
     Route::delete('/categorias/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
+
+    //Rutas de Gestion de Productos
+    Route::get('/productos', [ProductosController::class, 'index'])->name('productos.index');
+    Route::post('/productos', [ProductosController::class, 'store'])->name('productos.store');
+    Route::put('/productos/{id}', [ProductosController::class, 'update'])->name('productos.update');
+    Route::delete('/productos/{id}', [ProductosController::class, 'destroy'])->name('productos.destroy');
+
+    //Rutas de Gestion de Ventas
+    Route::get('/ventas',           [Ventacontroller::class, 'index']    )->name('ventas.index');     // Terminal POS
+    Route::get('/ventas/historial', [HistorialVentasController::class, 'index'])->name('ventas.historial');  // Historial de Ventas
+    Route::post('/ventas',          [Ventacontroller::class, 'store']    )->name('ventas.store');      // Registrar nueva venta
+
+    //Rutas de Gestion de Movimientos
+    Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
+    Route::post('/movimientos', [MovimientoController::class, 'store'])->name('movimientos.store');
+
+    //Rutas de Alertas de Stock
+    Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas.index');
+    
+    
 });
 
 require __DIR__ . '/auth.php';
