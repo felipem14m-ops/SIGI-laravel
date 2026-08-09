@@ -1,0 +1,22 @@
+# Historial de Ventas
+
+La lógica de esta funcionalidad se maneja principalmente desde el controlador `HistorialVentasController.php` y la vista `Admin/Venta/HistorialdeVentas.blade.php`.
+
+Para realizar esta acción, el usuario autenticado (administrador o cajero) interactúa con la opción "Historial de Ventas" ubicada en el menú lateral izquierdo del panel de administración, dentro de la sección "Gestión Comercial". Este enlace redirige al controlador `HistorialVentasController.php` mediante la ruta con nombre `ventas.historial`, correspondiente a la URL `/ventas/historial` a través de una petición de tipo `GET`. La ruta se encuentra protegida por el middleware `auth` para impedir accesos no autorizados.
+
+Al recibir la petición `GET`, el controlador ejecuta el método `index` de la clase `HistorialVentasController`. Este método construye una consulta Fluent mediante Eloquent sobre el modelo `Venta`, cargando de forma impaciente (eager loading) las relaciones `usuario`, `metodo` y `detalles` para evitar problemas de rendimiento N+1. La consulta ordena los registros en forma descendente mediante `latest()`.
+
+El método `index` evalúa los parámetros opcionales de filtro enviados en el `$request`:
+1. **Filtro por Fecha (`fecha`)**: Si el usuario especifica una fecha en el panel de filtros, el controlador agrega una cláusula `whereDate` comparando contra la columna `fecha_venta` o `created_at`.
+2. **Filtro por Usuario/Cajero (`cajero`)**: Si se ingresa un nombre de cajero, el controlador aplica un filtro sobre la relación `usuario` utilizando `whereHas('usuario', ...)` para buscar coincidencias parciales con el operador `LIKE` sobre la columna `nombre`.
+3. **Filtro por Método de Pago (`metodo`)**: Si se selecciona un método de pago, se filtra la relación `metodo` mediante `whereHas('metodo', ...)` filtrando por el nombre del método de pago.
+
+Posteriormente, el controlador ejecuta la paginación con `$query->paginate(15)->withQueryString()`, preservando los parámetros de búsqueda en los enlaces de paginación. Adicionalmente, recupera la lista completa de métodos de pago mediante `MetodoPago::orderBy('nombre')->get()`. Finalmente, empaqueta las variables `ventas` y `metodosPago` con la función `compact` y las envía a la vista `Admin/Venta/HistorialdeVentas.blade.php`.
+
+En la vista `HistorialdeVentas.blade.php`, los datos se presentan en una tabla estructurada que muestra el número de folio (`#0000XX`), la fecha y hora de la transacción, el cajero responsable con su avatar e inicial, el badge del método de pago, la cantidad total de unidades vendidas, el monto total y la columna de **Cambio** (resaltando en color verde cuando el cambio devuelto sea mayor a cero).
+
+Cada fila de la tabla contiene en la columna de acciones un único botón representado por el ícono del ojo (👁️). Al hacer clic en este botón, se invoca la función JavaScript `verDetalleVenta(id)`. Esta función abre el modal `#modal-detalle-venta` directamente en la misma pantalla sin realizar redirecciones de página. Mientras se obtienen los datos, el modal muestra un indicador de carga animado (spinner).
+
+La función `verDetalleVenta` realiza una petición asíncrona mediante `fetch` a la ruta con nombre `ventas.show` (URL `/ventas/historial/{id}`), enviando el encabezado `Accept: application/json`. Esta petición es atendida por el método `show` del controlador `HistorialVentasController.php`, el cual busca la venta por su identificador utilizando `Venta::with(['usuario', 'metodo', 'detalles.producto'])->findOrFail($id)` y retorna una respuesta JSON estructurada con el objeto `venta` y sus relaciones.
+
+Al recibir la respuesta JSON en la vista, la función JavaScript procesa los datos y renderiza directamente dentro del contenedor `#modal-body` la vista previa exacta del **Ticket Térmico POS en formato 80mm**. La plantilla renderizada incluye el encabezado de la tienda con su NIT y dirección, el folio de la factura, la fecha/hora, el cajero, el método de pago, la tabla detallada de productos con sus precios unitarios y subtotales, el total de la venta, el efectivo recibido y el cambio devuelto. En el pie del modal se ubica el botón "🖨️ Imprimir / Descargar POS", el cual ejecuta la función `imprimirTicketModal()`, enviando el contenido del ticket a un frame in-memory para lanzar la ventana de impresión del sistema operativo en segundo plano sin interrumpir la navegación del usuario.

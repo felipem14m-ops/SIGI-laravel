@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Venta;
+use App\Models\MetodoPago;
 
 
 
@@ -19,12 +20,15 @@ class HistorialVentasController extends Controller
                  ->latest();
 
         if ($request->filled('fecha')) {
-            $query->whereDate('created_at', $request->fecha);
+            $query->where(function ($q) use ($request) {
+                $q->whereDate('fecha_venta', $request->fecha)
+                  ->orWhereDate('created_at', $request->fecha);
+            });
         }
 
         if ($request->filled('cajero')) {
             $query->whereHas('usuario', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->cajero . '%');
+                $q->where('nombre', 'like', '%' . $request->cajero . '%');
             });
         }
 
@@ -38,18 +42,26 @@ class HistorialVentasController extends Controller
                     ->paginate(15)
                     ->withQueryString();
 
-        return view('Admin.Venta.HistorialdeVentas',compact('ventas')
-        );
+        $metodosPago = MetodoPago::orderBy('nombre')->get();
+
+        return view('Admin.Venta.HistorialdeVentas', compact('ventas', 'metodosPago'));
     }
 
-    public function show(Venta $venta)
+    public function show($id)
     {
-        // Ver detalle de la venta
+        $venta = Venta::with(['usuario', 'metodo', 'detalles.producto'])->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'venta' => $venta
+        ]);
     }
 
-    public function factura(Venta $venta)
+    public function factura($id)
     {
-        // Imprimir factura
+        $venta = Venta::with(['usuario', 'metodo', 'detalles.producto'])->findOrFail($id);
+
+        return view('Admin.Venta.facturaPOS', compact('venta'));
     }
 
     public function exportarPdf()

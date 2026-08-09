@@ -131,12 +131,13 @@
             <tbody>
                 @forelse($movimientos as $mov)
                 @php
+                    $codigo = strtolower($mov->tipoMovimiento->codigo ?? $mov->origen);
                     $tipoClass = [
                         'entrada' => ['bg'=>'#f0fdf4','color'=>'#16a34a','label'=>'Entrada (+)'],
                         'salida'  => ['bg'=>'#fff1f2','color'=>'#e11d48','label'=>'Salida (-)'],
                         'ajuste'  => ['bg'=>'#eff6ff','color'=>'#2563eb','label'=>'Ajuste (=)'],
                     ];
-                    $badge = $tipoClass[$mov->origen] ?? ['bg'=>'#f8fafc','color'=>'#64748b','label'=>$mov->origen];
+                    $badge = $tipoClass[$codigo] ?? ['bg'=>'#f8fafc','color'=>'#64748b','label'=>strtoupper($codigo)];
                 @endphp
                 <tr style="border-bottom:1px solid #f1f5f9;" onmouseover="this.style.background='#fafbfd'" onmouseout="this.style.background='transparent'">
 
@@ -180,7 +181,7 @@
                     {{-- Motivo / Usuario --}}
                     <td style="padding:14px 18px;">
                         <div style="font-size:0.85rem; color:#334155; font-weight:600;">{{ $mov->motivo ?? 'Sin especificación' }}</div>
-                        <div style="font-size:11px; color:#94a3b8; font-weight:600;">Por: {{ $mov->usuario->name ?? 'Sistema' }}</div>
+                        <div style="font-size:11px; color:#94a3b8; font-weight:600;">Por: {{ $mov->usuario->nombre ?? ($mov->usuario->name ?? 'Sistema') }}</div>
                     </td>
 
                 </tr>

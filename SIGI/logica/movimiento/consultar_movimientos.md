@@ -1,0 +1,17 @@
+# Consultar Historial de Movimientos
+
+La lógica de esta funcionalidad se maneja principalmente desde el controlador `MovimientoController.php` y la vista `Admin/Movimiento/ListasdeMovimiento.blade.php`.
+
+Para realizar esta acción, el usuario autenticado interactúa con la opción "Movimientos" que se encuentra en el menú lateral izquierdo del panel de administración, dentro de la sección "Inventario". Este enlace está configurado para dirigir al controlador `MovimientoController.php` a través de la ruta con nombre `movimientos.index`, que corresponde a la URL `/movimientos` mediante una petición de tipo `GET`. Esta ruta se encuentra protegida por el middleware `auth`, asegurando el acceso exclusivo a personal autorizado.
+
+Al momento de recibir la petición `GET`, el controlador ejecuta el método `index` de la clase `MovimientoController`. Este método prepara una consulta de Eloquent sobre el modelo `Movimiento`, incorporando la carga impaciente (*eager loading*) de las relaciones `producto`, `usuario` y `tipoMovimiento` mediante la instrucción `Movimiento::with(['producto', 'usuario', 'tipoMovimiento'])`. Los registros se ordenan de manera cronológica inversa aplicando `orderBy('id_movimiento', 'desc')`, permitiendo visualizar primero las transacciones de inventario más recientes.
+
+El método `index` evalúa dinámicamente los parámetros de filtro enviados en la petición `$request`:
+1. **Filtro por Nombre o Código de Producto (`search`)**: Si el usuario escribe una cadena en el campo de búsqueda, el controlador aplica un filtro sobre la relación `producto` mediante `whereHas('producto', ...)`. La consulta evalúa condicionalmente si el texto coincide parcialmente (utilizando el operador `LIKE` con comodines `%`) sobre la columna `nombre` o sobre el campo `codigoUnico` del producto.
+2. **Filtro por Tipo de Movimiento (`tipo`)**: Si el usuario selecciona un tipo específico de movimiento (Entrada, Salida o Ajuste), el controlador convierte el parámetro a mayúsculas y filtra la relación `tipoMovimiento` mediante `whereHas('tipoMovimiento', ...)` comparando contra la columna `codigo`.
+
+Una vez aplicados los filtros correspondientes, el controlador ejecuta la paginación de resultados fijando un límite de 15 registros por página mediante `$query->paginate(15)->withQueryString()`, lo que garantiza que los parámetros de filtro se mantengan activos al navegar entre las páginas. Asimismo, el controlador consulta la lista de productos activos mediante `Producto::where('estado', 'activo')->get()`, los cuales se requieren para alimentar las opciones del desplegable en el modal de registro de nuevo movimiento.
+
+Finalmente, las variables `movimientos` y `productos` se empaquetan con la función `compact` y se transmiten a la vista `Admin/Movimiento/ListasdeMovimiento.blade.php`.
+
+En la vista `ListasdeMovimiento.blade.php`, los datos se organizan en una tabla que detalla el identificador del movimiento, la fecha de registro, el nombre y código del producto impactado, la cantidad involucrada, el stock anterior a la operación, el stock resultante final, la etiqueta o badge representativo del tipo de movimiento (Entrada en verde, Salida en rojo, Ajuste en azul) y el motivo o descripción junto con el nombre del usuario responsable que ejecutó el cambio. En caso de que no existan movimientos que coincidan con la búsqueda o la base de datos se encuentre vacía, la vista utiliza la directiva `@empty` de Blade para renderizar un mensaje claro y estilizado informando al usuario.

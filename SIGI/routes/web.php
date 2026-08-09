@@ -10,8 +10,10 @@ use App\Http\Controllers\CategoriasController as Categoriascontroller;
 use App\Http\Controllers\HistorialVentasController;
 use App\Http\Controllers\ProductosController as Productoscontroller;
 use App\Http\Controllers\VentaController as Ventacontroller;
-use App\Http\Controllers\MovimientoController as Movimientocontroller;
+use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\AlertasController;
+use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\ConfiguracionesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     // Rutas de Gestión de Usuarios
     Route::get('/usuarios', [Usuariocontroller::class, 'index'])->name('usuarios.index');
     Route::get('/usuarios/crear', [Usuariocontroller::class, 'create'])->name('usuarios.create');
@@ -54,21 +56,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/proveedores/{id}', [Proveedorcontroller::class, 'destroy'])->name('proveedores.destroy');
 
     //Rutas de Gestion de Categorias
-    Route::get('/categorias', [CategoriasController::class, 'index'])->name('categorias.index');
-    Route::post('/categorias', [CategoriasController::class, 'store'])->name('categorias.store');
-    Route::put('/categorias/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
-    Route::delete('/categorias/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
+    Route::get('/categorias', [Categoriascontroller::class, 'index'])->name('categorias.index');
+    Route::post('/categorias', [Categoriascontroller::class, 'store'])->name('categorias.store');
+    Route::put('/categorias/{id}', [Categoriascontroller::class, 'update'])->name('categorias.update');
+    Route::delete('/categorias/{id}', [Categoriascontroller::class, 'destroy'])->name('categorias.destroy');
 
     //Rutas de Gestion de Productos
-    Route::get('/productos', [ProductosController::class, 'index'])->name('productos.index');
-    Route::post('/productos', [ProductosController::class, 'store'])->name('productos.store');
-    Route::put('/productos/{id}', [ProductosController::class, 'update'])->name('productos.update');
-    Route::delete('/productos/{id}', [ProductosController::class, 'destroy'])->name('productos.destroy');
+    Route::get('/productos', [Productoscontroller::class, 'index'])->name('productos.index');
+    Route::post('/productos', [Productoscontroller::class, 'store'])->name('productos.store');
+    Route::put('/productos/{id}', [Productoscontroller::class, 'update'])->name('productos.update');
+    Route::delete('/productos/{id}', [Productoscontroller::class, 'destroy'])->name('productos.destroy');
 
     //Rutas de Gestion de Ventas
-    Route::get('/ventas',           [Ventacontroller::class, 'index']    )->name('ventas.index');     // Terminal POS
-    Route::get('/ventas/historial', [HistorialVentasController::class, 'index'])->name('ventas.historial');  // Historial de Ventas
-    Route::post('/ventas',          [Ventacontroller::class, 'store']    )->name('ventas.store');      // Registrar nueva venta
+    Route::get('/ventas',                 [Ventacontroller::class, 'index'])->name('ventas.index');     // Terminal POS
+    Route::get('/ventas/historial',       [HistorialVentasController::class, 'index'])->name('ventas.historial');  // Historial de Ventas
+    Route::get('/ventas/historial/{id}',  [HistorialVentasController::class, 'show'])->name('ventas.show');       // Detalle de Venta
+    Route::get('/ventas/factura/{id}',    [HistorialVentasController::class, 'factura'])->name('ventas.factura');    // Factura POS Ticket
+    Route::post('/ventas',                [Ventacontroller::class, 'store'])->name('ventas.store');      // Registrar nueva venta
 
     //Rutas de Gestion de Movimientos
     Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
@@ -76,8 +80,16 @@ Route::middleware('auth')->group(function () {
 
     //Rutas de Alertas de Stock
     Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas.index');
-    
-    
+
+    //Rutas de Reportes
+    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
+
+    //Rutas de Configuraciones
+    Route::get('/configuraciones',                [ConfiguracionesController::class, 'index'])->name('configuraciones.index');
+    Route::get('/configuraciones/crear',          [ConfiguracionesController::class, 'create'])->name('configuraciones.create');
+    Route::post('/configuraciones/metodos',       [ConfiguracionesController::class, 'store'])->name('configuraciones.store');
+    Route::put('/configuraciones/metodos/{id}',   [ConfiguracionesController::class, 'update'])->name('configuraciones.update');
+    Route::delete('/configuraciones/metodos/{id}', [ConfiguracionesController::class, 'destroy'])->name('configuraciones.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -16,7 +16,6 @@ class Movimiento extends Model
         'cantidad',
         'stock_anterior',
         'stock_resultante',
-        'origen',
         'motivo',
         'fecha'
     ];
@@ -37,6 +36,11 @@ class Movimiento extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id');
+        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+    }
+
+    public function tipoMovimiento()
+    {
+        return $this->belongsTo(TipoMovimiento::class, 'id_tipo_movimiento', 'id_tipo');
     }
 }

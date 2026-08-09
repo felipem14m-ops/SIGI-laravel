@@ -29,7 +29,7 @@
 
         <div>
             <div style="font-size:10px; font-weight:800; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.08em; text-align:right; margin-bottom:2px;">INGRESOS DE HOY</div>
-            <div style="font-size:2rem; font-weight:900; color:#fff; text-align:right; letter-spacing:-0.02em;">$0</div>
+            <div id="ingresos-hoy" style="font-size:2rem; font-weight:900; color:#fff; text-align:right; letter-spacing:-0.02em;">${{ number_format($ingresosHoy ?? 0, 2) }}</div>
         </div>
     </div>
 </div>
@@ -133,56 +133,14 @@
                         </td>
                     </tr>
                     @empty
-                    {{-- Datos estáticos de demostración si la lista de la BD está vacía --}}
-                    <tr class="pos-prod-row" data-name="carne de cerdo" data-code="prod-001" data-cat="1" style="border-bottom:1px solid #f1f5f9;">
-                        <td style="padding:14px 16px;">
-                            <div style="width:42px; height:42px; border-radius:10px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">C</div>
-                        </td>
-                        <td style="padding:14px 16px;">
-                            <div style="font-weight:900; color:#0f172a; font-size:0.92rem;">Carne de cerdo</div>
-                            <div style="font-size:11px; color:#64748b; font-weight:600;">Carnes</div>
-                        </td>
-                        <td style="padding:14px 16px; text-align:center;">
-                            <span style="display:inline-block; background:#eff6ff; color:#2563eb; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">7 unidades</span>
-                        </td>
-                        <td style="padding:14px 16px; text-align:right; font-weight:900; color:#0f172a; font-size:0.95rem;">$16,000.00</td>
-                        <td style="padding:14px 16px; text-align:right;">
-                            <button type="button" onclick="agregarAlCarrito(1, 'Carne de cerdo', 16000, 7)"
-                                style="background:#2563eb; color:#fff; border:none; padding:8px 18px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer;">+ Añadir</button>
-                        </td>
-                    </tr>
-                    <tr class="pos-prod-row" data-name="carne de vaca" data-code="prod-002" data-cat="1" style="border-bottom:1px solid #f1f5f9;">
-                        <td style="padding:14px 16px;">
-                            <div style="width:42px; height:42px; border-radius:10px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">C</div>
-                        </td>
-                        <td style="padding:14px 16px;">
-                            <div style="font-weight:900; color:#0f172a; font-size:0.92rem;">Carne de vaca</div>
-                            <div style="font-size:11px; color:#64748b; font-weight:600;">Carnes</div>
-                        </td>
-                        <td style="padding:14px 16px; text-align:center;">
-                            <span style="display:inline-block; background:#eff6ff; color:#2563eb; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">17 unidades</span>
-                        </td>
-                        <td style="padding:14px 16px; text-align:right; font-weight:900; color:#0f172a; font-size:0.95rem;">$17,000.00</td>
-                        <td style="padding:14px 16px; text-align:right;">
-                            <button type="button" onclick="agregarAlCarrito(2, 'Carne de vaca', 17000, 17)"
-                                style="background:#2563eb; color:#fff; border:none; padding:8px 18px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer;">+ Añadir</button>
-                        </td>
-                    </tr>
-                    <tr class="pos-prod-row" data-name="cocacola personal" data-code="prod-003" data-cat="2" style="border-bottom:1px solid #f1f5f9;">
-                        <td style="padding:14px 16px;">
-                            <div style="width:42px; height:42px; border-radius:10px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">C</div>
-                        </td>
-                        <td style="padding:14px 16px;">
-                            <div style="font-weight:900; color:#0f172a; font-size:0.92rem;">Cocacola Personal</div>
-                            <div style="font-size:11px; color:#64748b; font-weight:600;">Bebidas</div>
-                        </td>
-                        <td style="padding:14px 16px; text-align:center;">
-                            <span style="display:inline-block; background:#eff6ff; color:#2563eb; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">34 unidades</span>
-                        </td>
-                        <td style="padding:14px 16px; text-align:right; font-weight:900; color:#0f172a; font-size:0.95rem;">$2,000.00</td>
-                        <td style="padding:14px 16px; text-align:right;">
-                            <button type="button" onclick="agregarAlCarrito(3, 'Cocacola Personal', 2000, 34)"
-                                style="background:#2563eb; color:#fff; border:none; padding:8px 18px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer;">+ Añadir</button>
+                    <tr>
+                        <td colspan="5" style="padding:48px 16px; text-align:center;">
+                            <div style="display:flex; flex-direction:column; align-items:center; gap:8px; color:#94a3b8;">
+                                <svg width="36" height="36" fill="none" stroke="#cbd5e1" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                                <span style="font-size:0.875rem; font-weight:600;">No hay productos disponibles para la venta.</span>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
@@ -238,10 +196,11 @@
                 <label style="display:block; font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">MÉTODO DE PAGO</label>
                 <select id="metodo_pago"
                     style="width:100%; padding:11px 14px; background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; cursor:pointer; font-family:inherit; appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;">
-                    <option value="efectivo" selected>Efectivo</option>
-                    <option value="nequi">Nequi / Daviplata</option>
-                    <option value="tarjeta">Tarjeta Débito / Crédito</option>
-                    <option value="transferencia">Transferencia Bancaria</option>
+                    @forelse($metodos ?? [] as $metodo)
+                        <option value="{{ $metodo->id_metodo }}">{{ $metodo->nombre }}</option>
+                    @empty
+                        <option value="" disabled>Sin métodos configurados</option>
+                    @endforelse
                 </select>
             </div>
 
@@ -414,7 +373,7 @@
         }
     });
 
-    // Acción de simulación de finalizar venta
+    // ── Finalizar Venta: envía POST real al servidor ──────────────────────
     function finalizarVenta() {
         if (carrito.length === 0) {
             Swal.fire({
@@ -426,31 +385,194 @@
             return;
         }
 
-        const totalStr = document.getElementById('cart-total-text').textContent;
-        const metodo = document.getElementById('metodo_pago').options[document.getElementById('metodo_pago').selectedIndex].text;
+        const selectEl  = document.getElementById('metodo_pago');
+        const metodoPagoId   = parseInt(selectEl.value);
+        const metodoPagoText = selectEl.options[selectEl.selectedIndex].text;
+        const totalNum  = carrito.reduce((acc, i) => acc + (i.precio * i.cantidad), 0);
+        const totalFormatted = totalNum.toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
+        if (!metodoPagoId) {
+            Swal.fire({ icon: 'warning', title: 'Selecciona un método de pago', confirmButtonColor: '#2563eb' });
+            return;
+        }
+
+        // Mostrar SweetAlert con cálculo de Monto Recibido y Cambio
         Swal.fire({
-            title: '¿Confirmar venta?',
-            html: `Total a cobrar: <strong>${totalStr}</strong><br>Método de pago: <strong>${metodo}</strong>`,
-            icon: 'question',
+            title: '<span style="font-weight:900; color:#334155; font-size:1.8rem;">Monto Recibido</span>',
+            icon: 'info',
+            iconColor: '#38bdf8',
+            html: `
+                <div style="background:#f8fafc; border-radius:18px; padding:20px; text-align:center; margin:15px 0 20px 0;">
+                    <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">TOTAL A COBRAR</div>
+                    <div style="font-size:2.3rem; font-weight:900; color:#2563eb; letter-spacing:-0.02em;">$${totalFormatted}</div>
+                </div>
+
+                <div style="text-align:left; margin-bottom:10px;">
+                    <label style="display:block; font-size:0.875rem; font-weight:700; color:#475569; margin-bottom:8px;">Ingrese el monto recibido:</label>
+                    <input id="swal-monto-recibido" type="number" step="any" min="0" placeholder="0.00" value="${totalNum}"
+                        style="width:100%; padding:14px; border:2.5px solid #3b82f6; border-radius:14px; font-size:1.6rem; font-weight:900; text-align:center; color:#1e293b; outline:none; box-sizing:border-box;"
+                        onfocus="this.select()">
+                </div>
+
+                <div id="swal-cambio-box" style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:12px; padding:12px 16px; text-align:center; margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+                    <span style="font-size:12px; font-weight:800; color:#16a34a; text-transform:uppercase; letter-spacing:0.06em;">Cambio a entregar:</span>
+                    <span id="swal-cambio-valor" style="font-size:1.3rem; font-weight:900; color:#15803d;">$0.00</span>
+                </div>
+            `,
             showCancelButton: true,
-            confirmButtonText: 'Sí, cobrar',
+            confirmButtonText: 'Calcular Cambio',
             cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#16a34a',
-            cancelButtonColor: '#64748b'
-        }).then(result => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Venta Realizada!',
-                    text: 'La transacción ha sido registrada exitosamente.',
-                    timer: 2000,
-                    showConfirmButton: false
+            confirmButtonColor: '#2563eb',
+            cancelButtonColor: '#64748b',
+            didOpen: () => {
+                const input = document.getElementById('swal-monto-recibido');
+                const cambioBox = document.getElementById('swal-cambio-box');
+                const cambioValor = document.getElementById('swal-cambio-valor');
+
+                function actualizarCambio() {
+                    const rec = parseFloat(input.value) || 0;
+                    const cambio = rec - totalNum;
+                    if (cambio >= 0) {
+                        cambioBox.style.background = '#f0fdf4';
+                        cambioBox.style.borderColor = '#bbf7d0';
+                        cambioValor.style.color = '#15803d';
+                        cambioValor.textContent = '$' + cambio.toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    } else {
+                        cambioBox.style.background = '#fff1f2';
+                        cambioBox.style.borderColor = '#fecdd3';
+                        cambioValor.style.color = '#e11d48';
+                        cambioValor.textContent = 'Monto insuficiente (-$' + Math.abs(cambio).toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')';
+                    }
+                }
+
+                input.addEventListener('input', actualizarCambio);
+                actualizarCambio();
+                input.focus();
+                input.select();
+            },
+            preConfirm: () => {
+                const input = document.getElementById('swal-monto-recibido');
+                const rec = parseFloat(input.value);
+                if (isNaN(rec) || rec < totalNum) {
+                    Swal.showValidationMessage(`El monto recibido debe ser mayor o igual al total a cobrar ($${totalFormatted})`);
+                    return false;
+                }
+                return {
+                    montoRecibido: rec,
+                    cambio: rec - totalNum
+                };
+            }
+        }).then(async result => {
+            if (!result.isConfirmed) return;
+
+            const { montoRecibido, cambio } = result.value;
+
+            // Bloquear botón mientras se procesa
+            const btn = document.getElementById('btn-finalizar-venta');
+            btn.disabled = true;
+            btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Procesando...';
+
+            // Payload para el servidor
+            const payload = {
+                items: carrito.map(i => ({
+                    id:       i.id,
+                    nombre:   i.nombre,
+                    precio:   i.precio,
+                    cantidad: i.cantidad
+                })),
+                metodo_pago_id: metodoPagoId,
+                total: parseFloat(totalNum.toFixed(2)),
+                monto_recibido: parseFloat(montoRecibido),
+                cambio: parseFloat(cambio.toFixed(2))
+            };
+
+            try {
+                // POST a /ventas
+                const response = await fetch('{{ route("ventas.store") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept':       'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify(payload)
                 });
-                limpiarCarrito();
+
+                const data = await response.json();
+
+                // Manejar respuesta
+                if (response.ok && data.success) {
+                    const ingresosEl = document.getElementById('ingresos-hoy');
+                    if (ingresosEl) {
+                        const actual = parseFloat(ingresosEl.textContent.replace(/[$,]/g, '')) || 0;
+                        const nuevo  = actual + totalNum;
+                        ingresosEl.textContent = '$' + nuevo.toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+                    }
+
+                    limpiarCarrito();
+
+                    const cambioFmt = cambio.toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Venta Registrada Exitosamente!',
+                        html: `
+                            <div style="margin-top:10px;">
+                                <div style="font-size:1.1rem; font-weight:800; color:#0f172a; margin-bottom:12px;">Venta #${data.venta_id}</div>
+                                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:16px; margin-bottom:14px;">
+                                    <div style="font-size:11px; font-weight:800; color:#16a34a; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">CAMBIO A ENTREGAR:</div>
+                                    <div style="font-size:2.2rem; font-weight:900; color:#15803d;">$${cambioFmt}</div>
+                                </div>
+                                <div style="font-size:0.85rem; color:#64748b;">Monto recibido: <strong>$${montoRecibido.toLocaleString('es-CO', {minimumFractionDigits:2})}</strong> | Método: <strong>${metodoPagoText}</strong></div>
+                            </div>
+                        `,
+                        showCancelButton: true,
+                        confirmButtonText: '🖨️ Imprimir / Descargar Factura POS',
+                        cancelButtonText: 'Nueva Venta',
+                        confirmButtonColor: '#2563eb',
+                        cancelButtonColor: '#64748b'
+                    }).then(res => {
+                        if (res.isConfirmed) {
+                            imprimirTicketVentaDirecto(data.venta_id);
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al registrar venta',
+                        text: data.message || 'Ocurrió un error inesperado.',
+                        confirmButtonColor: '#2563eb'
+                    });
+                }
+            } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor. Intenta de nuevo.',
+                    confirmButtonColor: '#2563eb'
+                });
+            } finally {
+                // Restaurar botón
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> FINALIZAR VENTA (F10)';
             }
         });
     }
+
+    // Abrir ventana emergente para imprimir ticket sin salir del POS
+    function imprimirTicketVentaDirecto(ventaId) {
+        const facturaBaseUrl = "{{ route('ventas.factura', ':id') }}";
+        const url = facturaBaseUrl.replace(':id', ventaId);
+        const printWin = window.open(url, 'ImprimirPOS', 'width=450,height=650');
+        if (printWin) {
+            printWin.focus();
+        }
+    }
+
+    // Animación spinner para el botón de procesamiento
+    const spinStyle = document.createElement('style');
+    spinStyle.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+    document.head.appendChild(spinStyle);
 </script>
 
 @endsection

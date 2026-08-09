@@ -27,13 +27,13 @@
         <div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
             {{-- Badge Agotados --}}
             <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color:#fff; padding:8px 18px; border-radius:12px; font-size:12px; font-weight:800;">
-                <span style="font-size:20px; font-weight:900; line-height:1;">🔥 {{ $totalAgotados }}</span>
+                <span style="font-size:20px; font-weight:900; line-height:1;">{{ $totalAgotados }}</span>
                 <span style="font-size:10px; opacity:0.85; letter-spacing:0.07em; text-transform:uppercase;">AGOTADOS</span>
             </div>
 
             {{-- Badge Bajo Stock --}}
             <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color:#fff; padding:8px 18px; border-radius:12px; font-size:12px; font-weight:800;">
-                <span style="font-size:20px; font-weight:900; line-height:1;">⚠️ {{ $totalBajoStock }}</span>
+                <span style="font-size:20px; font-weight:900; line-height:1;">{{ $totalBajoStock }}</span>
                 <span style="font-size:10px; opacity:0.85; letter-spacing:0.07em; text-transform:uppercase;">BAJO MÍNIMO</span>
             </div>
         </div>
@@ -45,40 +45,40 @@
 
     {{-- Tarjeta 1: Agotados --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
-        <div style="width:52px; height:52px; border-radius:16px; background:#ffe4e6; color:#e11d48; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
         </div>
         <div>
             <div style="font-size:2rem; font-weight:900; color:#0f172a; line-height:1;">{{ $totalAgotados }}</div>
-            <div style="font-size:11px; font-weight:800; color:#e11d48; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">AGOTADOS</div>
+            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">AGOTADOS</div>
         </div>
     </div>
 
     {{-- Tarjeta 2: Bajo Stock --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
-        <div style="width:52px; height:52px; border-radius:16px; background:#fef3c7; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
         </div>
         <div>
             <div style="font-size:2rem; font-weight:900; color:#0f172a; line-height:1;">{{ $totalBajoStock }}</div>
-            <div style="font-size:11px; font-weight:800; color:#d97706; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">BAJO STOCK</div>
+            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">BAJO STOCK</div>
         </div>
     </div>
 
     {{-- Tarjeta 3: Total Alertas --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
         <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
         </div>
         <div>
             <div style="font-size:2rem; font-weight:900; color:#0f172a; line-height:1;">{{ $totalAlertas }}</div>
-            <div style="font-size:11px; font-weight:800; color:#2563eb; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">TOTAL ALERTAS</div>
+            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.07em; margin-top:4px;">TOTAL ALERTAS</div>
         </div>
     </div>
 

@@ -84,10 +84,11 @@
                 <label style="display:block; font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">MÉTODO DE PAGO</label>
                 <select name="metodo" style="width:100%; padding:11px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; cursor:pointer; font-family:inherit; appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;">
                     <option value="">Todos los métodos</option>
-                    <option value="efectivo" {{ request('metodo')=='efectivo' ? 'selected' : '' }}>Efectivo</option>
-                    <option value="nequi" {{ request('metodo')=='nequi' ? 'selected' : '' }}>Nequi / Daviplata</option>
-                    <option value="tarjeta" {{ request('metodo')=='tarjeta' ? 'selected' : '' }}>Tarjeta</option>
-                    <option value="transferencia" {{ request('metodo')=='transferencia' ? 'selected' : '' }}>Transferencia</option>
+                    @foreach($metodosPago as $mp)
+                        <option value="{{ $mp->nombre }}" {{ request('metodo') == $mp->nombre ? 'selected' : '' }}>
+                            {{ $mp->nombre }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
@@ -216,7 +217,7 @@
                     <td style="padding:16px 20px; text-align:center;">
                         <button type="button"
                             onclick="verDetalleVenta({{ $venta->id_venta }})"
-                            title="Ver detalle"
+                            title="Ver detalle / Factura POS"
                             style="width:38px; height:38px; border-radius:12px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
                             onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -227,62 +228,17 @@
                     </td>
                 </tr>
                 @empty
-                {{-- Estado vacío con datos de demostración --}}
-                @php
-                $demoVentas = [
-                ['folio'=>'00032','fecha'=>'24/07/2026 01:49 PM','cajero'=>'Felipe Montes','metodo'=>'Efectivo','metodo_key'=>'efectivo','items'=>3,'total'=>48000,'cambio'=>2000],
-                ['folio'=>'00031','fecha'=>'21/05/2026 08:37 AM','cajero'=>'Felipe Montes','metodo'=>'Tarjeta','metodo_key'=>'tarjeta','items'=>8,'total'=>96000,'cambio'=>0],
-                ['folio'=>'00030','fecha'=>'21/05/2026 08:25 AM','cajero'=>'Felipe Montes','metodo'=>'Efectivo','metodo_key'=>'efectivo','items'=>2,'total'=>32000,'cambio'=>18000],
-                ['folio'=>'00029','fecha'=>'14/05/2026 01:17 PM','cajero'=>'Adan','metodo'=>'Efectivo','metodo_key'=>'efectivo','items'=>1,'total'=>17000,'cambio'=>3000],
-                ['folio'=>'00028','fecha'=>'14/05/2026 01:17 PM','cajero'=>'Adan','metodo'=>'Efectivo','metodo_key'=>'efectivo','items'=>2,'total'=>34000,'cambio'=>16000],
-                ['folio'=>'00027','fecha'=>'14/05/2026 06:37 AM','cajero'=>'Adan','metodo'=>'Efectivo','metodo_key'=>'efectivo','items'=>1,'total'=>2000,'cambio'=>0],
-                ];
-                $metodosBadge = [
-                'efectivo' => ['bg'=>'#f0fdf4','color'=>'#16a34a'],
-                'tarjeta' => ['bg'=>'#eff6ff','color'=>'#2563eb'],
-                'nequi' => ['bg'=>'#faf5ff','color'=>'#7c3aed'],
-                'transferencia' => ['bg'=>'#fff7ed','color'=>'#d97706'],
-                ];
-                @endphp
-                @foreach($demoVentas as $demo)
-                <tr style="border-bottom:1px solid #f1f5f9;" onmouseover="this.style.background='#fafbfd'" onmouseout="this.style.background='transparent'">
-                    <td style="padding:16px 20px;"><span style="font-size:0.875rem; font-weight:800; color:#2563eb;">#{{ $demo['folio'] }}</span></td>
-                    <td style="padding:16px 20px; font-size:0.875rem; color:#475569; font-weight:600; white-space:nowrap;">{{ $demo['fecha'] }}</td>
-                    <td style="padding:16px 20px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;">{{ mb_strtoupper(mb_substr($demo['cajero'],0,1)) }}</div>
-                            <span style="font-size:0.875rem; font-weight:700; color:#1e293b;">{{ $demo['cajero'] }}</span>
+                <tr>
+                    <td colspan="8" style="padding:60px 20px; text-align:center;">
+                        <div style="display:inline-flex; flex-direction:column; align-items:center; gap:12px; color:#94a3b8;">
+                            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="opacity:0.4;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <div style="font-weight:800; font-size:0.95rem; color:#64748b;">No hay ventas registradas</div>
+                            <div style="font-size:0.8rem; color:#94a3b8;">Las ventas aparecerán aquí una vez que se registren en el punto de venta.</div>
                         </div>
                     </td>
-                    <td style="padding:16px 20px;">
-                        <span style="display:inline-flex; align-items:center; gap:5px; background:{{ $metodosBadge[$demo['metodo_key']]['bg'] }}; color:{{ $metodosBadge[$demo['metodo_key']]['color'] }}; padding:5px 12px; border-radius:8px; font-size:11px; font-weight:800;">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            {{ $demo['metodo'] }}
-                        </span>
-                    </td>
-                    <td style="padding:16px 20px; text-align:center;"><span style="display:inline-block; background:#2563eb; color:#fff; font-weight:900; font-size:11px; padding:5px 12px; border-radius:8px;">{{ $demo['items'] }} und</span></td>
-                    <td style="padding:16px 20px; text-align:right; font-weight:900; color:#0f172a; font-size:0.95rem;">${{ number_format($demo['total'],0,',','.') }}</td>
-                    <td style="padding:16px 20px; text-align:right;">
-                        @if($demo['cambio'] > 0)
-                        <span style="font-weight:900; color:#16a34a; font-size:0.92rem;">${{ number_format($demo['cambio'],0,',','.') }}</span>
-                        @else
-                        <span style="font-weight:700; color:#94a3b8;">$0</span>
-                        @endif
-                    </td>
-                    <td style="padding:16px 20px; text-align:center;">
-                        <button type="button" onclick="verDetalleDemo('{{ $demo['folio'] }}')" title="Ver detalle"
-                            style="width:38px; height:38px; border-radius:12px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
-                            onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
-                            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        </button>
-                    </td>
                 </tr>
-                @endforeach
                 @endforelse
             </tbody>
         </table>
@@ -361,7 +317,14 @@
         </div>
 
         {{-- Modal Footer --}}
-        <div style="padding:18px 28px; border-top:1px solid #f1f5f9; display:flex; justify-content:flex-end; gap:10px;">
+        <div style="padding:18px 28px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
+            <a id="btn-imprimir-factura-modal" href="#" target="_blank"
+                style="padding:10px 18px; border-radius:12px; border:none; background:#2563eb; color:#fff; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 000-4H9a2 2 0 000 4zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Imprimir / Descargar POS
+            </a>
             <button onclick="cerrarModalDetalle()"
                 style="padding:10px 22px; border-radius:12px; border:1.5px solid #e2e8f0; background:#f8fafc; color:#475569; font-size:13px; font-weight:700; cursor:pointer;"
                 onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
@@ -387,42 +350,160 @@
 
 {{-- ===== JAVASCRIPT ===== --}}
 <script>
-    function verDetalleVenta(id) {
-        document.getElementById('modal-folio').textContent = 'Venta #' + String(id).padStart(5, '0');
-        document.getElementById('modal-body').innerHTML = `
-        <div style="text-align:center; padding:20px;">
-            <svg width="40" height="40" fill="none" stroke="#2563eb" stroke-width="1.8" viewBox="0 0 24 24" style="opacity:0.5;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            <p style="margin-top:10px; color:#64748b; font-size:0.875rem; font-weight:600;">El detalle estará disponible cuando se conecte el backend.</p>
-        </div>
-    `;
+    async function verDetalleVenta(id) {
+        // Mostrar modal con spinner
+        document.getElementById('modal-folio').textContent = 'Factura POS #' + String(id).padStart(6, '0');
+        document.getElementById('modal-body').innerHTML =
+            '<div style="text-align:center; padding:36px; color:#64748b;">' +
+            '<svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite; margin:0 auto 12px; display:block;">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>' +
+            '</svg>' +
+            '<p style="font-size:0.875rem; font-weight:600;">Generando Factura POS...</p>' +
+            '</div>';
         document.getElementById('modal-detalle-venta').style.display = 'flex';
+
+        try {
+            const showBaseUrl = "{{ route('ventas.show', ':id') }}";
+            const res = await fetch(showBaseUrl.replace(':id', id), {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+            });
+
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+
+            const data = await res.json();
+
+            if (!data.success || !data.venta) throw new Error('Respuesta inválida del servidor');
+
+            const v = data.venta;
+            const fechaStr   = v.fecha_venta ? new Date(v.fecha_venta).toLocaleString('es-CO') : new Date().toLocaleString('es-CO');
+            const folioStr   = String(v.id_venta).padStart(6, '0');
+            const cajeroStr  = v.usuario ? (v.usuario.nombre || v.usuario.name || 'Admin POS') : 'Admin POS';
+            const metodoStr  = v.metodo  ? v.metodo.nombre : 'Efectivo';
+            const totalNum   = parseFloat(v.total) || 0;
+            const montoNum   = parseFloat(v.monto_recibido) || totalNum;
+            const cambioNum  = parseFloat(v.cambio) || 0;
+            const fmt = (n) => n.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+            // Filas de productos
+            let filas = '';
+            if (v.detalles && v.detalles.length > 0) {
+                v.detalles.forEach(function(d) {
+                    var nombre   = d.producto ? d.producto.nombre : 'Producto #' + d.id_producto;
+                    var precio   = '$' + fmt(parseFloat(d.precioUnitario || 0));
+                    var subtotal = '$' + fmt(parseFloat(d.subtotal || 0));
+                    filas += '<tr>' +
+                        '<td style="padding:5px 0; font-weight:700;">' + nombre + '</td>' +
+                        '<td style="padding:5px 0; text-align:center;">' + precio + '</td>' +
+                        '<td style="padding:5px 0; text-align:center;">' + d.cantidad + '</td>' +
+                        '<td style="padding:5px 0; text-align:right;">' + subtotal + '</td>' +
+                        '</tr>';
+                });
+            } else {
+                filas = '<tr><td colspan="4" style="text-align:center; padding:10px; color:#94a3b8;">Sin ítems registrados</td></tr>';
+            }
+
+            // Fila de cambio (solo si > 0)
+            var cambioRow = cambioNum > 0
+                ? '<div style="display:flex; justify-content:space-between; margin-top:4px;">' +
+                  '<span style="color:#16a34a; font-weight:700;">Cambio:</span>' +
+                  '<span style="color:#16a34a; font-weight:900;">$' + fmt(cambioNum) + '</span>' +
+                  '</div>'
+                : '';
+
+            // HTML del ticket POS
+            var ticketHtml =
+                '<div id="pos-ticket-modal-content" style="background:#fff; border:1.5px dashed #cbd5e1; border-radius:14px; padding:22px; font-family:\'Courier New\', Courier, monospace; font-size:12px; color:#000; max-width:340px; margin:0 auto;">' +
+
+                    // ENCABEZADO
+                    '<div style="text-align:center; margin-bottom:10px;">' +
+                        '<div style="font-weight:900; font-size:17px; letter-spacing:0.04em;">TIENDA SIGI</div>' +
+                        '<div style="font-weight:700; font-size:11px;">NIT: 123.456.789-0</div>' +
+                        '<div style="border-top:1px dashed #555; margin:8px 0;"></div>' +
+                        '<div style="font-weight:700; font-size:12px;">FACTURA DE VENTA</div>' +
+                        '<div style="font-size:10px; color:#444;">RÉGIMEN SIMPLIFICADO</div>' +
+                        '<div style="font-size:11px; margin-top:3px; color:#333;">' + fechaStr + '</div>' +
+                    '</div>' +
+
+                    // DATOS VENTA
+                    '<div style="font-size:11px; margin-bottom:8px; display:flex; flex-direction:column; gap:3px;">' +
+                        '<div style="display:flex; justify-content:space-between;"><span>Factura Nro.:</span><span style="font-weight:700;">#' + folioStr + '</span></div>' +
+                        '<div style="display:flex; justify-content:space-between;"><span>Vendedor:</span><span style="font-weight:700;">' + cajeroStr + '</span></div>' +
+                        '<div style="display:flex; justify-content:space-between;"><span>Método de pago:</span><span style="font-weight:700;">' + metodoStr + '</span></div>' +
+                    '</div>' +
+
+                    '<div style="border-top:1px dashed #555; margin:8px 0;"></div>' +
+
+                    // TABLA
+                    '<table style="width:100%; border-collapse:collapse; font-size:11px;">' +
+                        '<thead>' +
+                            '<tr style="border-bottom:1px dashed #555;">' +
+                                '<th style="padding-bottom:5px; text-align:left; width:44%;">Artículo</th>' +
+                                '<th style="padding-bottom:5px; text-align:center; width:22%;">Precio</th>' +
+                                '<th style="padding-bottom:5px; text-align:center; width:10%;">Cant</th>' +
+                                '<th style="padding-bottom:5px; text-align:right; width:24%;">Total</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>' + filas + '</tbody>' +
+                    '</table>' +
+
+                    '<div style="border-top:1px dashed #555; margin:8px 0;"></div>' +
+
+                    // TOTALES
+                    '<div style="font-size:12px;">' +
+                        '<div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span>Subtotal:</span><span>$' + fmt(totalNum) + '</span></div>' +
+                        '<div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>IVA (0%):</span><span>$0</span></div>' +
+                        '<div style="display:flex; justify-content:space-between; font-weight:900; font-size:15px; border-top:1px dashed #555; border-bottom:1px dashed #555; padding:5px 0;">' +
+                            '<span>TOTAL:</span><span>$' + fmt(totalNum) + '</span>' +
+                        '</div>' +
+                        '<div style="margin-top:6px; display:flex; justify-content:space-between;"><span>Efectivo recibido:</span><span style="font-weight:700;">$' + fmt(montoNum) + '</span></div>' +
+                        cambioRow +
+                    '</div>' +
+
+                    '<div style="border-top:1px dashed #555; margin:10px 0 6px;"></div>' +
+
+                    // PIE
+                    '<div style="text-align:center; font-size:10px; color:#444;">' +
+                        '<div style="font-weight:900; font-size:12px;">¡GRACIAS POR SU COMPRA!</div>' +
+                        '<div style="margin-top:2px;">SIGI POS &bull; www.sigipos.co</div>' +
+                    '</div>' +
+                '</div>';
+
+            document.getElementById('modal-body').innerHTML = ticketHtml;
+
+            // Actualizar botón imprimir del footer
+            var footerBtn = document.getElementById('btn-imprimir-factura-modal');
+            if (footerBtn) {
+                footerBtn.onclick = function() { imprimirTicketModal('pos-ticket-modal-content'); };
+                footerBtn.removeAttribute('href');
+                footerBtn.tagName === 'A' && footerBtn.setAttribute('href', '#');
+            }
+
+        } catch (e) {
+            document.getElementById('modal-body').innerHTML =
+                '<div style="text-align:center; padding:24px;">' +
+                '<div style="font-size:2rem; margin-bottom:8px;">⚠️</div>' +
+                '<div style="color:#ef4444; font-weight:800; font-size:0.95rem;">Error al cargar el detalle</div>' +
+                '<div style="color:#94a3b8; font-size:12px; margin-top:4px;">' + e.message + '</div>' +
+                '</div>';
+        }
     }
 
-    function verDetalleDemo(folio) {
-        document.getElementById('modal-folio').textContent = 'Venta #' + folio;
-        document.getElementById('modal-body').innerHTML = `
-        <div style="background:#f8fafc; border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:10px;">
-            <div style="display:flex; justify-content:space-between; font-size:0.875rem;">
-                <span style="color:#64748b; font-weight:600;">Folio:</span>
-                <span style="color:#0f172a; font-weight:800;">#${folio}</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:0.875rem;">
-                <span style="color:#64748b; font-weight:600;">Estado:</span>
-                <span style="background:#f0fdf4; color:#16a34a; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:800;">Completada</span>
-            </div>
-        </div>
-        <p style="text-align:center; color:#94a3b8; font-size:12px; font-weight:600;">Datos de demostración — conecta el backend para ver el detalle completo.</p>
-    `;
-        document.getElementById('modal-detalle-venta').style.display = 'flex';
+    function imprimirTicketModal(elementId) {
+        var ticketEl = document.getElementById(elementId);
+        if (!ticketEl) return;
+        var printWin = window.open('', '_blank', 'width=420,height=650');
+        printWin.document.write('<!DOCTYPE html><html><head><title>Factura POS</title>' +
+            '<style>@page{size:80mm auto;margin:0}body{margin:0;padding:10px;font-family:"Courier New",monospace;background:#fff;}</style>' +
+            '</head><body onload="window.print();setTimeout(function(){window.close();},800);">' +
+            ticketEl.outerHTML +
+            '</body></html>');
+        printWin.document.close();
     }
 
     function cerrarModalDetalle() {
         document.getElementById('modal-detalle-venta').style.display = 'none';
     }
 
-    // Cerrar modal al hacer click fuera
     document.getElementById('modal-detalle-venta').addEventListener('click', function(e) {
         if (e.target === this) cerrarModalDetalle();
     });

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('id_metodo');
             $table->timestamp('fecha_venta')->useCurrent();
             $table->decimal('total', 12, 2);
+            $table->decimal('monto_recibido', 12, 2)->nullable();
+            $table->decimal('cambio', 12, 2)->nullable()->default(0);
             $table->enum('estado', ['completada', 'anulada'])->default('completada');
             $table->timestamps();
 

@@ -10,16 +10,20 @@ class Venta extends Model
     protected $primaryKey = 'id_venta';
 
     protected $fillable = [
-        'total',
         'id_usuario',
         'id_metodo',
         'fecha_venta',
         'total',
-        'estado'
+        'monto_recibido',
+        'cambio',
+        'estado',
     ];
 
     protected $casts = [
-        'fecha_venta' => 'date',
+        'fecha_venta'    => 'datetime',
+        'total'          => 'decimal:2',
+        'monto_recibido' => 'decimal:2',
+        'cambio'         => 'decimal:2',
     ];
 
     /*
@@ -27,13 +31,22 @@ class Venta extends Model
     | RELACIONES
     |--------------------------------------------------------------------------
     */
-    public function categoria()
+
+    /** Cajero que procesó la venta */
+    public function usuario()
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria', 'id_categoria');
+        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
     }
 
-    public function proveedor()
+    /** Método de pago utilizado */
+    public function metodo()
     {
-        return $this->belongsTo(Proveedor::class, 'id_proveedor', 'id_proveedor');
+        return $this->belongsTo(MetodoPago::class, 'id_metodo', 'id_metodo');
+    }
+
+    /** Líneas de detalle de la venta */
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVenta::class, 'id_venta', 'id_venta');
     }
 }
