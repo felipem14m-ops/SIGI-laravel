@@ -7,265 +7,321 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SIGI – @yield('title', 'Panel')</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700,800&display=swap" rel="stylesheet" />
-
-    <!-- Scripts / Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* ===== LAYOUT SIDEBAR ===== */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 256px;
-            height: 100vh;
-            z-index: 50;
-            overflow-y: auto;
-            transform: translateX(-256px);
-            transition: transform 0.3s ease-in-out;
+        * { font-family: 'Inter', sans-serif; }
+
+        /* ═══ SIDEBAR – color acoplado al banner del dashboard ═══ */
+        /* Banner del dashboard: linear-gradient(125deg, #1a3da8 0%, #2350d4 45%, #3b6ef8 100%) */
+        body.sidebar-mini .main-sidebar,
+        .main-sidebar { background: linear-gradient(180deg, #1a3da8 0%, #162e8a 100%) !important; }
+
+        .brand-link {
+            background: #132f8a !important;
+            border-bottom: 1px solid rgba(255,255,255,.1) !important;
+            padding: 15px 18px !important;
         }
-        #main-wrapper {
-            margin-left: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+
+        /* Nav links */
+        .nav-sidebar .nav-link {
+            color: rgba(255,255,255,.78) !important;
+            font-size: 12.5px; font-weight: 600;
+            border-radius: 8px;
+            margin: 1px 8px;
+            padding: 8px 12px;
+            transition: all .15s;
         }
-        @media (min-width: 768px) {
-            #sidebar {
-                transform: translateX(0);
-            }
-            #main-wrapper {
-                margin-left: 256px;
-            }
+        .nav-sidebar .nav-link:hover {
+            background: rgba(255,255,255,.12) !important;
+            color: #fff !important;
         }
-        /* Toggle abierto en mobile */
-        #sidebar.sidebar-open {
-            transform: translateX(0);
+        .nav-sidebar .nav-link.active {
+            background: rgba(255,255,255,.22) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,.2);
+            font-weight: 700;
         }
+
+        /* Section labels */
+        .nav-header {
+            font-size: 9px !important;
+            font-weight: 900 !important;
+            color: rgba(255,255,255,.38) !important;
+            letter-spacing: .14em;
+            padding: 12px 18px 3px;
+        }
+
+        /* Icons */
+        .nav-sidebar .nav-icon {
+            width: 16px; text-align: center; margin-right: 8px;
+            font-size: 13px; color: rgba(255,255,255,.55);
+        }
+        .nav-sidebar .nav-link.active .nav-icon,
+        .nav-sidebar .nav-link:hover .nav-icon { color: #fff !important; }
+
+        /* Badge POS */
+        .badge-pos {
+            background: rgba(255,255,255,.18);
+            color: #fff;
+            font-size: 8.5px; font-weight: 900;
+            padding: 2px 7px; border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.3);
+            float: right; margin-top: 3px;
+        }
+
+        /* ═══ TOPBAR – acoplado al sidebar ═══ */
+        .main-header.navbar {
+            background: linear-gradient(90deg, #1a3da8 0%, #2350d4 100%) !important;
+            box-shadow: 0 2px 12px rgba(26,61,168,.35) !important;
+            border-bottom: none !important;
+        }
+        .main-header .navbar-nav .nav-link {
+            color: rgba(255,255,255,.88) !important;
+            font-weight: 600; font-size: 13px;
+        }
+        .main-header .navbar-nav .nav-link:hover { color: #fff !important; }
+
+        /* Botón pushmenu */
+        .main-header [data-widget="pushmenu"] { color: rgba(255,255,255,.88) !important; }
+
+        /* Botón Inicio */
+        .topbar-inicio {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: rgba(255,255,255,.9) !important;
+            font-weight: 700; font-size: 13px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,.12);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background .15s;
+        }
+        .topbar-inicio:hover { background: rgba(255,255,255,.2) !important; color: #fff !important; text-decoration:none; }
+
+        /* Nombre usuario en topbar */
+        .topbar-user {
+            color: rgba(255,255,255,.88) !important;
+            font-weight: 700; font-size: 13px;
+        }
+
+        /* Botón Cerrar Sesión en topbar */
+        .topbar-logout {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9) !important;
+            font-weight: 700; font-size: 12.5px;
+            padding: 6px 14px; border-radius: 8px;
+            cursor: pointer; transition: background .15s;
+        }
+        .topbar-logout:hover { background: rgba(255,255,255,.2); color: #fff !important; }
+
+        /* Content */
+        .content-wrapper { background: #f1f5f9 !important; }
+
+        /* Scrollbar sidebar */
+        .main-sidebar::-webkit-scrollbar { width: 4px; }
+        .main-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
+
+        /* ═══ Divisor sidebar inferior ═══ */
+        .sidebar { padding-bottom: 20px; }
     </style>
 </head>
 
-<body class="font-sans antialiased bg-slate-50 text-slate-800">
+<body class="hold-transition sidebar-mini layout-fixed" style="font-family:'Inter',sans-serif;">
+<div class="wrapper">
 
-        {{-- ========== SIDEBAR ========== --}}
-        <aside
-            id="sidebar"
-            class="bg-[#0b0f19] text-white flex flex-col border-r border-slate-900">
-            <div>
-                {{-- Brand Logo --}}
-                <div class="flex items-center space-x-3 px-6 py-5 border-b border-slate-900/60 sticky top-0 bg-[#0b0f19] z-10">
-                    <div class="bg-blue-600 p-2.5 rounded-xl shrink-0 shadow-lg shadow-blue-500/25">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <span class="text-xl font-black tracking-wider text-white block leading-none">SIGI</span>
-                        <span class="text-[9px] font-bold text-slate-500 tracking-widest uppercase block mt-1">INVENTARIO</span>
-                    </div>
-                </div>
+    {{-- ========== TOPBAR ========== --}}
+    <nav class="main-header navbar navbar-expand">
+        {{-- Izquierda --}}
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="font-size:16px;">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </li>
+            <li class="nav-item ml-1">
+                <a href="{{ route('dashboard') }}" class="topbar-inicio">
+                    <i class="fas fa-home" style="font-size:13px;"></i> Inicio
+                </a>
+            </li>
+        </ul>
 
-                {{-- Sidebar Menu --}}
-                <nav class="py-5 px-4 space-y-5">
-                    <!-- DASHBOARD SECTION -->
-                    <div class="space-y-1">
-                        <p class="px-3 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-1.5">DASHBOARD</p>
-                        <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                            </svg>
-                            <span>Panel Principal</span>
+        {{-- Derecha --}}
+        <ul class="navbar-nav ml-auto align-items-center" style="gap:10px;">
+            {{-- Nombre --}}
+            <li class="nav-item">
+                <span class="topbar-user">
+                    <i class="fas fa-user-circle mr-1" style="font-size:14px; opacity:.75;"></i>
+                    {{ Auth::user()->nombre ?? 'Admin' }}
+                </span>
+            </li>
+            {{-- Logout --}}
+            <li class="nav-item mr-2">
+                <form method="POST" action="{{ route('logout') }}" class="d-inline" id="logout-form-top">
+                    @csrf
+                    <button type="submit" class="topbar-logout">
+                        <i class="fas fa-sign-out-alt" style="font-size:13px;"></i> Salir
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    {{-- /TOPBAR --}}
+
+    {{-- ========== SIDEBAR ========== --}}
+    <aside class="main-sidebar elevation-3">
+
+        {{-- Brand: solo SIGI sin LTE --}}
+        <a href="{{ route('dashboard') }}" class="brand-link d-flex align-items-center" style="gap:12px;">
+            <span style="background:rgba(255,255,255,.18); padding:8px 10px; border-radius:10px; display:inline-flex; align-items:center; flex-shrink:0;">
+                <i class="fas fa-shopping-cart" style="font-size:15px; color:#fff;"></i>
+            </span>
+            <span class="brand-text text-white" style="font-size:19px; font-weight:900; letter-spacing:-.01em; line-height:1;">
+                SIGI
+            </span>
+        </a>
+
+        <div class="sidebar">
+            {{-- Sin user panel --}}
+
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                    <li class="nav-header">PRINCIPAL</li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link {{ Request::routeIs('dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-th-large"></i>
+                            <p>Panel Principal</p>
                         </a>
-                    </div>
+                    </li>
 
-                    <!-- GESTIÓN COMERCIAL SECTION -->
-                    <div class="space-y-1">
-                        <p class="px-3 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-1.5">GESTIÓN COMERCIAL</p>
+                    <li class="nav-header">GESTIÓN COMERCIAL</li>
 
-                        <a href="{{ route('productos.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('productos.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
-                                <span>Productos</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('productos.index') }}" class="nav-link {{ Request::routeIs('productos.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-box-open"></i>
+                            <p>Productos</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('categorias.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('categorias.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                                </svg>
-                                <span>Categorías</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('categorias.index') }}" class="nav-link {{ Request::routeIs('categorias.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>Categorías</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('ventas.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('ventas.index') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <span>Punto de Venta</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('ventas.index') }}" class="nav-link {{ Request::routeIs('ventas.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cash-register"></i>
+                            <p>Punto de Venta <span class="badge-pos">POS</span></p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('ventas.historial') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('ventas.historial') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Historial de Ventas</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('ventas.historial') }}" class="nav-link {{ Request::routeIs('ventas.historial') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>Historial de Ventas</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('movimientos.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('movimientos.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                </svg>
-                                <span>Inventario</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('movimientos.index') }}" class="nav-link {{ Request::routeIs('movimientos.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-exchange-alt"></i>
+                            <p>Inventario</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('alertas.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('alertas.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
-                                <span>Alertas de Stock</span>
-                            </div>
-                            <span class="bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">!</span>
+                    <li class="nav-item">
+                        <a href="{{ route('alertas.index') }}" class="nav-link {{ Request::routeIs('alertas.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-exclamation-triangle" style="color:#fbbf24;"></i>
+                            <p>Alertas de Stock</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('proveedores.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('proveedores.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Proveedores</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('proveedores.index') }}" class="nav-link {{ Request::routeIs('proveedores.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p>Proveedores</p>
                         </a>
-                    </div>
+                    </li>
 
-                    <!-- ADMINISTRACIÓN SECTION -->
-                    <div class="space-y-1">
-                        <p class="px-3 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-1.5">ADMINISTRACIÓN</p>
+                    <li class="nav-header">ADMINISTRACIÓN</li>
 
-                        <a href="{{ route('usuarios.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('usuarios.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                                <span>Usuarios</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('usuarios.index') }}" class="nav-link {{ Request::routeIs('usuarios.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>Usuarios</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('reportes.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('reportes.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span>Reportes</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('reportes.index') }}" class="nav-link {{ Request::routeIs('reportes.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>Reportes</p>
                         </a>
+                    </li>
 
-                        <a href="{{ route('configuraciones.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('configuraciones.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/40' }} transition duration-150">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Configuración</span>
-                            </div>
+                    <li class="nav-item">
+                        <a href="{{ route('configuraciones.index') }}" class="nav-link {{ Request::routeIs('configuraciones.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>Configuración</p>
                         </a>
-                    </div>
+                    </li>
 
-                    <!-- SESIÓN SECTION -->
-                    <div class="space-y-1 pt-1">
-                        <p class="px-3 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-1.5">SESIÓN</p>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-red-500 hover:text-red-400 hover:bg-red-500/10 transition duration-150">
-                                <svg class="w-5 h-5 shrink-0 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                <span>Cerrar Sesión</span>
+                    <li class="nav-header">SESIÓN</li>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout') }}" id="logout-form">@csrf
+                            <button type="submit" class="nav-link" style="background:none; border:none; width:100%; text-align:left; cursor:pointer; color:rgba(255,180,180,.85) !important;">
+                                <i class="nav-icon fas fa-sign-out-alt" style="color:rgba(255,180,180,.85);"></i>
+                                <p style="color:rgba(255,180,180,.85);">Cerrar Sesión</p>
                             </button>
                         </form>
-                    </div>
-                </nav>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    {{-- /SIDEBAR --}}
+
+    {{-- ========== CONTENT WRAPPER ========== --}}
+    <div class="content-wrapper" style="padding:0;">
+
+        <div class="content-header" style="background:#fff; border-bottom:1px solid #e8ecf4; padding:13px 24px;">
+            <div class="container-fluid px-0">
+                <h5 class="mb-0 font-weight-bold" style="color:#1e293b; font-size:15px;">
+                    @yield('page-title', 'Dashboard')
+                </h5>
             </div>
-        </aside>
-
-        {{-- ========== MAIN AREA ========== --}}
-        <div id="main-wrapper">
-
-            {{-- Navbar --}}
-            <header class="bg-white border-b border-slate-150 h-20 flex items-center justify-between px-6 sticky top-0 z-40">
-                <div class="flex items-center space-x-4">
-                    {{-- Toggle Button (Mobile only) --}}
-                    <button id="sidebar-toggle" class="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                    <div>
-                        <h1 class="text-xl font-bold text-slate-900 leading-tight">@yield('page-title', 'Dashboard')</h1>
-                        <p class="text-xs text-slate-400 mt-0.5">Sistema de Gestión SIGI</p>
-                    </div>
-                </div>
-
-                {{-- Right Info --}}
-                <div class="flex items-center space-x-5">
-
-
-                    {{-- User Profile Pill --}}
-                    <div class="flex items-center space-x-3 pl-4 border-l border-slate-150">
-                        <div class="text-right hidden sm:block">
-                            <p class="text-sm font-bold text-slate-800 leading-none">{{ Auth::user()->nombre }}</p>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{{ Auth::user()->role->nombre ?? 'Usuario' }}</p>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-base font-bold shadow-lg shadow-blue-500/20">
-                            {{ strtoupper(substr(Auth::user()->nombre, 0, 1)) }}
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            {{-- Content Area --}}
-            <main class="flex-1 p-6 md:p-8 bg-slate-50">
-                @yield('content')
-            </main>
-
         </div>
 
-    {{-- Mobile overlay background --}}
-    <div id="sidebar-overlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.5); z-index:40;"></div>
+        <div class="content" style="padding:24px;">
+            <div class="container-fluid px-0">
+                @yield('content')
+            </div>
+        </div>
 
-    <script>
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        const sidebar   = document.getElementById('sidebar');
-        const overlay   = document.getElementById('sidebar-overlay');
+    </div>
+    {{-- /CONTENT --}}
 
-        function openMenu() {
-            sidebar.classList.add('sidebar-open');
-            overlay.style.display = 'block';
-        }
-        function closeMenu() {
-            sidebar.classList.remove('sidebar-open');
-            overlay.style.display = 'none';
-        }
-        function toggleMenu() {
-            sidebar.classList.contains('sidebar-open') ? closeMenu() : openMenu();
-        }
+    <footer class="main-footer" style="background:#fff; border-top:1px solid #e8ecf4; font-size:12px; color:#64748b; padding:10px 20px;">
+        <strong>SIGI</strong> &copy; {{ date('Y') }} – Sistema de Inventario y Gestión Integrado
+        <div class="float-right d-none d-sm-inline-block"><b>v</b> 1.0</div>
+    </footer>
 
-        toggleBtn?.addEventListener('click', toggleMenu);
-        overlay?.addEventListener('click', closeMenu);
-    </script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stack('scripts')
+
 </body>
-
 </html>

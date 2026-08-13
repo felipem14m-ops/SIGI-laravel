@@ -14,6 +14,9 @@ use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\ConfiguracionesController;
+use App\Http\Controllers\EmpleadoVentaController;
+use App\Http\Controllers\EmpleadoConsultaController;
+use App\Http\Controllers\EmpleadoMisVentasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -90,6 +93,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/configuraciones/metodos',       [ConfiguracionesController::class, 'store'])->name('configuraciones.store');
     Route::put('/configuraciones/metodos/{id}',   [ConfiguracionesController::class, 'update'])->name('configuraciones.update');
     Route::delete('/configuraciones/metodos/{id}', [ConfiguracionesController::class, 'destroy'])->name('configuraciones.destroy');
+
+    //Rutas de Gestion de Ventas Empleado
+    Route::get('/empleado/ventas',     [EmpleadoVentaController::class, 'index'])->name('empleado.ventas.index');
+    Route::get('/empleado/consultas',  [EmpleadoConsultaController::class, 'index'])->name('empleado.consultas.index');
+    Route::get('/empleado/mis-ventas', [EmpleadoMisVentasController::class, 'index'])->name('empleado.misventas.index');
 });
 
 require __DIR__ . '/auth.php';

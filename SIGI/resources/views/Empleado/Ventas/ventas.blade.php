@@ -1,14 +1,14 @@
-@extends('layouts.sidebarAdmin')
+@extends('layouts.sidebarEmpleado')
 
-@section('title', 'Terminal de Ventas')
-@section('page-title', 'Terminal de Ventas')
+@section('title', 'Punto de Venta')
+@section('page-title', 'Punto de Venta')
 
 @section('content')
 
 {{-- SweetAlert2 CDN --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- ===== HEADER BANNER ===== --}}
+{{-- ===== HEADER BANNER (ESTÍLO DE LA IMAGEN) ===== --}}
 <div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:28px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
@@ -22,14 +22,14 @@
             </div>
             <div>
                 <div style="display:inline-block; background:rgba(255,255,255,0.18); border-radius:20px; padding:3px 12px; font-size:10px; font-weight:800; color:#fff; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;">OPERACIÓN COMERCIAL</div>
-                <h2 style="font-size:1.8rem; font-weight:900; color:#fff; margin:0 0 4px; letter-spacing:-0.02em;">Punto de Venta (Admin)</h2>
-                <p style="font-size:0.85rem; color:rgba(255,255,255,0.85); margin:0;">Supervisión y ejecución de transacciones comerciales.</p>
+                <h2 style="font-size:1.8rem; font-weight:900; color:#fff; margin:0 0 4px; letter-spacing:-0.02em;">Punto de Venta</h2>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.85); margin:0;">Atención al cliente y registro de ventas.</p>
             </div>
         </div>
 
         <div>
-            <div style="font-size:10px; font-weight:800; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.08em; text-align:right; margin-bottom:2px;">INGRESOS DE HOY</div>
-            <div id="ingresos-hoy" style="font-size:2rem; font-weight:900; color:#fff; text-align:right; letter-spacing:-0.02em;">${{ number_format($ingresosHoy ?? 0, 2) }}</div>
+            <div style="font-size:10px; font-weight:800; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.08em; text-align:right; margin-bottom:2px;">MIS VENTAS HOY</div>
+            <div id="ingresos-hoy" style="font-size:2rem; font-weight:900; color:#fff; text-align:right; letter-spacing:-0.02em;">${{ number_format($ingresosHoy ?? 0, 0, ',', '.') }}</div>
         </div>
     </div>
 </div>
@@ -37,7 +37,7 @@
 {{-- ===== LAYOUT PRINCIPAL DEL POS ===== --}}
 <div style="display:grid; grid-template-columns: 1fr 380px; gap:24px; align-items:start;">
 
-    {{-- ===== PANEL IZQUIERDO: CATALOGO DE PRODUCTOS ===== --}}
+    {{-- ===== PANEL IZQUIERDO: CATÁLOGO DE PRODUCTOS ===== --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:24px; box-shadow:0 1px 6px rgba(0,0,0,0.04);">
         
         {{-- FILTROS DE BÚSQUEDA Y CATEGORÍAS --}}
@@ -115,7 +115,7 @@
 
                         {{-- Precio --}}
                         <td style="padding:14px 16px; text-align:right; font-weight:900; color:#0f172a; font-size:0.95rem;">
-                            ${{ number_format($prod->precio_venta, 2) }}
+                            ${{ number_format($prod->precio_venta, 0, ',', '.') }}
                         </td>
 
                         {{-- Acción --}}
@@ -199,7 +199,7 @@
                     @forelse($metodos ?? [] as $metodo)
                         <option value="{{ $metodo->id_metodo }}">{{ $metodo->nombre }}</option>
                     @empty
-                        <option value="" disabled>Sin métodos configurados</option>
+                        <option value="1">Efectivo</option>
                     @endforelse
                 </select>
             </div>
@@ -210,43 +210,56 @@
                 <span id="cart-total-text" style="font-size:1.8rem; font-weight:900; color:#2563eb; letter-spacing:-0.02em;">$0.00</span>
             </div>
 
-            {{-- Botón Finalizar Venta --}}
+            {{-- Botón Finalizar --}}
             <button type="button" id="btn-finalizar-venta" onclick="finalizarVenta()"
-                style="width:100%; padding:14px 20px; background:#2563eb; color:#fff; border:none; border-radius:14px; font-size:0.95rem; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(37,99,235,0.3); transition:all .2s;"
-                onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'"
+                style="width:100%; padding:14px; background:#2563eb; color:#fff; border:none; border-radius:14px; font-size:0.95rem; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(37,99,235,0.3); transition:all .2s;"
+                onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'" 
                 onmouseout="this.style.background='#2563eb'; this.style.transform=''">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                FINALIZAR VENTA
+                FINALIZAR VENTA (F10)
             </button>
-
         </div>
 
     </div>
 
 </div>
 
-{{-- ===== JAVASCRIPT POS LOCAL ===== --}}
+{{-- SCRIPT INTERACTIVO DEL PUNTO DE VENTA --}}
 <script>
     let carrito = [];
 
-    // Agregar producto al carrito
-    function agregarAlCarrito(id, nombre, precio, stockMax) {
-        let itemIndex = carrito.findIndex(i => i.id === id);
+    function filtrarProductosPOS() {
+        const searchVal = document.getElementById('pos-search').value.toLowerCase();
+        const catVal    = document.getElementById('pos-category').value;
+        const rows      = document.querySelectorAll('.pos-prod-row');
 
-        if (itemIndex > -1) {
-            if (carrito[itemIndex].cantidad < stockMax) {
-                carrito[itemIndex].cantidad++;
-            } else {
+        rows.forEach(row => {
+            const name = row.getAttribute('data-name');
+            const code = row.getAttribute('data-code');
+            const cat  = row.getAttribute('data-cat');
+
+            const matchSearch = name.includes(searchVal) || code.includes(searchVal);
+            const matchCat    = catVal === "" || cat === catVal;
+
+            row.style.display = (matchSearch && matchCat) ? "" : "none";
+        });
+    }
+
+    function agregarAlCarrito(id, nombre, precio, stockMax) {
+        const index = carrito.findIndex(item => item.id === id);
+        if (index > -1) {
+            if (carrito[index].cantidad + 1 > stockMax) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Stock máximo alcanzado',
-                    text: `No hay más unidades disponibles de ${nombre}`,
-                    timer: 2000,
-                    showConfirmButton: false
+                    title: 'Stock Límite',
+                    text: `No hay más stock disponible de ${nombre}`,
+                    confirmColor: '#2563eb'
                 });
+                return;
             }
+            carrito[index].cantidad++;
         } else {
             carrito.push({
                 id: id,
@@ -256,124 +269,85 @@
                 stockMax: stockMax
             });
         }
-
         renderizarCarrito();
     }
 
-    // Cambiar cantidad (+ / -)
-    function cambiarCantidad(id, delta) {
-        let item = carrito.find(i => i.id === id);
-        if (item) {
-            item.cantidad += delta;
-            if (item.cantidad <= 0) {
-                carrito = carrito.filter(i => i.id !== id);
-            } else if (item.cantidad > item.stockMax) {
-                item.cantidad = item.stockMax;
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Stock límite',
-                    text: `Stock máximo disponible: ${item.stockMax}`,
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-            }
+    function cambiarCantidad(index, delta) {
+        const nuevaCant = carrito[index].cantidad + delta;
+        if (nuevaCant <= 0) {
+            carrito.splice(index, 1);
+        } else if (nuevaCant > carrito[index].stockMax) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Stock Límite',
+                text: 'No puedes agregar más unidades que el stock disponible',
+                confirmColor: '#2563eb'
+            });
+        } else {
+            carrito[index].cantidad = nuevaCant;
         }
         renderizarCarrito();
     }
 
-    // Eliminar producto del carrito
-    function eliminarDelCarrito(id) {
-        carrito = carrito.filter(i => i.id !== id);
+    function eliminarDelCarrito(index) {
+        carrito.splice(index, 1);
         renderizarCarrito();
     }
 
-    // Limpiar carrito completo
     function limpiarCarrito() {
         carrito = [];
         renderizarCarrito();
     }
 
-    // Renderizar HTML del carrito
     function renderizarCarrito() {
         const emptyState = document.getElementById('cart-empty-state');
-        const itemsList = document.getElementById('cart-items-list');
-        const totalText = document.getElementById('cart-total-text');
+        const itemsList  = document.getElementById('cart-items-list');
+        const container  = document.getElementById('cart-container');
+        const totalSpan  = document.getElementById('cart-total-text');
 
         if (carrito.length === 0) {
             emptyState.style.display = 'block';
-            itemsList.style.display = 'none';
-            itemsList.innerHTML = '';
-            totalText.textContent = '$0.00';
+            itemsList.style.display  = 'none';
+            container.style.justifyContent = 'center';
+            totalSpan.textContent = '$0.00';
             return;
         }
 
         emptyState.style.display = 'none';
-        itemsList.style.display = 'flex';
-        itemsList.innerHTML = '';
+        itemsList.style.display  = 'flex';
+        container.style.justifyContent = 'flex-start';
 
         let total = 0;
+        let html = '';
 
-        carrito.forEach(item => {
-            let subtotal = item.precio * item.cantidad;
+        carrito.forEach((item, index) => {
+            const subtotal = item.precio * item.cantidad;
             total += subtotal;
 
-            let rowHtml = `
-                <div style="display:flex; align-items:center; justify-content:space-between; background:#f8fafc; padding:10px 14px; border-radius:12px; border:1px solid #e2e8f0;">
-                    <div style="flex:1;">
-                        <div style="font-size:0.875rem; font-weight:800; color:#0f172a;">${item.nombre}</div>
-                        <div style="font-size:11px; color:#64748b; font-weight:700;">$${item.precio.toLocaleString('en-US', {minimumFractionDigits:2})}</div>
+            html += `
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                    <div style="flex:1; min-width:0;">
+                        <div style="font-size:0.875rem; font-weight:800; color:#0f172a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.nombre}</div>
+                        <div style="font-size:11px; font-weight:700; color:#2563eb; margin-top:2px;">$${item.precio.toLocaleString('es-CO')}</div>
                     </div>
-                    
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <button type="button" onclick="cambiarCantidad(${item.id}, -1)" style="width:24px; height:24px; border-radius:6px; border:1px solid #cbd5e1; background:#fff; font-weight:800; cursor:pointer;">-</button>
+                    <div style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:2px 6px;">
+                        <button type="button" onclick="cambiarCantidad(${index}, -1)" style="border:none; background:transparent; font-weight:900; color:#64748b; cursor:pointer; font-size:14px;">-</button>
                         <span style="font-size:12px; font-weight:900; color:#0f172a; min-width:18px; text-align:center;">${item.cantidad}</span>
-                        <button type="button" onclick="cambiarCantidad(${item.id}, 1)" style="width:24px; height:24px; border-radius:6px; border:1px solid #cbd5e1; background:#fff; font-weight:800; cursor:pointer;">+</button>
-                        
-                        <button type="button" onclick="eliminarDelCarrito(${item.id})" style="border:none; background:transparent; color:#ef4444; margin-left:6px; cursor:pointer;" title="Eliminar">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                        <button type="button" onclick="cambiarCantidad(${index}, 1)" style="border:none; background:transparent; font-weight:900; color:#64748b; cursor:pointer; font-size:14px;">+</button>
                     </div>
+                    <button type="button" onclick="eliminarDelCarrito(${index})" style="border:none; background:transparent; color:#ef4444; cursor:pointer; padding:4px;" title="Eliminar">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
                 </div>
             `;
-            itemsList.innerHTML += rowHtml;
         });
 
-        totalText.textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+        itemsList.innerHTML = html;
+        totalSpan.textContent = '$' + total.toLocaleString('es-CO', { minimumFractionDigits: 2 });
     }
 
-    // Filtrar productos en el POS por texto y categoría
-    function filtrarProductosPOS() {
-        let searchVal = document.getElementById('pos-search').value.toLowerCase();
-        let catVal = document.getElementById('pos-category').value;
-        let rows = document.querySelectorAll('.pos-prod-row');
-
-        rows.forEach(row => {
-            let name = row.getAttribute('data-name');
-            let code = row.getAttribute('data-code');
-            let cat = row.getAttribute('data-cat');
-
-            let matchesSearch = name.includes(searchVal) || code.includes(searchVal);
-            let matchesCat = catVal === "" || cat === catVal;
-
-            if (matchesSearch && matchesCat) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    // Tecla rápida F10 para finalizar venta
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'F10') {
-            e.preventDefault();
-            finalizarVenta();
-        }
-    });
-
-    // ── Finalizar Venta: envía POST real al servidor ──────────────────────
     function finalizarVenta() {
         if (carrito.length === 0) {
             Swal.fire({
@@ -387,16 +361,15 @@
 
         const selectEl  = document.getElementById('metodo_pago');
         const metodoPagoId   = parseInt(selectEl.value);
-        const metodoPagoText = selectEl.options[selectEl.selectedIndex].text;
         const totalNum  = carrito.reduce((acc, i) => acc + (i.precio * i.cantidad), 0);
-        const totalFormatted = totalNum.toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        const totalFormatted = totalNum.toLocaleString('es-CO', {minimumFractionDigits: 0, maximumFractionDigits: 0});
 
         if (!metodoPagoId) {
             Swal.fire({ icon: 'warning', title: 'Selecciona un método de pago', confirmButtonColor: '#2563eb' });
             return;
         }
 
-        // Mostrar SweetAlert con cálculo de Monto Recibido y Cambio
+        // Modal SweetAlert con cálculo de Monto Recibido y Cambio a Entregar
         Swal.fire({
             title: '<span style="font-weight:900; color:#334155; font-size:1.8rem;">Monto Recibido</span>',
             icon: 'info',
@@ -409,18 +382,18 @@
 
                 <div style="text-align:left; margin-bottom:10px;">
                     <label style="display:block; font-size:0.875rem; font-weight:700; color:#475569; margin-bottom:8px;">Ingrese el monto recibido:</label>
-                    <input id="swal-monto-recibido" type="number" step="any" min="0" placeholder="0.00" value="${totalNum}"
+                    <input id="swal-monto-recibido" type="number" step="any" min="0" placeholder="0" value="${totalNum}"
                         style="width:100%; padding:14px; border:2.5px solid #3b82f6; border-radius:14px; font-size:1.6rem; font-weight:900; text-align:center; color:#1e293b; outline:none; box-sizing:border-box;"
                         onfocus="this.select()">
                 </div>
 
                 <div id="swal-cambio-box" style="background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:12px; padding:12px 16px; text-align:center; margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
                     <span style="font-size:12px; font-weight:800; color:#16a34a; text-transform:uppercase; letter-spacing:0.06em;">Cambio a entregar:</span>
-                    <span id="swal-cambio-valor" style="font-size:1.3rem; font-weight:900; color:#15803d;">$0.00</span>
+                    <span id="swal-cambio-valor" style="font-size:1.3rem; font-weight:900; color:#15803d;">$0</span>
                 </div>
             `,
             showCancelButton: true,
-            confirmButtonText: 'Calcular Cambio',
+            confirmButtonText: 'Registrar Venta',
             cancelButtonText: 'Cancelar',
             confirmButtonColor: '#2563eb',
             cancelButtonColor: '#64748b',
@@ -436,12 +409,12 @@
                         cambioBox.style.background = '#f0fdf4';
                         cambioBox.style.borderColor = '#bbf7d0';
                         cambioValor.style.color = '#15803d';
-                        cambioValor.textContent = '$' + cambio.toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        cambioValor.textContent = '$' + cambio.toLocaleString('es-CO', {minimumFractionDigits: 0, maximumFractionDigits: 0});
                     } else {
                         cambioBox.style.background = '#fff1f2';
                         cambioBox.style.borderColor = '#fecdd3';
                         cambioValor.style.color = '#e11d48';
-                        cambioValor.textContent = 'Monto insuficiente (-$' + Math.abs(cambio).toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ')';
+                        cambioValor.textContent = 'Monto insuficiente (-$' + Math.abs(cambio).toLocaleString('es-CO', {minimumFractionDigits: 0, maximumFractionDigits: 0}) + ')';
                     }
                 }
 
@@ -467,19 +440,8 @@
 
             const { montoRecibido, cambio } = result.value;
 
-            // Bloquear botón mientras se procesa
-            const btn = document.getElementById('btn-finalizar-venta');
-            btn.disabled = true;
-            btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Procesando...';
-
-            // Payload para el servidor
             const payload = {
-                items: carrito.map(i => ({
-                    id:       i.id,
-                    nombre:   i.nombre,
-                    precio:   i.precio,
-                    cantidad: i.cantidad
-                })),
+                items: carrito.map(i => ({ id: i.id, cantidad: i.cantidad })),
                 metodo_pago_id: metodoPagoId,
                 total: parseFloat(totalNum.toFixed(2)),
                 monto_recibido: parseFloat(montoRecibido),
@@ -487,30 +449,20 @@
             };
 
             try {
-                // POST a /ventas
-                const response = await fetch('{{ route("ventas.store") }}', {
-                    method: 'POST',
+                const res = await fetch("{{ route('ventas.store') }}", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Accept':       'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     body: JSON.stringify(payload)
                 });
 
-                const data = await response.json();
+                const data = await res.json();
 
-                // Manejar respuesta
-                if (response.ok && data.success) {
-                    const ingresosEl = document.getElementById('ingresos-hoy');
-                    if (ingresosEl) {
-                        const actual = parseFloat(ingresosEl.textContent.replace(/[$,]/g, '')) || 0;
-                        const nuevo  = actual + totalNum;
-                        ingresosEl.textContent = '$' + nuevo.toLocaleString('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
-                    }
-
+                if (res.ok && data.success) {
                     limpiarCarrito();
-
                     const cambioFmt = cambio.toLocaleString('es-CO', {minimumFractionDigits: 0, maximumFractionDigits: 0});
 
                     Swal.fire({
@@ -533,40 +485,29 @@
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error al registrar venta',
-                        text: data.message || 'Ocurrió un error inesperado.',
+                        title: 'Error al procesar la venta',
+                        text: data.message || 'No se pudo registrar la venta en la base de datos.',
                         confirmButtonColor: '#2563eb'
                     });
                 }
             } catch (err) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor. Intenta de nuevo.',
+                    title: 'Error de Red',
+                    text: 'Ocurrió un error al procesar la solicitud.',
                     confirmButtonColor: '#2563eb'
                 });
-            } finally {
-                // Restaurar botón
-                btn.disabled = false;
-                btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> FINALIZAR VENTA (F10)';
             }
         });
     }
 
-    // Abrir ventana emergente para imprimir ticket sin salir del POS
-    function imprimirTicketVentaDirecto(ventaId) {
-        const facturaBaseUrl = "{{ route('ventas.factura', ':id') }}";
-        const url = facturaBaseUrl.replace(':id', ventaId);
-        const printWin = window.open(url, 'ImprimirPOS', 'width=450,height=650');
-        if (printWin) {
-            printWin.focus();
+    // Tecla rápida F10 para finalizar venta
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F10') {
+            e.preventDefault();
+            finalizarVenta();
         }
-    }
-
-    // Animación spinner para el botón de procesamiento
-    const spinStyle = document.createElement('style');
-    spinStyle.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
-    document.head.appendChild(spinStyle);
+    });
 </script>
 
 @endsection

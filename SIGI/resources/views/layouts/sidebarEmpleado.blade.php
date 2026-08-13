@@ -1,163 +1,198 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SIGI – @yield('title', 'Panel Empleado')</title>
+    <title>SIGI – @yield('title', 'Empleado')</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700,800&display=swap" rel="stylesheet" />
-
-    <!-- Scripts / Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="font-sans antialiased bg-slate-50 text-slate-800 min-h-screen">
 
-<div class="flex min-h-screen">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+
+        /* ═══ SIDEBAR – mismo gradiente que el banner ═══ */
+        body.sidebar-mini .main-sidebar,
+        .main-sidebar { background: linear-gradient(180deg, #1a3da8 0%, #162e8a 100%) !important; }
+
+        .brand-link {
+            background: #132f8a !important;
+            border-bottom: 1px solid rgba(255,255,255,.1) !important;
+            padding: 15px 18px !important;
+        }
+
+        .nav-sidebar .nav-link {
+            color: rgba(255,255,255,.78) !important;
+            font-size: 12.5px; font-weight: 600;
+            border-radius: 8px; margin: 1px 8px; padding: 8px 12px;
+            transition: all .15s;
+        }
+        .nav-sidebar .nav-link:hover { background: rgba(255,255,255,.12) !important; color: #fff !important; }
+        .nav-sidebar .nav-link.active {
+            background: rgba(255,255,255,.22) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,.2);
+            font-weight: 700;
+        }
+
+        .nav-header { font-size: 9px !important; font-weight: 900 !important; color: rgba(255,255,255,.38) !important; letter-spacing: .14em; padding: 12px 18px 3px; }
+
+        .nav-sidebar .nav-icon { width: 16px; text-align: center; margin-right: 8px; font-size: 13px; color: rgba(255,255,255,.55); }
+        .nav-sidebar .nav-link.active .nav-icon,
+        .nav-sidebar .nav-link:hover .nav-icon { color: #fff !important; }
+
+        .badge-pos { background: rgba(255,255,255,.18); color: #fff; font-size: 8.5px; font-weight: 900; padding: 2px 7px; border-radius: 20px; border: 1px solid rgba(255,255,255,.3); float: right; margin-top: 3px; }
+
+        /* ═══ TOPBAR ═══ */
+        .main-header.navbar { background: linear-gradient(90deg, #1a3da8 0%, #2350d4 100%) !important; box-shadow: 0 2px 12px rgba(26,61,168,.35) !important; border-bottom: none !important; }
+        .main-header .navbar-nav .nav-link { color: rgba(255,255,255,.88) !important; font-weight: 600; font-size: 13px; }
+        .main-header .navbar-nav .nav-link:hover { color: #fff !important; }
+        .main-header [data-widget="pushmenu"] { color: rgba(255,255,255,.88) !important; }
+
+        .topbar-inicio { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.9) !important; font-weight: 700; font-size: 13px; padding: 6px 14px; background: rgba(255,255,255,.12); border-radius: 8px; text-decoration: none; transition: background .15s; }
+        .topbar-inicio:hover { background: rgba(255,255,255,.2) !important; color: #fff !important; text-decoration: none; }
+
+        .topbar-user { color: rgba(255,255,255,.88) !important; font-weight: 700; font-size: 13px; }
+
+        .topbar-logout { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9) !important; font-weight: 700; font-size: 12.5px; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: background .15s; }
+        .topbar-logout:hover { background: rgba(255,255,255,.2); color: #fff !important; }
+
+        .content-wrapper { background: #f1f5f9 !important; }
+        .main-sidebar::-webkit-scrollbar { width: 4px; }
+        .main-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
+        .sidebar { padding-bottom: 20px; }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed" style="font-family:'Inter',sans-serif;">
+<div class="wrapper">
+
+    {{-- ========== TOPBAR ========== --}}
+    <nav class="main-header navbar navbar-expand">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="font-size:16px;">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </li>
+            <li class="nav-item ml-1">
+                <a href="{{ route('empleado.ventas.index') }}" class="topbar-inicio">
+                    <i class="fas fa-cash-register" style="font-size:13px;"></i> Nueva Venta
+                </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto align-items-center" style="gap:10px;">
+            <li class="nav-item">
+                <span class="topbar-user">
+                    <i class="fas fa-user-circle mr-1" style="font-size:14px; opacity:.75;"></i>
+                    {{ Auth::user()->nombre ?? 'Empleado' }}
+                </span>
+            </li>
+            <li class="nav-item mr-2">
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="topbar-logout">
+                        <i class="fas fa-sign-out-alt" style="font-size:13px;"></i> Salir
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
 
     {{-- ========== SIDEBAR ========== --}}
-    <aside
-        id="sidebar"
-        class="bg-[#0b0f19] text-white w-64 shrink-0 flex flex-col justify-between 
-               fixed md:static inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-slate-900"
-    >
-        <div>
-            {{-- Brand Logo --}}
-            <div class="flex items-center space-x-3 px-6 py-5 border-b border-slate-900">
-                <div class="bg-blue-600 p-2.5 rounded-xl shrink-0 shadow-lg shadow-blue-500/20">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                    </svg>
-                </div>
-                <div>
-                    <span class="text-xl font-black tracking-wider text-white block leading-none">SIGI</span>
-                    <span class="text-[9px] font-bold text-slate-500 tracking-widest uppercase block mt-1">INVENTARIO</span>
-                </div>
-            </div>
+    <aside class="main-sidebar elevation-3">
 
-            {{-- Sidebar Menu --}}
-            <nav class="py-6 px-4 space-y-6">
-                <!-- DASHBOARD -->
-                <div>
-                    <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Dashboard</p>
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-semibold {{ Request::routeIs('dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/30' }} transition duration-200">
-                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                        <span>Panel Principal</span>
-                    </a>
-                </div>
+        <a href="{{ route('dashboard') }}" class="brand-link d-flex align-items-center" style="gap:12px;">
+            <span style="background:rgba(255,255,255,.18); padding:8px 10px; border-radius:10px; display:inline-flex; align-items:center; flex-shrink:0;">
+                <i class="fas fa-store" style="font-size:15px; color:#fff;"></i>
+            </span>
+            <span class="brand-text text-white" style="font-size:19px; font-weight:900; letter-spacing:-.01em; line-height:1;">
+                SIGI
+            </span>
+        </a>
 
-                <!-- MIS OPERACIONES -->
-                <div class="space-y-1">
-                    <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Mis Operaciones</p>
-                    
-                    <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/30 transition duration-200">
-                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                        <span>Nueva Venta</span>
-                    </a>
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                    <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/30 transition duration-200">
-                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                        <span>Consultar Productos</span>
-                    </a>
+                    <li class="nav-header">PRINCIPAL</li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link {{ Request::routeIs('dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-th-large"></i>
+                            <p>Panel Principal</p>
+                        </a>
+                    </li>
 
-                    <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/30 transition duration-200">
-                        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                        <span>Mis Ventas</span>
-                    </a>
-                </div>
+                    <li class="nav-header">MIS OPERACIONES</li>
 
-                <!-- SESIÓN -->
-                <div class="space-y-1">
-                    <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Sesión</p>
-                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                        @csrf
-                        <button type="submit" class="w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-rose-500 hover:bg-rose-500/10 transition duration-200">
-                            <svg class="w-5 h-5 shrink-0 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            <span>Cerrar Sesión</span>
-                        </button>
-                    </form>
-                </div>
+                    <li class="nav-item">
+                        <a href="{{ route('empleado.ventas.index') }}" class="nav-link {{ Request::routeIs('empleado.ventas.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cash-register"></i>
+                            <p>Nueva Venta <span class="badge-pos">POS</span></p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('empleado.consultas.index') }}" class="nav-link {{ Request::routeIs('empleado.consultas.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-search"></i>
+                            <p>Consultar Productos</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('empleado.misventas.index') }}" class="nav-link {{ Request::routeIs('empleado.misventas.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>Mis Ventas</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">SESIÓN</li>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout') }}" id="logout-form">@csrf
+                            <button type="submit" class="nav-link" style="background:none; border:none; width:100%; text-align:left; cursor:pointer; color:rgba(255,180,180,.85) !important;">
+                                <i class="nav-icon fas fa-sign-out-alt" style="color:rgba(255,180,180,.85);"></i>
+                                <p style="color:rgba(255,180,180,.85);">Cerrar Sesión</p>
+                            </button>
+                        </form>
+                    </li>
+
+                </ul>
             </nav>
-        </div>
-
-        {{-- Security Badge --}}
-        <div class="p-4 border-t border-slate-900 flex items-center space-x-2 text-[11px] text-slate-500 font-medium">
-            <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-            </svg>
-            <span>Sistema Seguro v1.0</span>
         </div>
     </aside>
 
-    {{-- ========== MAIN AREA ========== --}}
-    <div class="flex-1 flex flex-col min-h-screen min-w-0">
-        
-        {{-- Navbar --}}
-        <header class="bg-white border-b border-slate-150 h-20 flex items-center justify-between px-6 sticky top-0 z-40">
-            <div class="flex items-center space-x-4">
-                {{-- Toggle Button (Mobile only) --}}
-                <button id="sidebar-toggle" class="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-                <div>
-                    <h1 class="text-xl font-bold text-slate-900 leading-tight">@yield('page-title', 'Dashboard')</h1>
-                    <p class="text-xs text-slate-400 mt-0.5">Sistema de Gestión SIGI</p>
-                </div>
+    {{-- ========== CONTENT ========== --}}
+    <div class="content-wrapper" style="padding:0;">
+        <div class="content-header" style="background:#fff; border-bottom:1px solid #e8ecf4; padding:13px 24px;">
+            <div class="container-fluid px-0">
+                <h5 class="mb-0 font-weight-bold" style="color:#1e293b; font-size:15px;">
+                    @yield('page-title', 'Panel del Empleado')
+                </h5>
             </div>
-
-            {{-- Right Info --}}
-            <div class="flex items-center space-x-5">
-                {{-- User Profile Pill --}}
-                <div class="flex items-center space-x-3 pl-4">
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm font-bold text-slate-800 leading-none">{{ Auth::user()->nombre }}</p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{{ Auth::user()->role->nombre ?? 'Empleado' }}</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-base font-bold shadow-lg shadow-blue-500/20">
-                        {{ strtoupper(substr(Auth::user()->nombre, 0, 1)) }}
-                    </div>
-                </div>
+        </div>
+        <div class="content" style="padding:24px;">
+            <div class="container-fluid px-0">
+                @yield('content')
             </div>
-        </header>
-
-        {{-- Content Area --}}
-        <main class="flex-1 p-6 md:p-8 bg-slate-50">
-            @yield('content')
-        </main>
+        </div>
     </div>
+
+    <footer class="main-footer" style="background:#fff; border-top:1px solid #e8ecf4; font-size:12px; color:#64748b; padding:10px 20px;">
+        <strong>SIGI</strong> &copy; {{ date('Y') }} – Módulo de Empleados
+    </footer>
 
 </div>
 
-{{-- Mobile overlay background --}}
-<div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/40 z-40 hidden md:hidden transition-opacity"></div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stack('scripts')
 
-<script>
-    const toggleBtn = document.getElementById('sidebar-toggle');
-    const sidebar   = document.getElementById('sidebar');
-    const overlay   = document.getElementById('sidebar-overlay');
-
-    function toggleMenu() {
-        sidebar.classList.toggle('-translate-x-full');
-        overlay.classList.toggle('hidden');
-    }
-
-    toggleBtn?.addEventListener('click', toggleMenu);
-    overlay?.addEventListener('click', toggleMenu);
-</script>
 </body>
 </html>

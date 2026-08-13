@@ -13,11 +13,11 @@ use App\Models\Movimiento;
 use App\Models\TipoMovimiento;
 use App\Models\Categoria;
 
-class VentaController extends Controller
+class EmpleadoVentaController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Punto de Venta
+    | Punto de Venta (Empleado)
     |--------------------------------------------------------------------------
     */
 
@@ -32,11 +32,12 @@ class VentaController extends Controller
 
         $metodos = MetodoPago::where('activo', 1)->get();
 
-        $ingresosHoy = Venta::whereDate('created_at', today())
-            ->where('estado', 'completada')
+        $userId = Auth::id();
+        $ingresosHoy = Venta::where('id_usuario', $userId)
+            ->whereDate('created_at', today())
             ->sum('total');
-            
-        return view('Admin.Venta.ListasdeVentas', compact(
+
+        return view('Empleado.Ventas.ventas', compact(
             'productos',
             'categorias',
             'metodos',
