@@ -32,7 +32,7 @@
 @section('content')
 
 {{-- Welcome Banner --}}
-<div class="bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-900 rounded-3xl p-8 mb-6 text-white shadow-xl shadow-blue-950/20 relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between">
+<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%);" class="rounded-3xl p-8 mb-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent"></div>
 
     <div class="relative z-10 space-y-3">

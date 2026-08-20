@@ -123,9 +123,16 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $usuario = User::findOrFail($id);
-        $usuario->delete();
+        try {
+            $usuario = User::findOrFail($id);
+            $usuario->delete();
 
-        return back()->with('success', 'Usuario eliminado exitosamente');
+            return back()->with('success', 'Usuario eliminado exitosamente');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == "23000") {
+                return back()->with('error', 'No se puede eliminar el usuario porque tiene registros asociados (ej. movimientos de inventario). Le recomendamos desactivar el usuario en su lugar.');
+            }
+            return back()->with('error', 'Ocurrió un error al intentar eliminar el usuario.');
+        }
     }
 }

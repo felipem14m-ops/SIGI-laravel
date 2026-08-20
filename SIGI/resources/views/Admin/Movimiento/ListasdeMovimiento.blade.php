@@ -203,9 +203,7 @@
 
     {{-- Footer Paginación --}}
     <div style="padding:14px 24px; background:#f8fafc; border-top:1px solid #eef2f7; display:flex; align-items:center; justify-content:space-between;">
-        @php
-            $countMov = method_exists($movimientos, 'total') ? $movimientos->total() : count($movimientos);
-        @endphp
+    
         <span style="font-size:13px; color:#64748b; font-weight:600;">
             {{ $countMov }} {{ $countMov === 1 ? 'movimiento' : 'movimientos' }}
         </span>
