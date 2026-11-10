@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Configuración General')
 @section('page-title', 'Configuración')
@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:30px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:30px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:90px; width:220px; height:220px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
     <div style="position:absolute; bottom:-30px; right:-10px; width:140px; height:140px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:relative; z-index:1;">
@@ -27,7 +27,7 @@
             icon: 'success',
             title: '¡Listo!',
             text: "{{ session('success') }}",
-            confirmButtonColor: '#2563eb',
+            confirmButtonColor: '#475569',
             timer: 3000,
             timerProgressBar: true,
             showConfirmButton: false,
@@ -55,7 +55,7 @@
         <p style="font-size:10px; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; padding:0 6px; margin:0 0 10px;">AJUSTES DE SISTEMA</p>
 
         <button id="tab-metodos-btn" onclick="showTab('metodos')"
-            style="width:100%; display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; border:none; cursor:pointer; font-size:13px; font-weight:700; transition:all .15s; margin-bottom:4px; background:#eff6ff; color:#2563eb;">
+            style="width:100%; display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; border:none; cursor:pointer; font-size:13px; font-weight:700; transition:all .15s; margin-bottom:4px; background:#f1f5f9; color:#475569;">
             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
@@ -84,8 +84,8 @@
                     <div style="font-size:12px; color:#94a3b8; font-weight:500;">Gestiona las formas en que tus clientes pueden pagar.</div>
                 </div>
                 <button onclick="abrirModalAgregar()"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#2563eb; color:#fff; border:none; padding:10px 18px; border-radius:12px; font-size:13px; font-weight:800; cursor:pointer; transition:background .15s;"
-                    onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                    style="display:inline-flex; align-items:center; gap:8px; background:#475569; color:#fff; border:none; padding:10px 18px; border-radius:12px; font-size:13px; font-weight:800; cursor:pointer; transition:background .15s;"
+                    onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#475569'">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
@@ -100,8 +100,8 @@
 
                     {{-- Ícono + info --}}
                     <div style="display:flex; align-items:center; gap:14px;">
-                        <div style="width:42px; height:42px; border-radius:13px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:{{ $metodo->activo ? '#eff6ff' : '#f8fafc' }};">
-                            <svg width="20" height="20" fill="none" stroke="{{ $metodo->activo ? '#2563eb' : '#94a3b8' }}" stroke-width="2" viewBox="0 0 24 24">
+                        <div style="width:42px; height:42px; border-radius:13px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:{{ $metodo->activo ? '#f1f5f9' : '#f8fafc' }};">
+                            <svg width="20" height="20" fill="none" stroke="{{ $metodo->activo ? '#475569' : '#94a3b8' }}" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
                         </div>
@@ -122,8 +122,8 @@
                         <button type="button"
                             onclick="abrirModalEditar({{ $metodo->id_metodo }}, '{{ addslashes($metodo->nombre) }}')"
                             title="Editar Método"
-                            style="width:32px; height:32px; border-radius:10px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s;"
-                            onmouseover="this.style.background='#dbeafe'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='#eff6ff'; this.style.transform='scale(1)';">
+                            style="width:32px; height:32px; border-radius:10px; border:1px solid #e2e8f0; background:#f1f5f9; color:#475569; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s;"
+                            onmouseover="this.style.background='#e2e8f0'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='#f1f5f9'; this.style.transform='scale(1)';">
                             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -189,15 +189,15 @@
                 <div style="font-size:12px; color:#94a3b8; font-weight:500;">Actualiza tus credenciales de acceso al sistema.</div>
             </div>
             <div style="padding:26px;">
-                <div style="display:flex; align-items:flex-start; gap:12px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; padding:16px 18px; margin-bottom:22px;">
-                    <div style="width:32px; height:32px; border-radius:10px; background:#2563eb; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <div style="display:flex; align-items:flex-start; gap:12px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:14px; padding:16px 18px; margin-bottom:22px;">
+                    <div style="width:32px; height:32px; border-radius:10px; background:#475569; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <div style="font-size:13px; font-weight:600; color:#1e40af; line-height:1.6;">
+                    <div style="font-size:13px; font-weight:600; color:#1e293b; line-height:1.6;">
                         Para cambiar la contraseña general de administrador, ve al módulo de&nbsp;
-                        <a href="{{ route('usuarios.index') }}" style="font-weight:900; color:#2563eb; text-decoration:underline;">Usuarios</a>
+                        <a href="{{ route('usuarios.index') }}" style="font-weight:900; color:#475569; text-decoration:underline;">Usuarios</a>
                         &nbsp;y edita tu perfil.
                     </div>
                 </div>
@@ -224,8 +224,8 @@
             &times;
         </button>
 
-        <div style="width:48px; height:48px; border-radius:14px; background:#eff6ff; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
-            <svg width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2.2" viewBox="0 0 24 24">
+        <div style="width:48px; height:48px; border-radius:14px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="22" height="22" fill="none" stroke="#475569" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
         </div>
@@ -238,15 +238,15 @@
             <input type="text" name="nombre" id="input-nuevo-nombre" required maxlength="50"
                 placeholder="Ej: Nequi"
                 style="width:100%; padding:12px 14px; border:1.5px solid #e2e8f0; border-radius:12px; font-size:14px; font-weight:600; color:#0f172a; box-sizing:border-box; outline:none; transition:border .2s; margin-bottom:20px;"
-                onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,.1)'"
+                onfocus="this.style.borderColor='#475569'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,.1)'"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
             <div style="display:flex; gap:10px;">
                 <button type="button" onclick="cerrarModal('modal-agregar')"
                     style="flex:1; padding:12px; border-radius:12px; border:1.5px solid #e2e8f0; background:#fff; color:#64748b; font-size:13px; font-weight:700; cursor:pointer;"
                     onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='#fff'">Cancelar</button>
                 <button type="submit"
-                    style="flex:1; padding:12px; border-radius:12px; border:none; background:#2563eb; color:#fff; font-size:13px; font-weight:800; cursor:pointer;"
-                    onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">Guardar</button>
+                    style="flex:1; padding:12px; border-radius:12px; border:none; background:#475569; color:#fff; font-size:13px; font-weight:800; cursor:pointer;"
+                    onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#475569'">Guardar</button>
             </div>
         </form>
     </div>
@@ -260,8 +260,8 @@
             &times;
         </button>
 
-        <div style="width:48px; height:48px; border-radius:14px; background:#eff6ff; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
-            <svg width="22" height="22" fill="none" stroke="#2563eb" stroke-width="2.2" viewBox="0 0 24 24">
+        <div style="width:48px; height:48px; border-radius:14px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="22" height="22" fill="none" stroke="#475569" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
         </div>
@@ -273,7 +273,7 @@
             <label style="display:block; font-size:11px; font-weight:800; color:#475569; letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px;">Nombre del método</label>
             <input type="text" name="nombre" id="input-editar-nombre" required maxlength="50"
                 style="width:100%; padding:12px 14px; border:1.5px solid #e2e8f0; border-radius:12px; font-size:14px; font-weight:600; color:#0f172a; box-sizing:border-box; outline:none; transition:border .2s; margin-bottom:20px;"
-                onfocus="this.style.borderColor='#2563ebff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,.1)'"
+                onfocus="this.style.borderColor='#475569ff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,.1)'"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
             <div style="display:flex; gap:10px;">
                 <button type="button" onclick="cerrarModal('modal-editar')"
@@ -281,7 +281,7 @@
                     onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='#fff'">Cancelar</button>
                 <button type="submit"
                     style="flex:1; padding:12px; border-radius:12px; border:none; background:#d97706; color:#fff; font-size:13px; font-weight:800; cursor:pointer;"
-                    onmouseover="this.style.background='#2563ebff'" onmouseout="this.style.background='#2563ebff'">Actualizar</button>
+                    onmouseover="this.style.background='#475569ff'" onmouseout="this.style.background='#475569ff'">Actualizar</button>
             </div>
         </form>
     </div>
@@ -311,8 +311,8 @@
             var btn = document.getElementById('tab-' + t + '-btn');
             if (t === tab) {
                 panel.style.display = 'block';
-                btn.style.background = '#eff6ff';
-                btn.style.color = '#2563eb';
+                btn.style.background = '#f1f5f9';
+                btn.style.color = '#475569';
             } else {
                 panel.style.display = 'none';
                 btn.style.background = 'transparent';

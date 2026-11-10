@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Reportes y Análisis')
 @section('page-title', 'Reportes')
@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:28px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:28px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-50px; right:80px; width:260px; height:260px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
     <div style="position:absolute; bottom:-30px; right:-20px; width:160px; height:160px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:relative; z-index:1;">
@@ -24,10 +24,10 @@
     {{-- ── Reporte 1: Ventas ── --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05); transition:transform .15s, box-shadow .15s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(37,99,235,0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'">
         {{-- Franja de color --}}
-        <div style="height:5px; background:linear-gradient(90deg,#2563eb,#3b82f6);"></div>
+        <div style="height:5px; background:linear-gradient(90deg,#475569,#64748b);"></div>
         <div style="padding:24px 26px;">
             <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;">
-                <div style="width:48px; height:48px; border-radius:14px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <div style="width:48px; height:48px; border-radius:14px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                     <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
@@ -38,13 +38,13 @@
                 </div>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px;">
-                <span style="background:#eff6ff; color:#2563eb; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; letter-spacing:0.04em;">Por Fecha</span>
-                <span style="background:#eff6ff; color:#2563eb; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px;">Por Cajero</span>
-                <span style="background:#eff6ff; color:#2563eb; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px;">Por Método Pago</span>
+                <span style="background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; letter-spacing:0.04em;">Por Fecha</span>
+                <span style="background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px;">Por Cajero</span>
+                <span style="background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px;">Por Método Pago</span>
             </div>
             <a href="{{ route('ventas.historial') }}"
-                style="display:inline-flex; align-items:center; gap:8px; background:#2563eb; color:#fff; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; width:100%; justify-content:center;"
-                onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                style="display:inline-flex; align-items:center; gap:8px; background:#475569; color:#fff; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; width:100%; justify-content:center;"
+                onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#475569'">
                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -212,7 +212,7 @@
 
 {{-- ===== NOTA INFORMATIVA ===== --}}
 <div style="background:#fff; border-radius:18px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 4px rgba(0,0,0,0.03); display:flex; align-items:flex-start; gap:14px;">
-    <div style="width:38px; height:38px; border-radius:12px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+    <div style="width:38px; height:38px; border-radius:12px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>

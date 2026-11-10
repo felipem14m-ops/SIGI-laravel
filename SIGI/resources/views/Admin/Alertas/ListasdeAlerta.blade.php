@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Alertas de Stock')
 @section('page-title', 'Alertas de Stock')
@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -45,7 +45,7 @@
 
     {{-- Tarjeta 1: Agotados --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
-        <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <div style="width:52px; height:52px; border-radius:16px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
@@ -58,7 +58,7 @@
 
     {{-- Tarjeta 2: Bajo Stock --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
-        <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <div style="width:52px; height:52px; border-radius:16px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
@@ -71,7 +71,7 @@
 
     {{-- Tarjeta 3: Total Alertas --}}
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; padding:22px 26px; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center; gap:16px;">
-        <div style="width:52px; height:52px; border-radius:16px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <div style="width:52px; height:52px; border-radius:16px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
@@ -99,7 +99,7 @@
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="Ej. Zapatos Nike, #PROD-001..."
                         style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#2563eb'; this.style.background='#fff';"
+                        onfocus="this.style.borderColor='#475569'; this.style.background='#fff';"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc';" />
                 </div>
             </div>
@@ -129,7 +129,7 @@
             {{-- Botones --}}
             <div style="display:flex; gap:8px;">
                 <button type="submit"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#1e3fa8; color:#fff; padding:11px 20px; border-radius:12px; font-size:13px; font-weight:700; border:none; cursor:pointer;">
+                    style="display:inline-flex; align-items:center; gap:8px; background:#1e293b; color:#fff; padding:11px 20px; border-radius:12px; font-size:13px; font-weight:700; border:none; cursor:pointer;">
                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
                     </svg>
@@ -238,14 +238,14 @@
                         <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px;">
                             {{-- Botón Reabastecer -> lleva a Movimientos --}}
                             <a href="{{ route('movimientos.index') }}"
-                                style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; color:#2563eb; border:1px solid #dbeafe; padding:7px 14px; border-radius:10px; font-size:12px; font-weight:800; text-decoration:none;"
-                                onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+                                style="display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; padding:7px 14px; border-radius:10px; font-size:12px; font-weight:800; text-decoration:none;"
+                                onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
                                 <span style="font-size:14px; font-weight:900;">+</span> Reabastecer
                             </a>
 
                             {{-- Botón Atender --}}
                             <button type="button"
-                                onclick="Swal.fire({icon:'success',title:'Alerta Atendida',text:'Se ha notificado al área de compras para el producto {{ addslashes($prod->nombre) }}.',confirmButtonColor:'#2563eb'})"
+                                onclick="Swal.fire({icon:'success',title:'Alerta Atendida',text:'Se ha notificado al área de compras para el producto {{ addslashes($prod->nombre) }}.',confirmButtonColor:'#475569'})"
                                 style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; padding:7px 14px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer;"
                                 onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'">
                                 ✓ Atender
@@ -295,7 +295,7 @@
 
                 @for($i = $start; $i <= $end; $i++)
                     @if($i == $alertas->currentPage())
-                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
+                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
                     @else
                         <a href="{{ $alertas->url($i) }}" style="padding:6px 14px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; color:#475569; font-size:13px; font-weight:600; text-decoration:none;">{{ $i }}</a>
                     @endif
@@ -308,7 +308,7 @@
                 @endif
             @else
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Ant.</button>
-                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">1</button>
+                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">1</button>
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Sig.</button>
             @endif
         </div>

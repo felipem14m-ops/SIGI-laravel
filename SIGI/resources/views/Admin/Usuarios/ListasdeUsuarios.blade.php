@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Administración de Usuarios')
 @section('page-title', 'Administración de Usuarios')
@@ -33,7 +33,7 @@
 @endif
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -58,10 +58,10 @@
                 {{ $usuarios->count() }} registrados
             </div>
             <button onclick="openModal('create-modal')"
-                style="display:flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:10px 20px; border-radius:30px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
+                style="display:flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:10px 20px; border-radius:30px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
                 onmouseover="this.style.transform='translateY(-1px)'"
                 onmouseout="this.style.transform=''">
-                <svg width="16" height="16" fill="none" stroke="#1a3da8" stroke-width="2.5" viewBox="0 0 24 24">
+                <svg width="16" height="16" fill="none" stroke="#1e293b" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
                 Nuevo Usuario
@@ -83,7 +83,7 @@
                     </svg>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Ej. Juan Pérez..."
                         style="width:100%; padding:10px 14px 10px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 <label style="display:block; font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Rol de Sistema</label>
                 <select name="role_id"
                     style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; cursor:pointer;"
-                    onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                    onfocus="this.style.borderColor='#64748b'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                     onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                     <option value="">Todos los roles</option>
                     @foreach($roles as $role)
@@ -103,9 +103,9 @@
 
             <div style="display:flex; gap:10px; align-items:center;">
                 <button type="submit"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#1e3fa8; color:#fff; padding:10px 22px; border-radius:10px; font-size:0.875rem; font-weight:700; border:none; cursor:pointer; white-space:nowrap; box-shadow:0 2px 8px rgba(30,63,168,0.2);"
-                    onmouseover="this.style.background='#1730a0'"
-                    onmouseout="this.style.background='#1e3fa8'">
+                    style="display:inline-flex; align-items:center; gap:8px; background:#1e293b; color:#fff; padding:10px 22px; border-radius:10px; font-size:0.875rem; font-weight:700; border:none; cursor:pointer; white-space:nowrap; box-shadow:0 2px 8px rgba(30,41,59,0.2);"
+                    onmouseover="this.style.background='#0f172a'"
+                    onmouseout="this.style.background='#1e293b'">
                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
@@ -148,7 +148,7 @@
                     {{-- Avatar + Name --}}
                     <td style="padding:16px 20px;">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <div style="width:38px; height:38px; border-radius:50%; background:{{ $usuario->id_rol == 1 ? '#2563eb' : '#334155' }}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0;">
+                            <div style="width:38px; height:38px; border-radius:50%; background:{{ $usuario->id_rol == 1 ? '#475569' : '#334155' }}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0;">
                                 {{ mb_strtoupper(mb_substr($usuario->nombre, 0, 1)) }}
                             </div>
                             <span style="font-weight:700; color:#1e293b; font-size:0.875rem;">{{ $usuario->nombre }}</span>
@@ -156,7 +156,7 @@
                     </td>
 
                     {{-- Email --}}
-                    <td style="padding:16px 20px; font-size:0.875rem; color:#2563eb; font-weight:500;">{{ $usuario->email }}</td>
+                    <td style="padding:16px 20px; font-size:0.875rem; color:#475569; font-weight:500;">{{ $usuario->email }}</td>
 
                     {{-- ID --}}
                     <td style="padding:16px 20px; font-size:0.875rem; color:#475569; font-weight:500;">{{ $usuario->numeroIdentificacion }}</td>
@@ -164,8 +164,8 @@
                     {{-- Role Badge --}}
                     <td style="padding:16px 20px;">
                         @if($usuario->id_rol == 1)
-                        <span style="display:inline-flex; align-items:center; gap:5px; background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; padding:5px 12px; border-radius:999px; font-size:12px; font-weight:700;">
-                            <svg width="11" height="11" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24">
+                        <span style="display:inline-flex; align-items:center; gap:5px; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; padding:5px 12px; border-radius:999px; font-size:12px; font-weight:700;">
+                            <svg width="11" height="11" fill="none" stroke="#64748b" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                             Administrador
@@ -208,9 +208,9 @@
                             <button type="button"
                                 title="Editar usuario"
                                 onclick="openEditModal('{{ $usuario->id_usuario }}','{{ addslashes($usuario->nombre) }}','{{ $usuario->email }}','{{ $usuario->numeroIdentificacion }}','{{ $usuario->id_rol }}','{{ $usuario->activo }}')"
-                                style="width:34px; height:34px; border-radius:8px; border:1.5px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
-                                onmouseover="this.style.background='#dbeafe'"
-                                onmouseout="this.style.background='#eff6ff'">
+                                style="width:34px; height:34px; border-radius:8px; border:1.5px solid #e2e8f0; background:#f1f5f9; color:#475569; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                                onmouseover="this.style.background='#e2e8f0'"
+                                onmouseout="this.style.background='#f1f5f9'">
                                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
@@ -279,7 +279,7 @@
         <span style="font-size:13px; color:#64748b; font-weight:600;">{{ $usuarios->count() }} usuarios</span>
         <div style="display:flex; align-items:center; gap:6px;">
             <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Ant.</button>
-            <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">1</button>
+            <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">1</button>
             <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Sig.</button>
         </div>
     </div>
@@ -309,35 +309,35 @@
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Nombre Completo</label>
                     <input type="text" name="nombre" required placeholder="Ej. Juan Pérez"
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Correo Electrónico</label>
                     <input type="email" name="email" required placeholder="ejemplo@correo.com"
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Número de Identificación</label>
                     <input type="text" name="numeroIdentificacion" required placeholder="Identificación única"
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Contraseña</label>
                     <input type="password" name="contrasena" required placeholder="Mínimo 8 caracteres"
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Rol de Sistema</label>
                     <select name="id_rol" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                         @foreach($roles as $role)
                         <option value="{{ $role->id_rol }}">{{ $role->nombre }}</option>
@@ -349,8 +349,8 @@
                         style="flex:1; padding:12px; background:#f1f5f9; color:#475569; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit;"
                         onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">Cancelar</button>
                     <button type="submit"
-                        style="flex:1; padding:12px; background:#1e3fa8; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(30,63,168,0.3);"
-                        onmouseover="this.style.background='#1730a0'" onmouseout="this.style.background='#1e3fa8'">Registrar Usuario</button>
+                        style="flex:1; padding:12px; background:#1e293b; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(30,41,59,0.3);"
+                        onmouseover="this.style.background='#0f172a'" onmouseout="this.style.background='#1e293b'">Registrar Usuario</button>
                 </div>
             </form>
         </div>
@@ -382,35 +382,35 @@
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Nombre Completo</label>
                     <input type="text" id="edit-nombre" name="nombre" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Correo Electrónico</label>
                     <input type="email" id="edit-email" name="email" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Número de Identificación</label>
                     <input type="text" id="edit-identificacion" name="numeroIdentificacion" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Contraseña (opcional)</label>
                     <input type="password" name="contrasena" placeholder="Dejar vacío para conservar"
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
                 <div>
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Rol de Sistema</label>
                     <select id="edit-rol" name="id_rol" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                         @foreach($roles as $role)
                         <option value="{{ $role->id_rol }}">{{ $role->nombre }}</option>
@@ -421,7 +421,7 @@
                     <label style="display:block; font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Estado</label>
                     <select id="edit-activo" name="activo" required
                         style="width:100%; padding:10px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:10px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                         <option value="1">Activo</option>
                         <option value="0">Inactivo</option>
@@ -432,8 +432,8 @@
                         style="flex:1; padding:12px; background:#f1f5f9; color:#475569; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit;"
                         onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">Cancelar</button>
                     <button type="submit"
-                        style="flex:1; padding:12px; background:#1e3fa8; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(30,63,168,0.3);"
-                        onmouseover="this.style.background='#1730a0'" onmouseout="this.style.background='#1e3fa8'">Guardar Cambios</button>
+                        style="flex:1; padding:12px; background:#1e293b; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(30,41,59,0.3);"
+                        onmouseover="this.style.background='#0f172a'" onmouseout="this.style.background='#1e293b'">Guardar Cambios</button>
                 </div>
             </form>
         </div>

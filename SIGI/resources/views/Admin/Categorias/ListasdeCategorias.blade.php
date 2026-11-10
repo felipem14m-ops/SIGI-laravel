@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Catálogo de Categorías')
 @section('page-title', 'Catálogo de Categorías')
@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -36,7 +36,7 @@
             <div style="display:flex; background:rgba(255,255,255,0.2); padding:3px; border-radius:10px;">
                 <button id="btn-vista-cards" type="button"
                     onclick="mostrarVistaCards()"
-                    style="background:#fff; color:#1a3da8; border:none; padding:8px; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s;"
+                    style="background:#fff; color:#1e293b; border:none; padding:8px; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s;"
                     title="Vista tarjetas">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -54,10 +54,10 @@
 
             {{-- Botón Nueva Categoría --}}
             <button type="button" onclick="openModal('create-modal')"
-                style="display:flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
+                style="display:flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
                 onmouseover="this.style.transform='translateY(-1px)'"
                 onmouseout="this.style.transform=''">
-                <svg width="16" height="16" fill="none" stroke="#1a3da8" stroke-width="3" viewBox="0 0 24 24">
+                <svg width="16" height="16" fill="none" stroke="#1e293b" stroke-width="3" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
                 Nueva Categoría
@@ -79,7 +79,7 @@
                     </svg>
                     <input type="text" name="search" placeholder="Ej. Calzado Deportivo..."
                         style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                        onfocus="this.style.borderColor='#64748b'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 <label style="display:block; font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">ESTADO</label>
                 <select name="status"
                     style="width:100%; padding:11px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; cursor:pointer; font-family:inherit;"
-                    onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.1)'"
+                    onfocus="this.style.borderColor='#64748b'; this.style.boxShadow='0 0 0 3px rgba(71,85,105,0.1)'"
                     onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                     <option value="">Todos los estados</option>
                     <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Activas</option>
@@ -97,9 +97,9 @@
             </div>
 
             <button type="submit"
-                style="display:inline-flex; align-items:center; gap:8px; background:#2563eb; color:#fff; padding:11px 24px; border-radius:12px; font-size:0.875rem; font-weight:700; border:none; cursor:pointer; white-space:nowrap; box-shadow:0 3px 10px rgba(37,99,235,0.25);"
-                onmouseover="this.style.background='#1d4ed8'"
-                onmouseout="this.style.background='#2563eb'">
+                style="display:inline-flex; align-items:center; gap:8px; background:#475569; color:#fff; padding:11px 24px; border-radius:12px; font-size:0.875rem; font-weight:700; border:none; cursor:pointer; white-space:nowrap; box-shadow:0 3px 10px rgba(37,99,235,0.25);"
+                onmouseover="this.style.background='#334155'"
+                onmouseout="this.style.background='#475569'">
                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
@@ -133,7 +133,7 @@
                 @if($categoria->imagen)
                 <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="{{ $categoria->nombre }}" style="max-width:100%; max-height:100%; object-fit:contain;" />
                 @else
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#eff6ff,#dbeafe); color:#3b82f6; font-weight:900; font-size:2.5rem; letter-spacing:-0.02em;">
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f1f5f9,#e2e8f0); color:#64748b; font-weight:900; font-size:2.5rem; letter-spacing:-0.02em;">
                     {{ mb_strtoupper(mb_substr($categoria->nombre, 0, 1)) }}
                 </div>
                 @endif
@@ -152,7 +152,7 @@
             @endif
 
             <div style="display:flex; justify-content:center; margin-bottom:16px;">
-                <span style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; color:#2563eb; padding:5px 12px; border-radius:10px; font-size:12px; font-weight:700;">
+                <span style="display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:#475569; padding:5px 12px; border-radius:10px; font-size:12px; font-weight:700;">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
@@ -165,8 +165,8 @@
                 <button type="button"
                     title="Editar categoría"
                     onclick="openEditModal('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}','{{ addslashes($categoria->descripcion ?? '') }}','{{ $categoria->activa ? 1 : 0 }}')"
-                    style="flex:1; height:38px; border-radius:12px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
-                    onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+                    style="flex:1; height:38px; border-radius:12px; border:1px solid #e2e8f0; background:#f1f5f9; color:#475569; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                    onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
@@ -248,7 +248,7 @@
                                     alt="{{ $categoria->nombre }}"
                                     style="width:38px; height:38px; object-fit:cover; border-radius:50%; flex-shrink:0; border:1px solid #e2e8f0;">
                                 @else
-                                <div style="width:38px; height:38px; border-radius:50%; background:#2563eb; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0;">
+                                <div style="width:38px; height:38px; border-radius:50%; background:#475569; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0;">
                                     {{ mb_strtoupper(mb_substr($categoria->nombre, 0, 1)) }}
                                 </div>
                                 @endif
@@ -293,9 +293,9 @@
                                 <button type="button"
                                     title="Editar categoría"
                                     onclick="openEditModal('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}','{{ addslashes($categoria->descripcion ?? '') }}','{{ $categoria->activa ? 1 : 0 }}')"
-                                    style="width:34px; height:34px; border-radius:8px; border:1.5px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
-                                    onmouseover="this.style.background='#dbeafe'"
-                                    onmouseout="this.style.background='#eff6ff'">
+                                    style="width:34px; height:34px; border-radius:8px; border:1.5px solid #e2e8f0; background:#f1f5f9; color:#475569; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                                    onmouseover="this.style.background='#e2e8f0'"
+                                    onmouseout="this.style.background='#f1f5f9'">
                                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
@@ -364,7 +364,7 @@
             <span style="font-size:13px; color:#64748b; font-weight:600;">{{ $categorias->count() }} {{ $categorias->count() === 1 ? 'categoría' : 'categorías' }}</span>
             <div style="display:flex; align-items:center; gap:6px;">
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Ant.</button>
-                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">1</button>
+                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">1</button>
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Sig.</button>
             </div>
         </div>
@@ -378,7 +378,7 @@
         <div style="position:relative; background:#fff; border-radius:28px; max-width:680px; width:100%; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.25); z-index:1; pointer-events:all;">
 
             {{-- Modal Header --}}
-            <div style="background:#1d4ed8; padding:20px 28px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
+            <div style="background:#334155; padding:20px 28px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div style="background:rgba(255,255,255,0.2); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
                         <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24">
@@ -413,7 +413,7 @@
                     </label>
                     <input type="text" name="nombre" required placeholder="Ej: Electrónica, Hogar..."
                         style="width:100%; padding:12px 16px; background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.9rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                        onfocus="this.style.borderColor='#475569'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'" />
                 </div>
 
@@ -430,7 +430,7 @@
                         </label>
                         <textarea name="descripcion" placeholder="Describe los productos de esta categoría..." rows="5"
                             style="width:100%; padding:12px 16px; background:#fff; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.9rem; color:#1e293b; outline:none; box-sizing:border-box; resize:none; font-family:inherit;"
-                            onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                            onfocus="this.style.borderColor='#475569'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                             onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'"></textarea>
                     </div>
 
@@ -459,7 +459,7 @@
                                 style="
                 display:inline-block;
                 padding:8px 18px;
-                background:#2563eb;
+                background:#475569;
                 color:white;
                 border-radius:10px;
                 cursor:pointer;
@@ -513,8 +513,8 @@
                         Cancelar
                     </button>
                     <button type="submit"
-                        style="display:flex; align-items:center; gap:8px; padding:10px 26px; background:#1d4ed8; color:#fff; font-weight:800; border:none; border-radius:30px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(29,78,216,0.35);"
-                        onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1d4ed8'">
+                        style="display:flex; align-items:center; gap:8px; padding:10px 26px; background:#334155; color:#fff; font-weight:800; border:none; border-radius:30px; font-size:0.875rem; cursor:pointer; font-family:inherit; box-shadow:0 4px 14px rgba(29,78,216,0.35);"
+                        onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='#334155'">
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                         </svg>
@@ -575,7 +575,7 @@
                     <button type="button" onclick="closeModal('edit-modal')"
                         style="flex:1; padding:12px; background:#f1f5f9; color:#475569; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit;">Cancelar</button>
                     <button type="submit"
-                        style="flex:1; padding:12px; background:#1e3fa8; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit;">Guardar Cambios</button>
+                        style="flex:1; padding:12px; background:#1e293b; color:#fff; font-weight:700; border:none; border-radius:12px; font-size:0.875rem; cursor:pointer; font-family:inherit;">Guardar Cambios</button>
                 </div>
             </form>
         </div>
@@ -682,7 +682,7 @@
 
     const ESTILO_ACTIVO = {
         background: '#fff',
-        color: '#1a3da8'
+        color: '#1e293b'
     };
     const ESTILO_INACTIVO = {
         background: 'transparent',

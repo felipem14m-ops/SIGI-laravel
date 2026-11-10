@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -18,14 +18,14 @@
         <div class="w-full max-w-7xl bg-white rounded-none md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-screen md:min-h-[80vh]">
             
             <!-- Left Side: Decorative Gradient Panel -->
-            <div class="hidden md:flex w-full md:w-5/12 bg-gradient-to-br from-slate-800 via-indigo-900 to-indigo-950 p-12 flex-col justify-between text-white relative overflow-hidden">
+            <div class="hidden md:flex w-full md:w-5/12 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 p-12 flex-col justify-between text-white relative overflow-hidden">
                 <!-- Background decorative shapes -->
-                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent"></div>
-                <div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl"></div>
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-slate-500 via-transparent to-transparent"></div>
+                <div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-slate-1000/10 blur-3xl"></div>
 
                 <!-- Logo Section -->
                 <div class="flex items-center space-x-2 relative z-10">
-                    <div class="bg-indigo-600 p-2 rounded-xl">
+                    <div class="bg-slate-600 p-2 rounded-xl">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
@@ -36,13 +36,13 @@
                 <!-- Center Content -->
                 <div class="my-auto max-w-md relative z-10">
                     <h1 class="text-4xl font-extrabold tracking-tight leading-tight">Optimiza tu logística</h1>
-                    <p class="mt-4 text-indigo-200/80 font-light text-base leading-relaxed">
+                    <p class="mt-4 text-slate-300/80 font-light text-base leading-relaxed">
                         Controla el stock de tus almacenes de forma precisa, registra movimientos en tiempo real y aumenta tu productividad.
                     </p>
                 </div>
 
                 <!-- Footer Copyright -->
-                <div class="text-left text-xs text-indigo-300/50 relative z-10">
+                <div class="text-left text-xs text-slate-400/50 relative z-10">
                     © 2026 SIGI. Todos los derechos reservados.
                 </div>
             </div>
@@ -81,7 +81,7 @@
                                     </svg>
                                 </div>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus placeholder="ejemplo@sigi.com" 
-                                    class="block w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition duration-200">
+                                    class="block w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-1000 focus:border-slate-1000 text-sm transition duration-200">
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="mt-1" />
                         </div>
@@ -96,7 +96,7 @@
                                     </svg>
                                 </div>
                                 <input type="password" name="password" id="password" required placeholder="••••••••" 
-                                    class="block w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition duration-200">
+                                    class="block w-full pl-10 pr-4 py-3 bg-slate-50/50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-1000 focus:border-slate-1000 text-sm transition duration-200">
                             </div>
                             <x-input-error :messages="$errors->get('password')" class="mt-1" />
                         </div>
@@ -104,7 +104,7 @@
                         <!-- Remember Me & Forgot Password -->
                         <div class="flex items-center justify-between mt-2">
                             <div class="flex items-center h-5">
-                                <input id="remember_me" name="remember" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-slate-350 rounded transition duration-150">
+                                <input id="remember_me" name="remember" type="checkbox" class="focus:ring-slate-1000 h-4 w-4 text-slate-600 border-slate-350 rounded transition duration-150">
                                 <label for="remember_me" class="ml-2 text-xs text-slate-500 font-normal">
                                     Recordar sesión
                                 </label>
@@ -112,7 +112,7 @@
                             
                             @if (Route::has('password.request'))
                                 <div class="text-xs">
-                                    <a href="{{ route('password.request') }}" class="font-semibold text-indigo-600 hover:text-indigo-800 transition duration-200">
+                                    <a href="{{ route('password.request') }}" class="font-semibold text-slate-600 hover:text-slate-800 transition duration-200">
                                         ¿Olvidaste tu contraseña?
                                     </a>
                                 </div>
@@ -121,7 +121,7 @@
 
                         <!-- Submit Button -->
                         <div class="pt-2">
-                            <button type="submit" class="w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200">
+                            <button type="submit" class="w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-1000 transition duration-200">
                                 Entrar al Sistema
                                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -133,7 +133,7 @@
 
                 <!-- Footer Link -->
                 <div class="text-center text-sm text-slate-500 mt-2">
-                    ¿Aún no tienes una cuenta? <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold transition duration-200">Regístrate como empleado</a>
+                    ¿Aún no tienes una cuenta? <a href="{{ route('register') }}" class="text-slate-600 hover:text-slate-800 font-semibold transition duration-200">Regístrate como empleado</a>
                 </div>
             </div>
 

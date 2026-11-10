@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Gestión de Movimientos de Inventario')
 @section('page-title', 'Gestión de Movimientos')
@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -29,8 +29,8 @@
             {{-- Botón Nuevo Movimiento --}}
             <button type="button"
                 onclick="abrirModalMovimiento()"
-                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.12);"
-                onmouseover="this.style.background='#eff6ff'"
+                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; border:none; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.12);"
+                onmouseover="this.style.background='#f1f5f9'"
                 onmouseout="this.style.background='#fff'">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -75,7 +75,7 @@
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="Nombre o código único del producto..."
                         style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#2563eb'; this.style.background='#fff';"
+                        onfocus="this.style.borderColor='#475569'; this.style.background='#fff';"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc';" />
                 </div>
             </div>
@@ -95,7 +95,7 @@
             {{-- Botones --}}
             <div style="display:flex; gap:8px;">
                 <button type="submit"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#1e3fa8; color:#fff; padding:11px 20px; border-radius:12px; font-size:13px; font-weight:700; border:none; cursor:pointer;">
+                    style="display:inline-flex; align-items:center; gap:8px; background:#1e293b; color:#fff; padding:11px 20px; border-radius:12px; font-size:13px; font-weight:700; border:none; cursor:pointer;">
                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
                     </svg>
@@ -135,7 +135,7 @@
                     $tipoClass = [
                         'entrada' => ['bg'=>'#f0fdf4','color'=>'#16a34a','label'=>'Entrada (+)'],
                         'salida'  => ['bg'=>'#fff1f2','color'=>'#e11d48','label'=>'Salida (-)'],
-                        'ajuste'  => ['bg'=>'#eff6ff','color'=>'#2563eb','label'=>'Ajuste (=)'],
+                        'ajuste'  => ['bg'=>'#f1f5f9','color'=>'#475569','label'=>'Ajuste (=)'],
                     ];
                     $badge = $tipoClass[$codigo] ?? ['bg'=>'#f8fafc','color'=>'#64748b','label'=>strtoupper($codigo)];
                 @endphp
@@ -203,7 +203,9 @@
 
     {{-- Footer Paginación --}}
     <div style="padding:14px 24px; background:#f8fafc; border-top:1px solid #eef2f7; display:flex; align-items:center; justify-content:space-between;">
-    
+        @php
+            $countMov = method_exists($movimientos, 'total') ? $movimientos->total() : count($movimientos);
+        @endphp
         <span style="font-size:13px; color:#64748b; font-weight:600;">
             {{ $countMov }} {{ $countMov === 1 ? 'movimiento' : 'movimientos' }}
         </span>
@@ -223,7 +225,7 @@
 
                 @for($i = $start; $i <= $end; $i++)
                     @if($i == $movimientos->currentPage())
-                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
+                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
                     @else
                         <a href="{{ $movimientos->url($i) }}" style="padding:6px 14px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; color:#475569; font-size:13px; font-weight:600; text-decoration:none;">{{ $i }}</a>
                     @endif
@@ -236,7 +238,7 @@
                 @endif
             @else
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Ant.</button>
-                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">1</button>
+                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">1</button>
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Sig.</button>
             @endif
         </div>
@@ -250,7 +252,7 @@
         <div style="position:relative; background:#fff; border-radius:24px; max-width:560px; width:100%; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.25); pointer-events:all; animation:slideUp 0.2s ease;">
 
             {{-- Header --}}
-            <div style="background:linear-gradient(125deg,#1a3da8 0%,#2563eb 100%); padding:22px 28px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
+            <div style="background:linear-gradient(135deg,#1e293b 0%,#475569 100%); padding:22px 28px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div style="background:rgba(255,255,255,0.2); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
                         <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24">
@@ -316,7 +318,7 @@
                         Cancelar
                     </button>
                     <button type="submit"
-                        style="padding:11px 24px; border-radius:12px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(30,63,168,0.25);">
+                        style="padding:11px 24px; border-radius:12px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(30,41,59,0.25);">
                         Guardar Movimiento
                     </button>
                 </div>

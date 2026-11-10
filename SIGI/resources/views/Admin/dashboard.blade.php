@@ -32,8 +32,8 @@
 @section('content')
 
 {{-- Welcome Banner --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%);" class="rounded-3xl p-8 mb-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent"></div>
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%);" class="rounded-3xl p-8 mb-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-1000/10 via-transparent to-transparent"></div>
 
     <div class="relative z-10 space-y-3">
         <span class="inline-flex items-center space-x-1.5 bg-white/10 text-white px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
@@ -47,13 +47,13 @@
             @endphp
             {{ $saludo }}, {{ Auth::user()->nombre }}!
         </h2>
-        <p class="text-blue-200/80 text-sm font-medium capitalize">
+        <p class="text-slate-300/80 text-sm font-medium capitalize">
             {{ $fechaHoy }} &bull; <span id="reloj-live" class="font-bold">{{ Carbon::now()->format('h:i A') }}</span>
         </p>
     </div>
 
     <div class="relative z-10 mt-6 md:mt-0 flex items-center space-x-4 shrink-0">
-        <a href="{{ route('ventas.index') }}" class="inline-flex items-center space-x-2 bg-white text-blue-900 px-5 py-3 rounded-2xl text-sm font-bold shadow-md hover:bg-slate-50 transition duration-200">
+        <a href="{{ route('ventas.index') }}" class="inline-flex items-center space-x-2 bg-white text-slate-900 px-5 py-3 rounded-2xl text-sm font-bold shadow-md hover:bg-slate-50 transition duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
@@ -83,8 +83,8 @@
 <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5 mb-8">
 
     {{-- Productos --}}
-    <a href="{{ route('productos.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-blue-200 transition">
-        <div class="bg-blue-50 text-blue-600 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
+    <a href="{{ route('productos.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition">
+        <div class="bg-slate-100 text-slate-600 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
             </svg>
@@ -166,13 +166,13 @@
     {{-- Ventas de Hoy --}}
     <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-            <div class="flex items-center space-x-2 text-blue-600">
+            <div class="flex items-center space-x-2 text-slate-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
                 <h2 class="text-sm font-bold text-slate-900">Ventas de Hoy</h2>
             </div>
-            <a href="{{ route('ventas.historial') }}" class="text-xs bg-blue-50 text-blue-600 font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-100 transition">Ver todas →</a>
+            <a href="{{ route('ventas.historial') }}" class="text-xs bg-slate-100 text-slate-600 font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-200 transition">Ver todas →</a>
         </div>
 
         <div class="overflow-x-auto">
@@ -190,7 +190,7 @@
                 <tbody>
                     @forelse($ventasDelDia as $venta)
                     <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition">
-                        <td class="px-6 py-4 text-sm font-bold text-blue-600">
+                        <td class="px-6 py-4 text-sm font-bold text-slate-600">
                             #{{ str_pad($venta->id_venta, 5, '0', STR_PAD_LEFT) }}
                         </td>
                         <td class="px-6 py-4 text-sm text-slate-500 font-medium whitespace-nowrap">
@@ -198,14 +198,14 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center space-x-2">
-                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-slate-1000 to-slate-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
                                     {{ mb_strtoupper(mb_substr($venta->usuario->nombre ?? $venta->usuario->name ?? 'U', 0, 1)) }}
                                 </div>
                                 <span class="text-sm font-semibold text-slate-700">{{ $venta->usuario->nombre ?? $venta->usuario->name ?? '—' }}</span>
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <span class="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                            <span class="bg-slate-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
                                 {{ $venta->detalles->sum('cantidad') }} und
                             </span>
                         </td>
@@ -214,7 +214,7 @@
                                 $mp = strtolower($venta->metodo->nombre ?? 'efectivo');
                                 $colores = [
                                     'efectivo'       => 'bg-emerald-100 text-emerald-700',
-                                    'tarjeta'        => 'bg-blue-100 text-blue-700',
+                                    'tarjeta'        => 'bg-slate-200 text-slate-700',
                                     'nequi'          => 'bg-purple-100 text-purple-700',
                                     'transferencia'  => 'bg-orange-100 text-orange-700',
                                 ];
@@ -262,8 +262,8 @@
                     <p class="text-xs text-slate-400 mt-0.5">Abrir terminal POS</p>
                 </div>
             </a>
-            <a href="{{ route('productos.index') }}" class="flex items-center space-x-4 p-4 rounded-2xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50/20 transition duration-200 group">
-                <div class="bg-blue-50 text-blue-600 p-3 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition shrink-0">
+            <a href="{{ route('productos.index') }}" class="flex items-center space-x-4 p-4 rounded-2xl border border-slate-100 hover:border-slate-300 hover:bg-slate-100/20 transition duration-200 group">
+                <div class="bg-slate-100 text-slate-600 p-3 rounded-xl group-hover:bg-slate-600 group-hover:text-white transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
@@ -273,8 +273,8 @@
                     <p class="text-xs text-slate-400 mt-0.5">Gestión de catálogo</p>
                 </div>
             </a>
-            <a href="{{ route('ventas.historial') }}" class="flex items-center space-x-4 p-4 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/20 transition duration-200 group">
-                <div class="bg-indigo-50 text-indigo-600 p-3 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition shrink-0">
+            <a href="{{ route('ventas.historial') }}" class="flex items-center space-x-4 p-4 rounded-2xl border border-slate-100 hover:border-slate-300 hover:bg-slate-100/20 transition duration-200 group">
+                <div class="bg-slate-100 text-slate-600 p-3 rounded-xl group-hover:bg-slate-600 group-hover:text-white transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -48,12 +48,12 @@
         }
 
         .btn-print {
-            background: #2563eb;
+            background: #475569;
             color: #fff;
         }
 
         .btn-print:hover {
-            background: #1d4ed8;
+            background: #334155;
         }
 
         .btn-back {

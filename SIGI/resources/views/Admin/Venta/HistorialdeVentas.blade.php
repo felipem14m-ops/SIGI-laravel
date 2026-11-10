@@ -1,4 +1,4 @@
-@extends('layouts.sidebarAdmin')
+﻿@extends('layouts.sidebarAdmin')
 
 @section('title', 'Historial de Ventas')
 @section('page-title', 'Historial de Ventas')
@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -29,8 +29,8 @@
 
             {{-- Botón Nueva Venta --}}
             <a href="{{ route('ventas.index') }}"
-                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 2px 10px rgba(0,0,0,0.12);"
-                onmouseover="this.style.background='#eff6ff'"
+                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 2px 10px rgba(0,0,0,0.12);"
+                onmouseover="this.style.background='#f1f5f9'"
                 onmouseout="this.style.background='#fff'">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -61,7 +61,7 @@
                 <label style="display:block; font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">FECHA DE VENTA</label>
                 <input type="date" name="fecha" value="{{ request('fecha') }}"
                     style="width:100%; padding:11px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                    onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                    onfocus="this.style.borderColor='#475569'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                     onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'" />
             </div>
 
@@ -74,7 +74,7 @@
                     </svg>
                     <input type="text" name="cajero" value="{{ request('cajero') }}" placeholder="Nombre de cajero..."
                         style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
-                        onfocus="this.style.borderColor='#2563eb'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                        onfocus="this.style.borderColor='#475569'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                         onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
                 </div>
             </div>
@@ -95,8 +95,8 @@
             {{-- Botones --}}
             <div style="display:flex; gap:10px; flex-shrink:0; padding-top:1px;">
                 <button type="submit"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#2563eb; color:#fff; border:none; padding:11px 22px; border-radius:12px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 3px 10px rgba(37,99,235,0.25);"
-                    onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                    style="display:inline-flex; align-items:center; gap:8px; background:#475569; color:#fff; border:none; padding:11px 22px; border-radius:12px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 3px 10px rgba(37,99,235,0.25);"
+                    onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#475569'">
                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
                     </svg>
@@ -150,7 +150,7 @@
 
                     {{-- Folio --}}
                     <td style="padding:16px 20px;">
-                        <span style="font-size:0.875rem; font-weight:800; color:#2563eb; letter-spacing:0.02em;">
+                        <span style="font-size:0.875rem; font-weight:800; color:#475569; letter-spacing:0.02em;">
                             #{{ str_pad($venta->id_venta, 5, '0', STR_PAD_LEFT) }}
                         </span>
                     </td>
@@ -163,7 +163,7 @@
                     {{-- Usuario / Cajero --}}
                     <td style="padding:16px 20px;">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0;">
+                            <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#475569,#64748b); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0;">
                                 {{ mb_strtoupper(mb_substr($venta->usuario->name ?? 'U', 0, 1)) }}
                             </div>
                             <span style="font-size:0.875rem; font-weight:700; color:#1e293b;">{{ $venta->usuario->name ?? 'Sin usuario' }}</span>
@@ -177,7 +177,7 @@
                         $metodoBadge = [
                         'efectivo' => ['bg'=>'#f0fdf4','color'=>'#16a34a','text'=>'Efectivo'],
                         'nequi' => ['bg'=>'#faf5ff','color'=>'#7c3aed','text'=>'Nequi'],
-                        'tarjeta' => ['bg'=>'#eff6ff','color'=>'#2563eb','text'=>'Tarjeta'],
+                        'tarjeta' => ['bg'=>'#f1f5f9','color'=>'#475569','text'=>'Tarjeta'],
                         'transferencia' => ['bg'=>'#fff7ed','color'=>'#d97706','text'=>'Transferencia'],
                         ];
                         $badge = $metodoBadge[$metodo] ?? ['bg'=>'#f8fafc','color'=>'#475569','text'=>ucfirst($metodo)];
@@ -193,7 +193,7 @@
                     {{-- Ítems --}}
                     <td style="padding:16px 20px; text-align:center;">
                         @php $totalItems = $venta->detalles ? $venta->detalles->sum('cantidad') : 0; @endphp
-                        <span style="display:inline-block; background:#2563eb; color:#fff; font-weight:900; font-size:11px; padding:5px 12px; border-radius:8px; min-width:36px; text-align:center;">
+                        <span style="display:inline-block; background:#475569; color:#fff; font-weight:900; font-size:11px; padding:5px 12px; border-radius:8px; min-width:36px; text-align:center;">
                             {{ $totalItems }} und
                         </span>
                     </td>
@@ -218,8 +218,8 @@
                         <button type="button"
                             onclick="verDetalleVenta({{ $venta->id_venta }})"
                             title="Ver detalle / Factura POS"
-                            style="width:38px; height:38px; border-radius:12px; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
-                            onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+                            style="width:38px; height:38px; border-radius:12px; border:1px solid #e2e8f0; background:#f1f5f9; color:#475569; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;"
+                            onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -270,7 +270,7 @@
 
                 @for($i = $start; $i <= $end; $i++)
                     @if($i == $ventas->currentPage())
-                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
+                        <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">{{ $i }}</button>
                     @else
                         <a href="{{ $ventas->url($i) }}" style="padding:6px 14px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; color:#475569; font-size:13px; font-weight:600; text-decoration:none;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#fff'">{{ $i }}</a>
                     @endif
@@ -284,7 +284,7 @@
                 @endif
             @else
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Ant.</button>
-                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e3fa8; color:#fff; font-size:13px; font-weight:700;">1</button>
+                <button style="padding:6px 14px; border-radius:8px; border:none; background:#1e293b; color:#fff; font-size:13px; font-weight:700;">1</button>
                 <button disabled style="padding:6px 16px; border-radius:8px; border:1px solid #e2e8f0; background:#f1f5f9; color:#94a3b8; font-size:13px; font-weight:600; cursor:not-allowed;">Sig.</button>
             @endif
         </div>
@@ -296,7 +296,7 @@
     <div style="background:#fff; border-radius:24px; width:100%; max-width:560px; box-shadow:0 20px 60px rgba(0,0,0,0.2); overflow:hidden; animation:slideUp .25s ease;">
 
         {{-- Modal Header --}}
-        <div style="background:linear-gradient(125deg,#1a3da8 0%,#2563eb 100%); padding:22px 28px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="background:linear-gradient(135deg,#1e293b 0%,#475569 100%); padding:22px 28px; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:12px;">
                 <div style="width:40px; height:40px; border-radius:12px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; color:#fff;">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -319,7 +319,7 @@
         {{-- Modal Footer --}}
         <div style="padding:18px 28px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
             <a id="btn-imprimir-factura-modal" href="#" target="_blank"
-                style="padding:10px 18px; border-radius:12px; border:none; background:#2563eb; color:#fff; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                style="padding:10px 18px; border-radius:12px; border:none; background:#475569; color:#fff; font-size:13px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
                 <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 000-4H9a2 2 0 000 4zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>

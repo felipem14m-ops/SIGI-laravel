@@ -1,4 +1,4 @@
-@extends('layouts.sidebarEmpleado')
+﻿@extends('layouts.sidebarEmpleado')
 
 @section('title', 'Punto de Venta')
 @section('page-title', 'Punto de Venta')
@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {{-- ===== HEADER BANNER (ESTÍLO DE LA IMAGEN) ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:28px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:28px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -49,14 +49,14 @@
                 <input type="text" id="pos-search" placeholder="Buscar por nombre o código..."
                     style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
                     onkeyup="filtrarProductosPOS()"
-                    onfocus="this.style.borderColor='#2563eb'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                    onfocus="this.style.borderColor='#475569'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                     onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
             </div>
 
             <div style="width:220px;">
                 <select id="pos-category" onchange="filtrarProductosPOS()"
                     style="width:100%; padding:11px 14px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; cursor:pointer; font-family:inherit; appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;"
-                    onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+                    onfocus="this.style.borderColor='#475569'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
                     onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                     <option value="">Todas las Categorías</option>
                     @foreach($categorias ?? [] as $cat)
@@ -94,7 +94,7 @@
                             <img src="{{ asset('storage/' . $prod->imagen) }}" alt="{{ $prod->nombre }}"
                                 style="width:42px; height:42px; object-fit:contain; border-radius:10px; background:#fafafa; border:1px solid #e2e8f0; padding:2px;">
                             @else
-                            <div style="width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#eff6ff,#dbeafe); color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">
+                            <div style="width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#f1f5f9,#e2e8f0); color:#475569; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">
                                 {{ mb_strtoupper(mb_substr($prod->nombre, 0, 1)) }}
                             </div>
                             @endif
@@ -108,7 +108,7 @@
 
                         {{-- Stock --}}
                         <td style="padding:14px 16px; text-align:center;">
-                            <span style="display:inline-block; background:#eff6ff; color:#2563eb; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">
+                            <span style="display:inline-block; background:#f1f5f9; color:#475569; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">
                                 {{ $prod->stock_actual }} unidades
                             </span>
                         </td>
@@ -122,9 +122,9 @@
                         <td style="padding:14px 16px; text-align:right;">
                             <button type="button" 
                                 onclick="agregarAlCarrito({{ $prod->id_producto }}, '{{ addslashes($prod->nombre) }}', {{ $prod->precio_venta }}, {{ $prod->stock_actual }})"
-                                style="background:#2563eb; color:#fff; border:none; padding:8px 18px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 3px 10px rgba(37,99,235,0.25); transition:all .2s;"
-                                onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'" 
-                                onmouseout="this.style.background='#2563eb'; this.style.transform=''">
+                                style="background:#475569; color:#fff; border:none; padding:8px 18px; border-radius:10px; font-size:12px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 3px 10px rgba(37,99,235,0.25); transition:all .2s;"
+                                onmouseover="this.style.background='#334155'; this.style.transform='translateY(-1px)'" 
+                                onmouseout="this.style.background='#475569'; this.style.transform=''">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                                 </svg>
@@ -153,7 +153,7 @@
     <div style="background:#fff; border-radius:20px; border:1px solid #e8ecf4; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column;">
         
         {{-- HEADER DEL CARRITO --}}
-        <div style="background:linear-gradient(125deg,#1a3da8 0%,#2563eb 100%); padding:18px 22px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
+        <div style="background:linear-gradient(135deg,#1e293b 0%,#475569 100%); padding:18px 22px; display:flex; align-items:center; justify-content:space-between; color:#fff;">
             <div style="display:flex; align-items:center; gap:10px; font-weight:900; font-size:1.05rem;">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
@@ -207,14 +207,14 @@
             {{-- Total --}}
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
                 <span style="font-size:11px; font-weight:900; color:#64748b; text-transform:uppercase; letter-spacing:0.08em;">TOTAL A COBRAR:</span>
-                <span id="cart-total-text" style="font-size:1.8rem; font-weight:900; color:#2563eb; letter-spacing:-0.02em;">$0.00</span>
+                <span id="cart-total-text" style="font-size:1.8rem; font-weight:900; color:#475569; letter-spacing:-0.02em;">$0.00</span>
             </div>
 
             {{-- Botón Finalizar --}}
             <button type="button" id="btn-finalizar-venta" onclick="finalizarVenta()"
-                style="width:100%; padding:14px; background:#2563eb; color:#fff; border:none; border-radius:14px; font-size:0.95rem; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(37,99,235,0.3); transition:all .2s;"
-                onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'" 
-                onmouseout="this.style.background='#2563eb'; this.style.transform=''">
+                style="width:100%; padding:14px; background:#475569; color:#fff; border:none; border-radius:14px; font-size:0.95rem; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(37,99,235,0.3); transition:all .2s;"
+                onmouseover="this.style.background='#334155'; this.style.transform='translateY(-1px)'" 
+                onmouseout="this.style.background='#475569'; this.style.transform=''">
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
@@ -255,7 +255,7 @@
                     icon: 'warning',
                     title: 'Stock Límite',
                     text: `No hay más stock disponible de ${nombre}`,
-                    confirmColor: '#2563eb'
+                    confirmColor: '#475569'
                 });
                 return;
             }
@@ -281,7 +281,7 @@
                 icon: 'warning',
                 title: 'Stock Límite',
                 text: 'No puedes agregar más unidades que el stock disponible',
-                confirmColor: '#2563eb'
+                confirmColor: '#475569'
             });
         } else {
             carrito[index].cantidad = nuevaCant;
@@ -328,7 +328,7 @@
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
                     <div style="flex:1; min-width:0;">
                         <div style="font-size:0.875rem; font-weight:800; color:#0f172a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.nombre}</div>
-                        <div style="font-size:11px; font-weight:700; color:#2563eb; margin-top:2px;">$${item.precio.toLocaleString('es-CO')}</div>
+                        <div style="font-size:11px; font-weight:700; color:#475569; margin-top:2px;">$${item.precio.toLocaleString('es-CO')}</div>
                     </div>
                     <div style="display:flex; align-items:center; gap:6px; background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:2px 6px;">
                         <button type="button" onclick="cambiarCantidad(${index}, -1)" style="border:none; background:transparent; font-weight:900; color:#64748b; cursor:pointer; font-size:14px;">-</button>
@@ -354,7 +354,7 @@
                 icon: 'info',
                 title: 'Carrito vacío',
                 text: 'Agrega al menos un producto para procesar la venta.',
-                confirmButtonColor: '#2563eb'
+                confirmButtonColor: '#475569'
             });
             return;
         }
@@ -365,7 +365,7 @@
         const totalFormatted = totalNum.toLocaleString('es-CO', {minimumFractionDigits: 0, maximumFractionDigits: 0});
 
         if (!metodoPagoId) {
-            Swal.fire({ icon: 'warning', title: 'Selecciona un método de pago', confirmButtonColor: '#2563eb' });
+            Swal.fire({ icon: 'warning', title: 'Selecciona un método de pago', confirmButtonColor: '#475569' });
             return;
         }
 
@@ -377,13 +377,13 @@
             html: `
                 <div style="background:#f8fafc; border-radius:18px; padding:20px; text-align:center; margin:15px 0 20px 0;">
                     <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">TOTAL A COBRAR</div>
-                    <div style="font-size:2.3rem; font-weight:900; color:#2563eb; letter-spacing:-0.02em;">$${totalFormatted}</div>
+                    <div style="font-size:2.3rem; font-weight:900; color:#475569; letter-spacing:-0.02em;">$${totalFormatted}</div>
                 </div>
 
                 <div style="text-align:left; margin-bottom:10px;">
                     <label style="display:block; font-size:0.875rem; font-weight:700; color:#475569; margin-bottom:8px;">Ingrese el monto recibido:</label>
                     <input id="swal-monto-recibido" type="number" step="any" min="0" placeholder="0" value="${totalNum}"
-                        style="width:100%; padding:14px; border:2.5px solid #3b82f6; border-radius:14px; font-size:1.6rem; font-weight:900; text-align:center; color:#1e293b; outline:none; box-sizing:border-box;"
+                        style="width:100%; padding:14px; border:2.5px solid #64748b; border-radius:14px; font-size:1.6rem; font-weight:900; text-align:center; color:#1e293b; outline:none; box-sizing:border-box;"
                         onfocus="this.select()">
                 </div>
 
@@ -395,7 +395,7 @@
             showCancelButton: true,
             confirmButtonText: 'Registrar Venta',
             cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#2563eb',
+            confirmButtonColor: '#475569',
             cancelButtonColor: '#64748b',
             didOpen: () => {
                 const input = document.getElementById('swal-monto-recibido');
@@ -478,7 +478,7 @@
                             </div>
                         `,
                         confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#2563eb'
+                        confirmButtonColor: '#475569'
                     }).then(() => {
                         location.reload();
                     });
@@ -487,7 +487,7 @@
                         icon: 'error',
                         title: 'Error al procesar la venta',
                         text: data.message || 'No se pudo registrar la venta en la base de datos.',
-                        confirmButtonColor: '#2563eb'
+                        confirmButtonColor: '#475569'
                     });
                 }
             } catch (err) {
@@ -495,7 +495,7 @@
                     icon: 'error',
                     title: 'Error de Red',
                     text: 'Ocurrió un error al procesar la solicitud.',
-                    confirmButtonColor: '#2563eb'
+                    confirmButtonColor: '#475569'
                 });
             }
         });

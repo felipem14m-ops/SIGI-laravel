@@ -1,4 +1,4 @@
-@extends('layouts.sidebarEmpleado')
+﻿@extends('layouts.sidebarEmpleado')
 
 @section('title', 'Dashboard Empleado')
 @section('page-title')
@@ -37,7 +37,7 @@ Mi Panel - {{ Auth::user()->nombre }}
 <div class="space-y-6">
 
     {{-- ===== BANNER PRINCIPAL (ESTÁNDAR DEL PROYECTO) ===== --}}
-    <div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:32px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
         <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
         <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -60,10 +60,10 @@ Mi Panel - {{ Auth::user()->nombre }}
 
             <div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
                 <a href="{{ route('ventas.index') }}"
-                    style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:12px 22px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,0.15); transition:all 0.2s;"
-                    onmouseover="this.style.transform='translateY(-1px)'; this.style.background='#eff6ff';"
+                    style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:12px 22px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,0.15); transition:all 0.2s;"
+                    onmouseover="this.style.transform='translateY(-1px)'; this.style.background='#f1f5f9';"
                     onmouseout="this.style.transform=''; this.style.background='#fff';">
-                    <svg width="18" height="18" fill="none" stroke="#1a3da8" stroke-width="2.5" viewBox="0 0 24 24">
+                    <svg width="18" height="18" fill="none" stroke="#1e293b" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     Abrir Caja / POS
@@ -148,19 +148,19 @@ Mi Panel - {{ Auth::user()->nombre }}
             </div>
         </a>
 
-        <a href="{{ route('productos.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-blue-200 transition duration-200 group">
+        <a href="{{ route('productos.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition duration-200 group">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition duration-200 shrink-0">
+                <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-slate-600 group-hover:text-white transition duration-200 shrink-0">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-base font-bold text-slate-800 group-hover:text-blue-600 transition">Consultar Catálogo de Productos</h3>
+                    <h3 class="text-base font-bold text-slate-800 group-hover:text-slate-600 transition">Consultar Catálogo de Productos</h3>
                     <p class="text-xs text-slate-400 mt-0.5">Verifica precios, disponibilidad y stock</p>
                 </div>
             </div>
-            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 text-blue-500 group-hover:text-blue-700 transition shrink-0">
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 text-slate-1000 group-hover:text-slate-700 transition shrink-0">
                 <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -174,14 +174,14 @@ Mi Panel - {{ Auth::user()->nombre }}
         {{-- Header Tabla --}}
         <div style="padding:20px 24px; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between; gap:16px;">
             <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:36px; height:36px; border-radius:10px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center;">
+                <div style="width:36px; height:36px; border-radius:10px; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center;">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 01-2h2a2 2 0 012 2" />
                     </svg>
                 </div>
                 <h3 style="font-size:1rem; font-weight:800; color:#0f172a; margin:0;">Mis Ventas del Día</h3>
             </div>
-            <a href="{{ route('ventas.historial') }}" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; color:#2563eb; background:#eff6ff; padding:7px 14px; border-radius:10px; text-decoration:none;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+            <a href="{{ route('ventas.historial') }}" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; color:#475569; background:#f1f5f9; padding:7px 14px; border-radius:10px; text-decoration:none;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
                 Ver Historial Completo →
             </a>
         </div>
@@ -204,7 +204,7 @@ Mi Panel - {{ Auth::user()->nombre }}
                         
                         {{-- Ticket --}}
                         <td style="padding:16px 20px;">
-                            <span style="font-size:0.875rem; font-weight:800; color:#2563eb; letter-spacing:0.02em;">
+                            <span style="font-size:0.875rem; font-weight:800; color:#475569; letter-spacing:0.02em;">
                                 #{{ str_pad($venta->id_venta, 5, '0', STR_PAD_LEFT) }}
                             </span>
                         </td>
@@ -217,7 +217,7 @@ Mi Panel - {{ Auth::user()->nombre }}
                         {{-- Ítems --}}
                         <td style="padding:16px 20px; text-align:center;">
                             @php $totalItems = $venta->detalles ? $venta->detalles->sum('cantidad') : 0; @endphp
-                            <span style="display:inline-block; background:#2563eb; color:#fff; font-weight:900; font-size:11px; padding:5px 12px; border-radius:8px; min-width:36px; text-align:center;">
+                            <span style="display:inline-block; background:#475569; color:#fff; font-weight:900; font-size:11px; padding:5px 12px; border-radius:8px; min-width:36px; text-align:center;">
                                 {{ $totalItems }} und
                             </span>
                         </td>
@@ -229,7 +229,7 @@ Mi Panel - {{ Auth::user()->nombre }}
                             $metodoBadge = [
                                 'efectivo' => ['bg'=>'#f0fdf4','color'=>'#16a34a','text'=>'Efectivo'],
                                 'nequi' => ['bg'=>'#faf5ff','color'=>'#7c3aed','text'=>'Nequi'],
-                                'tarjeta' => ['bg'=>'#eff6ff','color'=>'#2563eb','text'=>'Tarjeta'],
+                                'tarjeta' => ['bg'=>'#f1f5f9','color'=>'#475569','text'=>'Tarjeta'],
                                 'transferencia' => ['bg'=>'#fff7ed','color'=>'#d97706','text'=>'Transferencia'],
                             ];
                             $badge = $metodoBadge[$metodo] ?? ['bg'=>'#f8fafc','color'=>'#475569','text'=>ucfirst($metodo)];

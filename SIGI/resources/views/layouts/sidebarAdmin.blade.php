@@ -17,12 +17,12 @@
         * { font-family: 'Inter', sans-serif; }
 
         /* ═══ SIDEBAR – color acoplado al banner del dashboard ═══ */
-        /* Banner del dashboard: linear-gradient(125deg, #1a3da8 0%, #2350d4 45%, #3b6ef8 100%) */
+        /* Banner del dashboard: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%) */
         body.sidebar-mini .main-sidebar,
-        .main-sidebar { background: linear-gradient(180deg, #1a3da8 0%, #162e8a 100%) !important; }
+        .main-sidebar { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important; }
 
         .brand-link {
-            background: #132f8a !important;
+            background: #0f172a !important;
             border-bottom: 1px solid rgba(255,255,255,.1) !important;
             padding: 15px 18px !important;
         }
@@ -76,8 +76,8 @@
 
         /* ═══ TOPBAR – acoplado al sidebar ═══ */
         .main-header.navbar {
-            background: linear-gradient(90deg, #1a3da8 0%, #2350d4 100%) !important;
-            box-shadow: 0 2px 12px rgba(26,61,168,.35) !important;
+            background: linear-gradient(90deg, #1e293b 0%, #334155 100%) !important;
+            box-shadow: 0 2px 12px rgba(15,23,42,.35) !important;
             border-bottom: none !important;
         }
         .main-header .navbar-nav .nav-link {

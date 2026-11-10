@@ -1,0 +1,590 @@
+{
+	"info": {
+		"_postman_id": "sigi-api-collection-v1",
+		"name": "SIGI API - Mobile & POS",
+		"description": "Colección completa de endpoints para la aplicación móvil en Flutter y pruebas en Postman del Sistema SIGI.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Autenticación",
+			"item": [
+				{
+					"name": "Login (Iniciar Sesión)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.access_token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.access_token);",
+									"    console.log(\"Token guardado automáticamente:\", jsonData.access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@sigi.com\",\n    \"password\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["login"]
+						}
+					}
+				},
+				{
+					"name": "Registro de Empleado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cajero Móvil\",\n    \"numeroIdentificacion\": \"1085293847\",\n    \"email\": \"cajero@sigi.com\",\n    \"password\": \"12345678\",\n    \"id_rol\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["register"]
+						}
+					}
+				},
+				{
+					"name": "Usuario Actual (Me)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["me"]
+						}
+					}
+				},
+				{
+					"name": "Logout (Cerrar Sesión)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Dashboard & Métricas",
+			"item": [
+				{
+					"name": "Obtener Resumen Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Productos",
+			"item": [
+				{
+					"name": "Listar Productos (con filtros)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/productos?search=&id_categoria=&solo_disponibles=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos"],
+							"query": [
+								{ "key": "search", "value": "" },
+								{ "key": "id_categoria", "value": "" },
+								{ "key": "solo_disponibles", "value": "false" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Buscar Producto por Código de Barras (Escáner)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/productos/barcode/PROD-001",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos", "barcode", "PROD-001"]
+						}
+					}
+				},
+				{
+					"name": "Detalle de Producto por ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/productos/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos", "1"]
+						}
+					}
+				},
+				{
+					"name": "Crear Producto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigoUnico\": \"PROD-999\",\n    \"nombre\": \"Mouse Inalámbrico RGB\",\n    \"descripcion\": \"Mouse ergonómico para oficina\",\n    \"id_categoria\": 1,\n    \"id_proveedor\": 1,\n    \"precio_venta\": 45000,\n    \"precio_costo\": 28000,\n    \"stock_minimo\": 5,\n    \"stock_actual\": 20,\n    \"estado\": \"activo\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Producto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Mouse Inalámbrico RGB v2\",\n    \"precio_venta\": 48000,\n    \"stock_actual\": 25\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos", "1"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Producto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/productos/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["productos", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Categorías",
+			"item": [
+				{
+					"name": "Listar Categorías",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/categorias",
+							"host": ["{{baseUrl}}"],
+							"path": ["categorias"]
+						}
+					}
+				},
+				{
+					"name": "Detalle Categoría con Productos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/categorias/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["categorias", "1"]
+						}
+					}
+				},
+				{
+					"name": "Crear Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Accesorios Móviles\",\n    \"descripcion\": \"Cables, cargadores y fundas\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/categorias",
+							"host": ["{{baseUrl}}"],
+							"path": ["categorias"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Ventas / POS Terminal",
+			"item": [
+				{
+					"name": "Registrar Venta POS (Checkout)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"metodo_pago_id\": 1,\n    \"monto_recibido\": 100000,\n    \"items\": [\n        {\n            \"id\": 1,\n            \"cantidad\": 2\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ventas",
+							"host": ["{{baseUrl}}"],
+							"path": ["ventas"]
+						}
+					}
+				},
+				{
+					"name": "Listar Historial de Ventas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/ventas?fecha=&page=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["ventas"],
+							"query": [
+								{ "key": "fecha", "value": "" },
+								{ "key": "page", "value": "1" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Detalle de Venta (Ticket POS)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/ventas/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["ventas", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Auxiliares & Monitoreo",
+			"item": [
+				{
+					"name": "Listar Métodos de Pago",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/metodos-pago",
+							"host": ["{{baseUrl}}"],
+							"path": ["metodos-pago"]
+						}
+					}
+				},
+				{
+					"name": "Listar Alertas de Stock Bajo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/alertas?tipo_alerta=",
+							"host": ["{{baseUrl}}"],
+							"path": ["alertas"],
+							"query": [
+								{ "key": "tipo_alerta", "value": "" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Listar Movimientos de Kardex",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/movimientos",
+							"host": ["{{baseUrl}}"],
+							"path": ["movimientos"]
+						}
+					}
+				},
+				{
+					"name": "Registrar Movimiento Manual de Stock",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_producto\": 1,\n    \"tipo\": \"ENTRADA\",\n    \"cantidad\": 10,\n    \"motivo\": \"Reabastecimiento recibido desde app móvil\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/movimientos",
+							"host": ["{{baseUrl}}"],
+							"path": ["movimientos"]
+						}
+					}
+				},
+				{
+					"name": "Listar Proveedores",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/proveedores",
+							"host": ["{{baseUrl}}"],
+							"path": ["proveedores"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
+

@@ -1,4 +1,4 @@
-@extends('layouts.sidebarEmpleado')
+﻿@extends('layouts.sidebarEmpleado')
 
 @section('title', 'Consultar Productos')
 @section('page-title', 'Consultar Productos')
@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- ===== HEADER BANNER ===== --}}
-<div style="background:linear-gradient(125deg,#1a3da8 0%,#2350d4 45%,#3b6ef8 100%); border-radius:20px; padding:28px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
+<div style="background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#475569 100%); border-radius:20px; padding:28px 36px; margin-bottom:24px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-40px; right:100px; width:220px; height:220px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
     <div style="position:absolute; top:10px; right:0; width:120px; height:120px; background:rgba(255,255,255,0.04); border-radius:50%;"></div>
 
@@ -38,7 +38,7 @@
             {{-- Botones Toggle Vista (Tarjetas / DataTable) --}}
             <div style="display:flex; background:rgba(255,255,255,0.2); padding:3px; border-radius:10px;">
                 <button id="btn-vista-cards" type="button" onclick="mostrarVistaCards()"
-                    style="background:#fff; color:#1a3da8; border:none; padding:8px; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s;"
+                    style="background:#fff; color:#1e293b; border:none; padding:8px; border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s;"
                     title="Vista tarjetas">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -54,9 +54,9 @@
             </div>
 
             <a href="{{ route('empleado.ventas.index') }}"
-                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1a3da8; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
+                style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:10px 20px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,0.15);"
                 onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">
-                <svg width="16" height="16" fill="none" stroke="#1a3da8" stroke-width="2.5" viewBox="0 0 24 24">
+                <svg width="16" height="16" fill="none" stroke="#1e293b" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 000-4z" />
                 </svg>
                 Ir a POS
@@ -74,7 +74,7 @@
         <input type="text" id="pos-search" placeholder="Buscar por nombre o código único de producto..."
             style="width:100%; padding:11px 14px 11px 42px; background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:12px; font-size:0.875rem; color:#1e293b; outline:none; box-sizing:border-box; font-family:inherit;"
             onkeyup="filtrarCatalogo()"
-            onfocus="this.style.borderColor='#2563eb'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
+            onfocus="this.style.borderColor='#475569'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(37,99,235,0.1)'"
             onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'" />
     </div>
 </div>
@@ -95,7 +95,7 @@
                 @if($prod->imagen)
                 <img src="{{ asset('storage/' . $prod->imagen) }}" alt="{{ $prod->nombre }}" style="max-width:100%; max-height:100%; object-fit:contain;">
                 @else
-                <div style="width:70px; height:70px; border-radius:16px; background:linear-gradient(135deg,#eff6ff,#dbeafe); color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:900;">
+                <div style="width:70px; height:70px; border-radius:16px; background:linear-gradient(135deg,#f1f5f9,#e2e8f0); color:#475569; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:900;">
                     {{ mb_strtoupper(mb_substr($prod->nombre, 0, 1)) }}
                 </div>
                 @endif
@@ -112,7 +112,7 @@
 
                 {{-- Badges de Categoría y Stock --}}
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-                    <span style="background:#eff6ff; color:#2563eb; font-size:10px; font-weight:800; padding:4px 10px; border-radius:8px; text-transform:uppercase;">
+                    <span style="background:#f1f5f9; color:#475569; font-size:10px; font-weight:800; padding:4px 10px; border-radius:8px; text-transform:uppercase;">
                         &bull; {{ mb_strtoupper($prod->categoria->nombre ?? 'SIN CATEGORÍA') }}
                     </span>
 
@@ -181,14 +181,14 @@
                             <img src="{{ asset('storage/' . $prod->imagen) }}" alt="{{ $prod->nombre }}"
                                 style="width:42px; height:42px; object-fit:contain; border-radius:10px; background:#fafafa; border:1px solid #e2e8f0; padding:2px;">
                             @else
-                            <div style="width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#eff6ff,#dbeafe); color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">
+                            <div style="width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#f1f5f9,#e2e8f0); color:#475569; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900;">
                                 {{ mb_strtoupper(mb_substr($prod->nombre, 0, 1)) }}
                             </div>
                             @endif
                         </td>
 
                         {{-- Código --}}
-                        <td style="padding:14px 20px; font-size:0.875rem; font-weight:800; color:#2563eb;">
+                        <td style="padding:14px 20px; font-size:0.875rem; font-weight:800; color:#475569;">
                             {{ $prod->codigoUnico }}
                         </td>
 
@@ -202,7 +202,7 @@
 
                         {{-- Categoría --}}
                         <td style="padding:14px 20px;">
-                            <span style="display:inline-block; background:#eff6ff; color:#2563eb; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">
+                            <span style="display:inline-block; background:#f1f5f9; color:#475569; font-weight:800; font-size:11px; padding:4px 12px; border-radius:8px;">
                                 {{ $prod->categoria->nombre ?? 'Sin Categoría' }}
                             </span>
                         </td>
@@ -245,7 +245,7 @@
         document.getElementById('vista-tabla').style.display = 'none';
 
         document.getElementById('btn-vista-cards').style.background = '#fff';
-        document.getElementById('btn-vista-cards').style.color = '#1a3da8';
+        document.getElementById('btn-vista-cards').style.color = '#1e293b';
 
         document.getElementById('btn-vista-tabla').style.background = 'transparent';
         document.getElementById('btn-vista-tabla').style.color = '#fff';
@@ -256,7 +256,7 @@
         document.getElementById('vista-tabla').style.display = 'block';
 
         document.getElementById('btn-vista-tabla').style.background = '#fff';
-        document.getElementById('btn-vista-tabla').style.color = '#1a3da8';
+        document.getElementById('btn-vista-tabla').style.color = '#1e293b';
 
         document.getElementById('btn-vista-cards').style.background = 'transparent';
         document.getElementById('btn-vista-cards').style.color = '#fff';
