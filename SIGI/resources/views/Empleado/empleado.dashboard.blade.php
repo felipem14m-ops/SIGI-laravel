@@ -1,3 +1,3 @@
-@extends('layouts.sidebaradmin')
+@extends('layouts.sidebarAdmin')
 
 @section('content')

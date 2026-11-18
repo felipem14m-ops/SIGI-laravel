@@ -46,3 +46,4 @@ La API expone los endpoints bajo el prefijo `/api`:
 * `GET /api/alertas` & `GET /api/movimientos`
 
 Para más detalles sobre los modelos de datos y código Dart de integración, revisa la [Documentación Técnica](DOCUMENTACION_ARQUITECTURA_Y_PLAN_FLUTTER.md).
+

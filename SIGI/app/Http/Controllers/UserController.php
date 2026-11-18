@@ -35,7 +35,7 @@ class UserController extends Controller
         $usuarios = $query->get();
         $roles = Role::all();
 
-        return view('admin.Usuarios.ListasdeUsuarios', compact('usuarios', 'roles', 'search', 'roleFilter'));
+        return view('Admin.Usuarios.ListasdeUsuarios', compact('usuarios', 'roles', 'search', 'roleFilter'));
     }
 
     /**

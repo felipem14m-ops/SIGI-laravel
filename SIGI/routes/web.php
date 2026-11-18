@@ -32,12 +32,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     /** @var \App\Models\User $user */
     $user = Auth::user();
-    $role = $user->role_id;
+    $role = $user->role_id ?? $user->id_rol ?? null;
     if ($role == 1) {
-        return view('admin.dashboard');
+        return view('Admin.dashboard');
     } elseif ($role == 2) {
-        return view('empleado.dashboard');
+        return view('Empleado.dashboard');
     }
+    return view('Empleado.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
