@@ -131,9 +131,8 @@
 
                         {{-- Toggle Activar / Desactivar --}}
                         <form id="form-toggle-{{ $metodo->id_metodo }}" method="POST"
-                            action="{{ route('configuraciones.update', $metodo->id_metodo) }}" style="display:none;">
-                            @csrf @method('PUT')
-                            <input type="hidden" name="toggle_activo" value="1">
+                            action="{{ route('configuraciones.estado', $metodo->id_metodo) }}" style="display:none;">
+                            @csrf @method('PATCH')
                         </form>
                         <button type="button"
                             onclick="confirmarToggle({{ $metodo->id_metodo }}, '{{ addslashes($metodo->nombre) }}', {{ $metodo->activo ? 'true' : 'false' }})"

@@ -1,104 +1,87 @@
 <?php
 
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Empleado;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Ventas\ComprobanteVentaController;
+use App\Http\Controllers\Ventas\RegistrarVentaController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController as Usuariocontroller;
-use App\Http\Controllers\ProveedorController as Proveedorcontroller;
-use App\Http\Controllers\CategoriasController as Categoriascontroller;
-use App\Http\Controllers\HistorialVentasController;
-use App\Http\Controllers\ProductosController as Productoscontroller;
-use App\Http\Controllers\VentaController as Ventacontroller;
-use App\Http\Controllers\MovimientoController;
-use App\Http\Controllers\AlertasController;
-use App\Http\Controllers\ReportesController;
-use App\Http\Controllers\ConfiguracionesController;
-use App\Http\Controllers\EmpleadoVentaController;
-use App\Http\Controllers\EmpleadoConsultaController;
-use App\Http\Controllers\EmpleadoMisVentasController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard con redirección por Rol
+| Rutas Web - SIGI
 |--------------------------------------------------------------------------
-| Rol 1 → Administrador → admin/dashboard
-| Rol 2 → Empleado     → empleado/dashboard
+| Organización por rol:
+|   · Compartidas (Administrador y Empleado): dashboard, perfil, registro y
+|     comprobantes de venta (VentaPolicy limita al empleado a sus ventas).
+|   · role:admin    → módulos de gestión.
+|   · role:empleado → POS, consultas y "mis ventas" del empleado.
 */
-Route::get('/dashboard', function () {
-    /** @var \App\Models\User $user */
-    $user = Auth::user();
-    $role = $user->role_id ?? $user->id_rol ?? null;
-    if ($role == 1) {
-        return view('Admin.dashboard');
-    } elseif ($role == 2) {
-        return view('Empleado.dashboard');
-    }
-    return view('Empleado.dashboard');
-})->middleware(['auth'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::view('/', 'welcome');
 
-    // Rutas de Gestión de Usuarios
-    Route::get('/usuarios', [Usuariocontroller::class, 'index'])->name('usuarios.index');
-    Route::get('/usuarios/crear', [Usuariocontroller::class, 'create'])->name('usuarios.create');
-    Route::post('/usuarios', [Usuariocontroller::class, 'store'])->name('usuarios.store');
-    Route::put('/usuarios/{id}', [Usuariocontroller::class, 'update'])->name('usuarios.update');
-    Route::delete('/usuarios/{id}', [Usuariocontroller::class, 'destroy'])->name('usuarios.destroy');
+Route::middleware(['auth', 'activo'])->group(function () {
 
-    //Rutas de Gestion de Proveedores 
-    Route::get('/proveedores', [Proveedorcontroller::class, 'index'])->name('proveedores.index');
-    Route::post('/proveedores', [Proveedorcontroller::class, 'store'])->name('proveedores.store');
-    Route::put('/proveedores/{id}', [Proveedorcontroller::class, 'update'])->name('proveedores.update');
-    Route::delete('/proveedores/{id}', [Proveedorcontroller::class, 'destroy'])->name('proveedores.destroy');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    //Rutas de Gestion de Categorias
-    Route::get('/categorias', [Categoriascontroller::class, 'index'])->name('categorias.index');
-    Route::post('/categorias', [Categoriascontroller::class, 'store'])->name('categorias.store');
-    Route::put('/categorias/{id}', [Categoriascontroller::class, 'update'])->name('categorias.update');
-    Route::delete('/categorias/{id}', [Categoriascontroller::class, 'destroy'])->name('categorias.destroy');
+    Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::patch('/', 'update')->name('update');
+        Route::delete('/', 'destroy')->name('destroy');
+    });
 
-    //Rutas de Gestion de Productos
-    Route::get('/productos', [Productoscontroller::class, 'index'])->name('productos.index');
-    Route::post('/productos', [Productoscontroller::class, 'store'])->name('productos.store');
-    Route::put('/productos/{id}', [Productoscontroller::class, 'update'])->name('productos.update');
-    Route::delete('/productos/{id}', [Productoscontroller::class, 'destroy'])->name('productos.destroy');
+    // ── Ventas (ambos roles) ────────────────────────────────────────────
+    Route::post('/ventas', RegistrarVentaController::class)->name('ventas.store');
+    Route::get('/ventas/historial/{venta}', [ComprobanteVentaController::class, 'show'])->name('ventas.show');
+    Route::get('/ventas/factura/{venta}', [ComprobanteVentaController::class, 'factura'])->name('ventas.factura');
 
-    //Rutas de Gestion de Ventas
-    Route::get('/ventas',                 [Ventacontroller::class, 'index'])->name('ventas.index');     // Terminal POS
-    Route::get('/ventas/historial',       [HistorialVentasController::class, 'index'])->name('ventas.historial');  // Historial de Ventas
-    Route::get('/ventas/historial/{id}',  [HistorialVentasController::class, 'show'])->name('ventas.show');       // Detalle de Venta
-    Route::get('/ventas/factura/{id}',    [HistorialVentasController::class, 'factura'])->name('ventas.factura');    // Factura POS Ticket
-    Route::post('/ventas',                [Ventacontroller::class, 'store'])->name('ventas.store');      // Registrar nueva venta
+    // ── Administrador ───────────────────────────────────────────────────
+    Route::middleware('role:admin')->group(function () {
 
-    //Rutas de Gestion de Movimientos
-    Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
-    Route::post('/movimientos', [MovimientoController::class, 'store'])->name('movimientos.store');
+        Route::resource('usuarios', Admin\UsuarioController::class)
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->parameters(['usuarios' => 'usuario']);
+        Route::patch('/usuarios/{usuario}/estado', [Admin\UsuarioController::class, 'alternarEstado'])->name('usuarios.estado');
 
-    //Rutas de Alertas de Stock
-    Route::get('/alertas', [AlertasController::class, 'index'])->name('alertas.index');
+        Route::resource('proveedores', Admin\ProveedorController::class)
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->parameters(['proveedores' => 'proveedor']);
+        Route::patch('/proveedores/{proveedor}/estado', [Admin\ProveedorController::class, 'alternarEstado'])->name('proveedores.estado');
 
-    //Rutas de Reportes
-    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
+        Route::resource('categorias', Admin\CategoriaController::class)
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->parameters(['categorias' => 'categoria']);
+        Route::patch('/categorias/{categoria}/estado', [Admin\CategoriaController::class, 'alternarEstado'])->name('categorias.estado');
 
-    //Rutas de Configuraciones
-    Route::get('/configuraciones',                [ConfiguracionesController::class, 'index'])->name('configuraciones.index');
-    Route::get('/configuraciones/crear',          [ConfiguracionesController::class, 'create'])->name('configuraciones.create');
-    Route::post('/configuraciones/metodos',       [ConfiguracionesController::class, 'store'])->name('configuraciones.store');
-    Route::put('/configuraciones/metodos/{id}',   [ConfiguracionesController::class, 'update'])->name('configuraciones.update');
-    Route::delete('/configuraciones/metodos/{id}', [ConfiguracionesController::class, 'destroy'])->name('configuraciones.destroy');
+        Route::resource('productos', Admin\ProductoController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::patch('/productos/{producto}/estado', [Admin\ProductoController::class, 'alternarEstado'])->name('productos.estado');
 
-    //Rutas de Gestion de Ventas Empleado
-    Route::get('/empleado/ventas',     [EmpleadoVentaController::class, 'index'])->name('empleado.ventas.index');
-    Route::get('/empleado/consultas',  [EmpleadoConsultaController::class, 'index'])->name('empleado.consultas.index');
-    Route::get('/empleado/mis-ventas', [EmpleadoMisVentasController::class, 'index'])->name('empleado.misventas.index');
+        Route::get('/ventas', Admin\PuntoVentaController::class)->name('ventas.index');
+        Route::get('/ventas/historial', Admin\HistorialVentaController::class)->name('ventas.historial');
+
+        Route::get('/movimientos', [Admin\MovimientoController::class, 'index'])->name('movimientos.index');
+        Route::post('/movimientos', [Admin\MovimientoController::class, 'store'])->name('movimientos.store');
+
+        Route::get('/alertas', Admin\AlertaController::class)->name('alertas.index');
+        Route::get('/reportes', Admin\ReporteController::class)->name('reportes.index');
+
+        Route::controller(Admin\MetodoPagoController::class)->prefix('configuraciones')->name('configuraciones.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/metodos', 'store')->name('store');
+            Route::put('/metodos/{metodo}', 'update')->name('update');
+            Route::patch('/metodos/{metodo}/estado', 'alternarEstado')->name('estado');
+            Route::delete('/metodos/{metodo}', 'destroy')->name('destroy');
+        });
+    });
+
+    // ── Empleado ────────────────────────────────────────────────────────
+    Route::middleware('role:empleado')->prefix('empleado')->name('empleado.')->group(function () {
+        Route::get('/ventas', Empleado\PuntoVentaController::class)->name('ventas.index');
+        Route::get('/consultas', Empleado\ConsultaProductoController::class)->name('consultas.index');
+        Route::get('/mis-ventas', Empleado\MisVentasController::class)->name('misventas.index');
+    });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

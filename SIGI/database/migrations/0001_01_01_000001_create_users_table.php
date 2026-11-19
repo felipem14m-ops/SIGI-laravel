@@ -28,8 +28,8 @@ return new class extends Migration
             $table->index(['id_rol', 'activo'], 'idx_rol_activo');
 
             $table->foreign('id_rol', 'fk_usuarios_rol')
-                  ->references('id_rol')
-                  ->on('roles');
+                ->references('id_rol')
+                ->on('roles');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

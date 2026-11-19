@@ -42,7 +42,10 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // Solo usuarios activos pueden iniciar sesión (RF de seguridad del SRS).
+        $credenciales = [...$this->only('email', 'password'), 'activo' => true];
+
+        if (! Auth::attempt($credenciales, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

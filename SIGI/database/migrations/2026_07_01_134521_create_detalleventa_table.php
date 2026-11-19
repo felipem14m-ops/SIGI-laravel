@@ -24,12 +24,12 @@ return new class extends Migration
             $table->index('id_producto', 'idx_detalle_producto');
 
             $table->foreign('id_venta', 'fk_detalle_venta')
-                  ->references('id_venta')
-                  ->on('venta');
+                ->references('id_venta')
+                ->on('venta');
 
             $table->foreign('id_producto', 'fk_detalle_producto')
-                  ->references('id_producto')
-                  ->on('productos');
+                ->references('id_producto')
+                ->on('productos');
         });
     }
 

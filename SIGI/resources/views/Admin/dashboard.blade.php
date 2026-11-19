@@ -3,29 +3,10 @@
 @section('title', 'Dashboard Administrador')
 @section('page-title', 'Panel Principal')
 
+{{-- Datos provistos por DashboardController → DashboardService::resumenAdministrador() --}}
 @php
-    use App\Models\Producto;
-    use App\Models\Venta;
-    use App\Models\User;
     use Carbon\Carbon;
 
-    $hoy             = Carbon::today();
-    $totalProductos  = Producto::where('estado', 'activo')->count();
-    $ventasHoy       = Venta::where(function($q) use ($hoy) {
-                            $q->whereDate('fecha_venta', $hoy)->orWhereDate('created_at', $hoy);
-                        })->count();
-    $ingresosHoy     = Venta::where(function($q) use ($hoy) {
-                            $q->whereDate('fecha_venta', $hoy)->orWhereDate('created_at', $hoy);
-                        })->sum('total');
-    $alertasStock    = Producto::whereColumn('stock_actual', '<=', 'stock_minimo')->count();
-    $totalUsuarios   = User::count();
-    $ventasDelDia    = Venta::with(['metodo', 'detalles', 'usuario'])
-                        ->where(function($q) use ($hoy) {
-                            $q->whereDate('fecha_venta', $hoy)->orWhereDate('created_at', $hoy);
-                        })
-                        ->latest()
-                        ->take(10)
-                        ->get();
     $fechaHoy = Carbon::now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY');
 @endphp
 

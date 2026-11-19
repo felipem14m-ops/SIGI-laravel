@@ -29,16 +29,16 @@ return new class extends Migration
             $table->index('id_usuario', 'idx_mov_usuario');
 
             $table->foreign('id_producto', 'fk_movimiento_producto')
-                  ->references('id_producto')
-                  ->on('productos');
+                ->references('id_producto')
+                ->on('productos');
 
             $table->foreign('id_usuario', 'fk_movimiento_usuario')
-                  ->references('id_usuario')
-                  ->on('users');
+                ->references('id_usuario')
+                ->on('users');
 
             $table->foreign('id_tipo_movimiento', 'fk_movimiento_tipo')
-                  ->references('id_tipo')
-                  ->on('tipos_movimiento');
+                ->references('id_tipo')
+                ->on('tipos_movimiento');
         });
     }
 

@@ -188,10 +188,9 @@
                             </button>
 
                             {{-- 🔄 Toggle Activar/Desactivar --}}
-                            <form id="toggle-form-{{ $proveedor->id_proveedor }}" method="POST" action="{{ route('proveedores.update', $proveedor->id_proveedor) }}" style="display:inline;">
+                            <form id="toggle-form-{{ $proveedor->id_proveedor }}" method="POST" action="{{ route('proveedores.estado', $proveedor->id_proveedor) }}" style="display:inline;">
                                 @csrf
-                                @method('PUT')
-                                <input type="hidden" name="toggle_status" value="1" />
+                                @method('PATCH')
                                 <button type="button"
                                     title="{{ $proveedor->activo == 1 ? 'Desactivar proveedor' : 'Activar proveedor' }}"
                                     onclick="confirmToggle('{{ $proveedor->id_proveedor }}','{{ addslashes($proveedor->nombre) }}',{{ $proveedor->activo }})"

@@ -217,10 +217,9 @@
                             </button>
 
                             {{-- 🔄 Toggle Activar/Desactivar --}}
-                            <form id="toggle-form-{{ $usuario->id_usuario }}" method="POST" action="{{ route('usuarios.update', $usuario->id_usuario) }}" style="display:inline;">
+                            <form id="toggle-form-{{ $usuario->id_usuario }}" method="POST" action="{{ route('usuarios.estado', $usuario->id_usuario) }}" style="display:inline;">
                                 @csrf
-                                @method('PUT')
-                                <input type="hidden" name="toggle_status" value="1" />
+                                @method('PATCH')
                                 <button type="button"
                                     title="{{ $usuario->activo == 1 ? 'Desactivar usuario' : 'Activar usuario' }}"
                                     onclick="confirmToggle('{{ $usuario->id_usuario }}','{{ addslashes($usuario->nombre) }}',{{ $usuario->activo }})"

@@ -34,12 +34,12 @@ return new class extends Migration
             $table->index('fechaVencimiento', 'idx_vencimiento');
 
             $table->foreign('id_categoria', 'fk_productos_categoria')
-                  ->references('id_categoria')
-                  ->on('categorias');
+                ->references('id_categoria')
+                ->on('categorias');
 
             $table->foreign('id_proveedor', 'fk_productos_proveedor')
-                  ->references('id_proveedor')
-                  ->on('proveedores');
+                ->references('id_proveedor')
+                ->on('proveedores');
         });
     }
 

@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Middleware\AsegurarRol;
+use App\Http\Middleware\AsegurarUsuarioActivo;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,10 +17,24 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'role' => AsegurarRol::class,
+            'activo' => AsegurarUsuarioActivo::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*'),
+            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // 404 uniforme en la API: { success: false, message }
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                $recurso = $e->getPrevious() instanceof ModelNotFoundException
+                    ? class_basename($e->getPrevious()->getModel())
+                    : 'Recurso';
+
+                return response()->json(['success' => false, 'message' => "{$recurso} no encontrado."], 404);
+            }
+        });
     })->create();

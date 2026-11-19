@@ -180,10 +180,9 @@
                 </button>
 
                 {{-- 🚫 Toggle Estado --}}
-                <form id="toggle-form-{{ $producto->id_producto }}" method="POST" action="{{ route('productos.update', $producto->id_producto) }}" style="display:inline; flex:1;">
+                <form id="toggle-form-{{ $producto->id_producto }}" method="POST" action="{{ route('productos.estado', $producto->id_producto) }}" style="display:inline; flex:1;">
                     @csrf
-                    @method('PUT')
-                    <input type="hidden" name="toggle_status" value="1" />
+                    @method('PATCH')
                     <button type="button"
                         title="{{ $producto->estado === 'activo' ? 'Desactivar producto' : 'Activar producto' }}"
                         onclick="confirmToggle('{{ $producto->id_producto }}','{{ addslashes($producto->nombre) }}','{{ $producto->estado }}')"
@@ -333,10 +332,9 @@
                                 </button>
 
                                 {{-- 🚫 Desactivar / Activar --}}
-                                <form id="toggle-form-{{ $producto->id_producto }}" method="POST" action="{{ route('productos.update', $producto->id_producto) }}" style="display:inline;">
+                                <form id="toggle-form-{{ $producto->id_producto }}" method="POST" action="{{ route('productos.estado', $producto->id_producto) }}" style="display:inline;">
                                     @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="toggle_status" value="1" />
+                                    @method('PATCH')
                                     <button type="button"
                                         title="{{ $producto->estado === 'activo' ? 'Desactivar producto' : 'Activar producto' }}"
                                         onclick="confirmToggle('{{ $producto->id_producto }}','{{ addslashes($producto->nombre) }}','{{ $producto->estado }}')"

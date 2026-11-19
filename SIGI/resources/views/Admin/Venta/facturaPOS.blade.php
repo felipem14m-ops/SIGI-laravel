@@ -196,7 +196,7 @@
             Imprimir / Descargar PDF
         </button>
 
-        <a href="{{ route('ventas.index') }}" class="btn-action btn-back">
+        <a href="{{ auth()->user()->esAdministrador() ? route('ventas.index') : route('empleado.ventas.index') }}" class="btn-action btn-back">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>

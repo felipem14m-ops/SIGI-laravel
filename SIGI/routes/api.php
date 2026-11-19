@@ -1,72 +1,61 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ApiController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes - SIGI Sistema de Inventario y Gestión Integrado
+| API REST - SIGI (prefijo automático /api)
 |--------------------------------------------------------------------------
-| Todas las rutas aquí declaradas tienen el prefijo automático "/api".
-| Compatibles con Flutter y pruebas en Postman.
+| Consumida por la app Flutter y documentada en postman_collection_SIGI.json.
+| Lectura y POS: cualquier usuario autenticado. Escritura de catálogo e
+| inventario: solo Administrador (`role:admin`).
 */
 
-// =========================================================================
-// 1. RUTAS PÚBLICAS (Sin token)
-// =========================================================================
-Route::post('/login',    [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+// ── Públicas (con límite de intentos) ──────────────────────────────────
+Route::middleware('throttle:10,1')->group(function () {
+    Route::post('/login', [Api\AuthController::class, 'login']);
+    Route::post('/register', [Api\AuthController::class, 'register']);
+});
 
-// =========================================================================
-// 2. RUTAS PROTEGIDAS (Requieren Bearer Token con Laravel Sanctum)
-// =========================================================================
-Route::middleware('auth:sanctum')->group(function () {
+// ── Protegidas (Bearer token Sanctum) ──────────────────────────────────
+Route::middleware(['auth:sanctum', 'activo'])->group(function () {
 
-    // ── Autenticación y Perfil ──────────────────────────────────────────
-    Route::get('/me',     [AuthController::class, 'me']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', function (Request $request) {
-        return $request->user()->load('role');
+    Route::get('/me', [Api\AuthController::class, 'me']);
+    Route::get('/user', [Api\AuthController::class, 'me']);
+    Route::post('/logout', [Api\AuthController::class, 'logout']);
+
+    Route::get('/dashboard', Api\DashboardController::class);
+
+    // Productos (la ruta barcode va antes de {producto} para evitar colisión)
+    Route::get('/productos/barcode/{codigo}', [Api\ProductoController::class, 'porCodigo']);
+    Route::get('/productos', [Api\ProductoController::class, 'index']);
+    Route::get('/productos/{producto}', [Api\ProductoController::class, 'show']);
+
+    Route::get('/categorias', [Api\CategoriaController::class, 'index']);
+    Route::get('/categorias/{categoria}', [Api\CategoriaController::class, 'show']);
+
+    Route::get('/ventas', [Api\VentaController::class, 'index']);
+    Route::get('/ventas/{venta}', [Api\VentaController::class, 'show']);
+    Route::post('/ventas', [Api\VentaController::class, 'store']);
+
+    Route::get('/metodos-pago', [Api\CatalogoController::class, 'metodosPago']);
+    Route::get('/alertas', Api\AlertaController::class);
+
+    // ── Solo Administrador ──────────────────────────────────────────────
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/productos', [Api\ProductoController::class, 'store']);
+        // POST con {id} permite multipart/form-data con imagen desde Flutter
+        Route::match(['post', 'put', 'patch'], '/productos/{producto}', [Api\ProductoController::class, 'update']);
+        Route::delete('/productos/{producto}', [Api\ProductoController::class, 'destroy']);
+
+        Route::post('/categorias', [Api\CategoriaController::class, 'store']);
+        Route::match(['post', 'put', 'patch'], '/categorias/{categoria}', [Api\CategoriaController::class, 'update']);
+        Route::delete('/categorias/{categoria}', [Api\CategoriaController::class, 'destroy']);
+
+        Route::get('/movimientos', [Api\MovimientoController::class, 'index']);
+        Route::post('/movimientos', [Api\MovimientoController::class, 'store']);
+
+        Route::get('/proveedores', [Api\CatalogoController::class, 'proveedores']);
     });
-
-    // ── Dashboard & Métricas Móviles ────────────────────────────────────
-    Route::get('/dashboard', [ApiController::class, 'dashboard']);
-
-    // ── Productos ───────────────────────────────────────────────────────
-    // NOTA: La ruta barcode va ANTES de {id} para evitar colisión de parámetros
-    Route::get('/productos/barcode/{codigo}', [ApiController::class, 'productoPorCodigo']);
-    Route::get('/productos',                  [ApiController::class, 'productos']);
-    Route::get('/productos/{id}',              [ApiController::class, 'producto']);
-    Route::post('/productos',                 [ApiController::class, 'guardarProducto']);
-    Route::post('/productos/{id}',            [ApiController::class, 'actualizarProducto']); // Soporte multipart/form-data con imagen
-    Route::put('/productos/{id}',             [ApiController::class, 'actualizarProducto']);
-    Route::delete('/productos/{id}',          [ApiController::class, 'eliminarProducto']);
-
-    // ── Categorías ──────────────────────────────────────────────────────
-    Route::get('/categorias',          [ApiController::class, 'categorias']);
-    Route::get('/categorias/{id}',      [ApiController::class, 'categoria']);
-    Route::post('/categorias',         [ApiController::class, 'guardarCategoria']);
-    Route::post('/categorias/{id}',    [ApiController::class, 'actualizarCategoria']); // Soporte multipart/form-data con imagen
-    Route::put('/categorias/{id}',     [ApiController::class, 'actualizarCategoria']);
-    Route::delete('/categorias/{id}',  [ApiController::class, 'eliminarCategoria']);
-
-    // ── Ventas (Terminal POS Móvil) ─────────────────────────────────────
-    Route::get('/ventas',      [ApiController::class, 'ventas']);
-    Route::get('/ventas/{id}', [ApiController::class, 'venta']);
-    Route::post('/ventas',     [ApiController::class, 'guardarVenta']);
-
-    // ── Métodos de Pago ─────────────────────────────────────────────────
-    Route::get('/metodos-pago', [ApiController::class, 'metodosPago']);
-
-    // ── Alertas de Stock ────────────────────────────────────────────────
-    Route::get('/alertas', [ApiController::class, 'alertas']);
-
-    // ── Movimientos de Inventario (Kardex) ───────────────────────────────
-    Route::get('/movimientos',  [ApiController::class, 'movimientos']);
-    Route::post('/movimientos', [ApiController::class, 'guardarMovimiento']);
-
-    // ── Proveedores ─────────────────────────────────────────────────────
-    Route::get('/proveedores', [ApiController::class, 'proveedores']);
 });

@@ -2,153 +2,77 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Enums\Rol;
+use App\Http\Requests\Api\LoginRequest;
+use App\Http\Requests\Api\RegistroRequest;
+use App\Http\Resources\UsuarioResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-class AuthController extends Controller
+/**
+ * Autenticación por token (Laravel Sanctum) para la app Flutter y Postman.
+ */
+class AuthController extends ApiController
 {
-    /**
-     * Registro de nuevo usuario (Empleado por defecto)
-     */
-    public function register(Request $request)
+    private const TOKEN_POR_DEFECTO = 'flutter_token';
+
+    public function register(RegistroRequest $request): JsonResponse
     {
-        $request->validate([
-            'nombre'               => 'required|string|max:255',
-            'numeroIdentificacion' => 'required|string|max:20|unique:users,numeroIdentificacion',
-            'email'                => 'required|string|email|max:255|unique:users,email',
-            'password'             => 'nullable|string|min:6',
-            'contrasena'           => 'nullable|string|min:6',
-            'id_rol'               => 'nullable|integer|exists:roles,id_rol',
+        $usuario = User::create([
+            'id_rol' => Rol::EMPLEADO->value,
+            'nombre' => $request->validated('nombre'),
+            'numeroIdentificacion' => $request->validated('numeroIdentificacion'),
+            'email' => $request->validated('email'),
+            'contrasena' => $request->validated('password'),
+            'activo' => true,
         ]);
 
-        $password = $request->input('password') ?? $request->input('contrasena');
-        if (!$password) {
-            return response()->json([
-                'success' => false,
-                'message' => 'La contraseña es requerida (campo "password" o "contrasena").'
-            ], 422);
-        }
-
-        $user = User::create([
-            'id_rol'               => $request->input('id_rol', 2), // 2 = Empleado
-            'nombre'               => $request->nombre,
-            'numeroIdentificacion' => $request->numeroIdentificacion,
-            'email'                => $request->email,
-            'contrasena'           => Hash::make($password),
-            'activo'               => 1,
-        ]);
-
-        $token = $user->createToken('flutter_token')->plainTextToken;
-        $user->load('role');
-
-        return response()->json([
-            'success'      => true,
-            'message'      => 'Usuario registrado exitosamente.',
-            'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'user'         => [
-                'id_usuario'           => $user->id_usuario,
-                'nombre'               => $user->nombre,
-                'email'                => $user->email,
-                'numeroIdentificacion' => $user->numeroIdentificacion,
-                'id_rol'               => $user->id_rol,
-                'rol_nombre'           => $user->role->nombre ?? ($user->id_rol == 1 ? 'Administrador' : 'Empleado'),
-                'activo'               => (bool)$user->activo,
-            ]
-        ], 201);
+        return $this->respuestaConToken($usuario, 'Usuario registrado exitosamente.', Response::HTTP_CREATED);
     }
 
-    /**
-     * Inicio de sesión para Flutter / Postman
-     */
-    public function login(Request $request)
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email'      => 'required|string|email',
-            'password'   => 'nullable|string',
-            'contrasena' => 'nullable|string',
-        ]);
+        $usuario = User::with('role')->where('email', $request->validated('email'))->first();
 
-        $password = $request->input('password') ?? $request->input('contrasena');
-        if (!$password) {
-            return response()->json([
-                'success' => false,
-                'message' => 'La contraseña es requerida (campo "password" o "contrasena").'
-            ], 422);
+        if (! $usuario || ! Hash::check($request->validated('password'), $usuario->contrasena)) {
+            return $this->error('Credenciales incorrectas. Verifica tu correo y contraseña.', Response::HTTP_UNAUTHORIZED);
         }
 
-        if (!Auth::attempt(['email' => $request->email, 'password' => $password])) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Credenciales incorrectas. Verifica tu correo y contraseña.'
-            ], 401);
+        if (! $usuario->activo) {
+            return $this->error('Tu cuenta se encuentra inactiva. Contacta al administrador.', Response::HTTP_FORBIDDEN);
         }
 
-        $user = User::with('role')->where('email', $request->email)->firstOrFail();
+        return $this->respuestaConToken($usuario, 'Inicio de sesión exitoso.', Response::HTTP_OK, $request->validated('device_name'));
+    }
 
-        // Verificar si la cuenta está activa
-        if (!$user->activo) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Tu cuenta se encuentra inactiva. Contacta al administrador.'
-            ], 403);
-        }
-
-        $token = $user->createToken('flutter_token')->plainTextToken;
-
+    public function me(Request $request): JsonResponse
+    {
         return response()->json([
-            'success'      => true,
-            'message'      => 'Inicio de sesión exitoso.',
-            'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'user'         => [
-                'id_usuario'           => $user->id_usuario,
-                'nombre'               => $user->nombre,
-                'email'                => $user->email,
-                'numeroIdentificacion' => $user->numeroIdentificacion,
-                'id_rol'               => $user->id_rol,
-                'rol_nombre'           => $user->role->nombre ?? ($user->id_rol == 1 ? 'Administrador' : 'Empleado'),
-                'activo'               => (bool)$user->activo,
-            ]
+            'success' => true,
+            'user' => new UsuarioResource($request->user()->load('role')),
         ]);
     }
 
-    /**
-     * Información del usuario autenticado actual
-     */
-    public function me(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        $user = $request->user()->load('role');
+        $request->user()->currentAccessToken()?->delete();
+
+        return $this->exito(mensaje: 'Sesión cerrada exitosamente.');
+    }
+
+    private function respuestaConToken(User $usuario, string $mensaje, int $status, ?string $dispositivo = null): JsonResponse
+    {
+        $token = $usuario->createToken($dispositivo ?: self::TOKEN_POR_DEFECTO)->plainTextToken;
 
         return response()->json([
             'success' => true,
-            'user'    => [
-                'id_usuario'           => $user->id_usuario,
-                'nombre'               => $user->nombre,
-                'email'                => $user->email,
-                'numeroIdentificacion' => $user->numeroIdentificacion,
-                'id_rol'               => $user->id_rol,
-                'rol_nombre'           => $user->role->nombre ?? ($user->id_rol == 1 ? 'Administrador' : 'Empleado'),
-                'activo'               => (bool)$user->activo,
-            ]
-        ]);
-    }
-
-    /**
-     * Cierre de sesión (revocación de token actual)
-     */
-    public function logout(Request $request)
-    {
-        if ($request->user() && $request->user()->currentAccessToken()) {
-            $request->user()->currentAccessToken()->delete();
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Sesión cerrada exitosamente.'
-        ]);
+            'message' => $mensaje,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => new UsuarioResource($usuario->load('role')),
+        ], $status);
     }
 }

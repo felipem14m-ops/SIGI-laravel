@@ -27,12 +27,12 @@ return new class extends Migration
             $table->index('id_usuario', 'idx_venta_usuario');
 
             $table->foreign('id_usuario', 'fk_venta_usuario')
-                  ->references('id_usuario')
-                  ->on('users');
+                ->references('id_usuario')
+                ->on('users');
 
             $table->foreign('id_metodo', 'fk_venta_metodo')
-                  ->references('id_metodo')
-                  ->on('metodos_pago');
+                ->references('id_metodo')
+                ->on('metodos_pago');
         });
     }
 

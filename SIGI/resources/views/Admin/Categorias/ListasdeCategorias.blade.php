@@ -173,10 +173,9 @@
                 </button>
 
                 {{-- 🚫 Toggle Estado --}}
-                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.update', $categoria->id_categoria) }}" style="display:inline; flex:1;">
+                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.estado', $categoria->id_categoria) }}" style="display:inline; flex:1;">
                     @csrf
-                    @method('PUT')
-                    <input type="hidden" name="toggle_status" value="1" />
+                    @method('PATCH')
                     <button type="button"
                         title="{{ $categoria->activa ? 'Desactivar categoría' : 'Activar categoría' }}"
                         onclick="confirmToggle('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}',{{ $categoria->activa ? 1 : 0 }})"
@@ -302,10 +301,9 @@
                                 </button>
 
                                 {{-- 🔄 Toggle Activar/Desactivar --}}
-                                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.update', $categoria->id_categoria) }}" style="display:inline;">
+                                <form id="toggle-form-{{ $categoria->id_categoria }}" method="POST" action="{{ route('categorias.estado', $categoria->id_categoria) }}" style="display:inline;">
                                     @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="toggle_status" value="1" />
+                                    @method('PATCH')
                                     <button type="button"
                                         title="{{ $categoria->activa ? 'Desactivar categoría' : 'Activar categoría' }}"
                                         onclick="confirmToggle('{{ $categoria->id_categoria }}','{{ addslashes($categoria->nombre) }}',{{ $categoria->activa ? 1 : 0 }})"

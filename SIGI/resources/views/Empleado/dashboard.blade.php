@@ -1,33 +1,13 @@
-﻿@extends('layouts.sidebarEmpleado')
+@extends('layouts.sidebarEmpleado')
 
 @section('title', 'Dashboard Empleado')
 @section('page-title')
 Mi Panel - {{ Auth::user()->nombre }}
 @endsection
 
+{{-- Datos provistos por DashboardController → DashboardService::resumenEmpleado() --}}
 @php
-    use App\Models\Venta;
     use Carbon\Carbon;
-
-    $user = Auth::user();
-    $userId = $user->id_usuario ?? $user->id;
-    $hoy = Carbon::today();
-
-    // Query de ventas del día realizadas por este empleado
-    $ventasHoyQuery = Venta::where('id_usuario', $userId)
-        ->where(function($q) use ($hoy) {
-            $q->whereDate('fecha_venta', $hoy)->orWhereDate('created_at', $hoy);
-        });
-
-    $totalVentasHoy   = (clone $ventasHoyQuery)->count();
-    $totalIngresosHoy = (clone $ventasHoyQuery)->sum('total');
-    $ticketPromedio   = $totalVentasHoy > 0 ? ($totalIngresosHoy / $totalVentasHoy) : 0;
-
-    // Ventas paginadas estilo datatable (5 por página)
-    $misVentasHoy = (clone $ventasHoyQuery)
-        ->with(['metodo', 'detalles'])
-        ->latest()
-        ->paginate(5);
 
     $fechaHoy = Carbon::now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY');
 @endphp
@@ -59,7 +39,7 @@ Mi Panel - {{ Auth::user()->nombre }}
             </div>
 
             <div style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
-                <a href="{{ route('ventas.index') }}"
+                <a href="{{ route('empleado.ventas.index') }}"
                     style="display:inline-flex; align-items:center; gap:8px; background:#fff; color:#1e293b; padding:12px 22px; border-radius:12px; font-size:13px; font-weight:800; text-decoration:none; box-shadow:0 4px 16px rgba(0,0,0,0.15); transition:all 0.2s;"
                     onmouseover="this.style.transform='translateY(-1px)'; this.style.background='#f1f5f9';"
                     onmouseout="this.style.transform=''; this.style.background='#fff';">
@@ -129,7 +109,7 @@ Mi Panel - {{ Auth::user()->nombre }}
 
     {{-- ===== ACCIONES RÁPIDAS (ESTÁNDAR CON COLORES AZUL E ÍNDIGO) ===== --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <a href="{{ route('ventas.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-emerald-200 transition duration-200 group">
+        <a href="{{ route('empleado.ventas.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-emerald-200 transition duration-200 group">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition duration-200 shrink-0">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +128,7 @@ Mi Panel - {{ Auth::user()->nombre }}
             </div>
         </a>
 
-        <a href="{{ route('productos.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition duration-200 group">
+        <a href="{{ route('empleado.consultas.index') }}" class="bg-white rounded-2xl border border-slate-100 p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:border-slate-300 transition duration-200 group">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-slate-600 group-hover:text-white transition duration-200 shrink-0">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +161,7 @@ Mi Panel - {{ Auth::user()->nombre }}
                 </div>
                 <h3 style="font-size:1rem; font-weight:800; color:#0f172a; margin:0;">Mis Ventas del Día</h3>
             </div>
-            <a href="{{ route('ventas.historial') }}" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; color:#475569; background:#f1f5f9; padding:7px 14px; border-radius:10px; text-decoration:none;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+            <a href="{{ route('empleado.misventas.index') }}" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; color:#475569; background:#f1f5f9; padding:7px 14px; border-radius:10px; text-decoration:none;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
                 Ver Historial Completo →
             </a>
         </div>
